@@ -10,6 +10,7 @@
   - 사진 파일 : images/  (같은 이름으로 바꿔 넣으면 됨, 목록은 IMAGES.md)
 """
 import base64
+import hashlib
 import json
 import logging
 import mimetypes
@@ -36,7 +37,7 @@ def build(single: bool) -> Path:
     images = sorted(p for p in (ROOT / 'images').iterdir() if p.is_file())
 
     # 사이트가 참조하는 이미지 이름 -> 경로(또는 data URI)
-    imgf = {p.name: (data_uri(p) if single else f'images/{p.name}') for p in images}
+    imgf = {p.name: (data_uri(p) if single else f'images/{p.name}?v={hashlib.md5(p.read_bytes()).hexdigest()[:8]}') for p in images}  # ?v= : 같은 이름으로 사진을 바꿔도 브라우저가 새 사진을 받게
 
     # 사진 연결이 끊긴 항목 점검 (빌드는 계속하고 경고만)
     missing = sorted({m[1] for it in model['items'].values() if 'ref' not in it for m in it.get('media', []) if m[1] not in imgf})
