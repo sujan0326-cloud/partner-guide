@@ -392,7 +392,7 @@ body.inb .srch input{border-color:transparent}body.inb .pbtn{display:inline-flex
 .ptypes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.3vw,22px);max-width:1280px}
 .ptype{background:#fff;border:1px solid var(--line);display:flex;flex-direction:column}
 .ptimg{position:relative;height:clamp(150px,13vw,210px);background:#f4f5f7;display:flex;align-items:center;justify-content:center;overflow:hidden}.ptimg img{width:100%;height:100%;object-fit:cover}.ptimg>span:not(.ptno){color:var(--mute);font-size:13px}
-.ptimg.fit{background:#fff}.ptimg.fit img{object-fit:contain;padding:6px}.ptimg.fit .ptno{color:var(--navy);text-shadow:none}
+.ptimg.fit{background:#fff}.ptimg.fit img{object-fit:contain;padding:0}.ptimg.fit .ptno{color:var(--navy);text-shadow:none}
 .ptno{position:absolute;left:14px;top:10px;font:600 20px var(--en);color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.35)}
 .ptbody{padding:18px 20px 20px;display:flex;flex-direction:column;gap:7px;flex:1}.ptbody .en{color:var(--navy2)}.ptbody h2{margin:0;font-size:20px;font-weight:700;letter-spacing:-.4px}.ptbody .en{font-size:11px}
 .ptflow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:4px 0}.ptflow span{font-size:12px;font-weight:600;padding:3px 8px;background:#f1f3f7;color:var(--navy)}.ptflow i{width:8px;height:8px;border-top:1.5px solid #9aa3b5;border-right:1.5px solid #9aa3b5;transform:rotate(45deg)}
@@ -668,9 +668,9 @@ function svShow() {
 }
 function svClose() { $('#sv').classList.remove('show'); document.body.style.overflow = ''; }
 const PTYPES = [
-  {id: 'solid', name: '솔리드', en: 'SOLID', flow: '개별 포장 → 박스', copy: '상품은 개별 포장하고, 포장한 상품을 박스에 담는 유형입니다.', check: '개별 폴리백·가격택·박스 입수량을 확인합니다.', img: 'pt_solid.jpg'},
-  {id: 'assort', name: '아소트 팩', en: 'ASSORT PACK', flow: '지정 구성 → 팩 → 박스', copy: '지정 구성을 블리스터 백으로 묶고, 1박스에 팩 3개 이상 담는 유형입니다.', check: '팩 스티커는 정가운데, 가격택은 반대면입니다. 잔량은 마지막 박스에 한해 1~2팩까지 허용합니다.', img: 'pt_pack_new.jpg', fit: 'contain', img2: 'pt_pack2.jpg'},
-  {id: 'assort', name: '아소트 박스', en: 'ASSORT BOX', flow: '지정 구성 → 박스', copy: '1박스에 3팩이 안 될 때, 솔리드로 포장한 제품을 그대로 박스에 담는 유형입니다.', check: '블리스터 백은 필요 없습니다. 2팩만 들어가면 1팩으로 바꾸고 박스를 줄입니다.', img: 'as_box_after.jpg'}];
+  {id: 'solid', name: '솔리드', en: 'SOLID', flow: '개별 포장 → 박스', copy: '상품은 개별 포장하고, 포장한 상품을 박스에 담는 유형입니다.', check: '개별 폴리백·가격택·박스 입수량을 확인합니다.', img: 'pt_solid_card.jpg', fit: 'contain'},
+  {id: 'assort', name: '아소트 팩', en: 'ASSORT PACK', flow: '지정 구성 → 팩 → 박스', copy: '지정 구성을 블리스터 백으로 묶고, 1박스에 팩 3개 이상 담는 유형입니다.', check: '팩 스티커는 정가운데, 가격택은 반대면입니다. 잔량은 마지막 박스에 한해 1~2팩까지 허용합니다.', img: 'pt_pack_card.jpg', fit: 'contain', img2: 'pt_pack2.jpg'},
+  {id: 'assort', name: '아소트 박스', en: 'ASSORT BOX', flow: '지정 구성 → 박스', copy: '1박스에 3팩이 안 될 때, 솔리드로 포장한 제품을 그대로 박스에 담는 유형입니다.', check: '블리스터 백은 필요 없습니다. 2팩만 들어가면 1팩으로 바꾸고 박스를 줄입니다.', img: 'pt_box_card.jpg', fit: 'contain'}];
 function typesHTML() {
   return `<div class="ptypes">${PTYPES.map((t, i) => `<article class="ptype"><div class="ptimg${t.fit ? ' fit' : ''}">${t.img ? `<img src="${srcOf(t.img)}" alt="${t.name} 포장 예시">` : '<span>사진 준비 중</span>'}<span class="ptno">0${i + 1}</span></div>
      <div class="ptbody"><span class="en">${t.en}</span><h2>${t.name}</h2><div class="ptflow">${t.flow.split(' → ').map(x => `<span>${x}</span>`).join('<i aria-hidden="true"></i>')}</div><p>${t.copy}</p><p class="ptc">${t.check}</p>
