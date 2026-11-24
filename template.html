@@ -106,7 +106,7 @@ body.inb .srch input{border-color:transparent}body.inb .pbtn{display:inline-flex
 .cap .t{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.cap .m{color:var(--mute)}
 .kind{flex:none;display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 11px;border-radius:3px;font-size:13px;font-weight:700;white-space:nowrap}
 .kind{border:1px solid #d5d8de;background:#fff;color:var(--ink);font-weight:600}.k-ref,.k-dia{color:var(--sub)}
-.shot{flex:none;height:280px;background:#f4f5f7;display:flex;align-items:center;justify-content:center;overflow:hidden;border:0;padding:0;cursor:zoom-in}
+.shot{position:relative;flex:none;height:280px;background:#f4f5f7;display:flex;align-items:center;justify-content:center;overflow:hidden;border:0;padding:0;cursor:zoom-in}
 .shot img{max-width:100%;max-height:100%;object-fit:contain;transition:transform .5s ease}.shot:hover img{transform:scale(1.03)}
 .empty{flex:none;height:280px;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:20px;border:1px dashed #c5c9d0;background:#fafafa}
 .empty b{font-size:15px}.empty span{font-size:14px;color:var(--sub)}
@@ -381,6 +381,9 @@ body.inb .srch input{border-color:transparent}body.inb .pbtn{display:inline-flex
 .slide header{display:flex;align-items:center;gap:10px}.slide header .en{font-size:20px;color:var(--navy);letter-spacing:0}.slide header small{font-size:12px;color:var(--mute)}
 .slide h3{margin:0;font-size:19px;line-height:1.45;font-weight:700;letter-spacing:-.3px}
 .slide>p{margin:0;font-size:14px;line-height:1.65;color:var(--sub)}.slide .clink{align-self:flex-start}
+.mk{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.35);z-index:4;pointer-events:none}
+.mk svg{width:100%;height:100%}.mk-ok{background:#1f8a4c}.mk-bad{background:#d0021b}
+.mkw{position:relative}.slide.big .mk{width:54px;height:54px;right:16px;top:16px}
 .pair2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pair2 figure{margin:0;display:flex;flex-direction:column;gap:8px}
 .pair2 figcaption{align-self:flex-start;font-size:12px;font-weight:700;padding:2px 10px;border:1px solid var(--line)}.pair2 .g{color:var(--navy)}.pair2 .r{color:#fff;background:#d0021b;border-color:#d0021b}
 .pair2 .m3,.pair2 .sph{height:250px}.sph{background:#f4f5f7;display:flex;align-items:center;justify-content:center;overflow:hidden}.sph img{max-width:100%;max-height:100%;object-fit:contain}.sph.none span{font-size:13px;color:var(--mute)}
@@ -596,9 +599,12 @@ function renderChrome() {
 }
 const narrow = () => matchMedia('(max-width:1100px)').matches;
 let S = {view: 'home', sel: null, mi: 0, more: false, mode: '3d', scn: 'normal', pi: {ok: 0, bad: 0}, lbPair: false};
-try { S.flt = localStorage.getItem('k2g-flt') || 'all'; } catch (e) { S.flt = 'all'; }
+try { S.flt = localStorage.getItem('k2g-flt2') || 'pair'; } catch (e) { S.flt = 'pair'; }  // 기본: 정상·불량 나란히
 const GN = {ok: '정상', bad: '불량'};
 const counts = md => ({all: md.length, ok: md.filter(m => m[3] === 'ok').length, bad: md.filter(m => m[3] === 'bad').length});
+/* 정상 = 초록 O, 불량 = 빨간 X 표시 (사진 위 오른쪽 위) */
+const MARK = g => g === 'ok' ? '<i class="mk mk-ok" aria-label="정상"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="11" fill="none" stroke="#fff" stroke-width="4.5"/></svg></i>'
+  : g === 'bad' ? '<i class="mk mk-bad" aria-label="불량"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 12l16 16M28 12L12 28" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></svg></i>' : '';
 function effFlt(md) { const c = counts(md); const f = S.flt; if (f === 'pair') return c.ok && c.bad ? 'pair' : 'all'; return f !== 'all' && !c[f] ? 'all' : f; }
 const listOf = (md, f) => f === 'all' ? md : md.filter(m => m[3] === f);
 
@@ -646,7 +652,7 @@ function slideInner(id, k, big) {
   const x = IT[id], m = m3Of(x), pg = pageOfItem(id);
   const bad = m && m.scns ? SCN_NOTE[m.scns[1]] : (x.why ? '이유: ' + x.why : x.exc);
   return `<header><span class="en">${String(k).padStart(2, '0')}</span>${tag(x.tag)}${x.rid ? `<small>${esc(x.rid)}</small>` : ''}${big ? '' : '<span class="zoomhint" aria-hidden="true">크게 보기</span>'}</header><h3>${esc(x.text)}</h3>
-    <div class="pair2"><figure><figcaption class="g">정상</figcaption>${staticVisual(x, 'ok')}</figure><figure><figcaption class="r">불량</figcaption>${staticVisual(x, 'bad')}</figure></div>
+    <div class="pair2"><figure><figcaption class="g">정상</figcaption><div class="mkw">${staticVisual(x, 'ok')}${MARK('ok')}</div></figure><figure><figcaption class="r">불량</figcaption><div class="mkw">${staticVisual(x, 'bad')}${MARK('bad')}</div></figure></div>
     ${bad ? `<p>${esc(bad)}</p>` : ''}${pg ? `<button type="button" class="clink" data-go="${pg}" data-sel="${id}">기준 자세히 보기 →</button>` : ''}`;
 }
 function slidesHTML(b) {
@@ -980,7 +986,7 @@ function renderPanel() {
     media = modeBar + modelHTML(m3);
   } else if (f === 'pair') {
     const L = g => listOf(all, g), at = g => Math.min(S.pi[g], L(g).length - 1);
-    const half = g => { const m = L(g)[at(g)]; return `<button class="half" type="button" data-pz="${g}" aria-label="${GN[g]} 사진 크게 보기"><img src="${m[1]}" alt="${esc(m[2])}"></button>`; };
+    const half = g => { const m = L(g)[at(g)]; return `<button class="half" type="button" data-pz="${g}" aria-label="${GN[g]} 사진 크게 보기"><img src="${m[1]}" alt="${esc(m[2])}">${MARK(g)}</button>`; };
     const head = g => `<div><span><b>${GN[g]}</b>${at(g) + 1} / ${L(g).length}</span>${L(g).length > 1 ? `<span class="arr"><span role="button" tabindex="0" data-pn="${g}:-1" aria-label="이전 ${GN[g]} 사진">‹</span><span role="button" tabindex="0" data-pn="${g}:1" aria-label="다음 ${GN[g]} 사진">›</span></span>` : ''}</div>`;
     const capOf = g => esc(L(g)[at(g)][2]);
     media = `${modeBar}<div class="phead">${head('ok')}${head('bad')}</div>${seg}<div class="pair">${half('ok')}${half('bad')}</div>
@@ -988,7 +994,7 @@ function renderPanel() {
   } else if (c) {
     const k = KIND[c[0]] || KIND.ref;
     media = `<div class="cap"><span class="kind ${k[0]}">${k[1]}</span><span class="t">${esc(c[2])} <span class="m">· ${mi + 1} / ${md.length}</span></span></div>${modeBar}${seg}
-      <button class="shot" type="button" id="shot" aria-label="사진 크게 보기"><img src="${c[1]}" alt="${esc(c[2])}"></button>
+      <button class="shot" type="button" id="shot" aria-label="사진 크게 보기"><img src="${c[1]}" alt="${esc(c[2])}">${MARK(c[3])}</button>
       <div class="thr"><div class="ths">${md.map((m, i) => `<button class="th${i === mi ? ' on' : ''}" type="button" data-mi="${i}" aria-label="${esc(m[2])}"><img src="${m[1]}" alt=""></button>`).join('')}</div>
       <button class="zoom" type="button" id="zoomBtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="6"/><path d="m20 20-4.5-4.5M11 8v6M8 11h6"/></svg>크게 보기</button></div>`;
   } else {
@@ -1075,7 +1081,7 @@ document.addEventListener('click', e => {
   if (t.dataset.flip) { bagY = t.dataset.flip === 'back' ? 180 : 0; const c = $('#carton'); if (c) c.style.transform = `rotateX(-6deg) rotateY(${bagY}deg)`; return; }
   if (t.dataset.kg) { kg = +t.dataset.kg; renderPanel(); return; }
   if (t.dataset.ang) { angle = ANG[t.dataset.ang].slice(); const c = $('#carton'); if (c) c.style.transform = `rotateX(${angle[0]}deg) rotateY(${angle[1]}deg)`; return; }
-  if (t.dataset.flt) { S.flt = t.dataset.flt; S.mi = 0; try { localStorage.setItem('k2g-flt', S.flt); } catch (err) {} renderPanel(); return; }
+  if (t.dataset.flt) { S.flt = t.dataset.flt; S.mi = 0; try { localStorage.setItem('k2g-flt2', S.flt); } catch (err) {} renderPanel(); return; }
   if (t.dataset.pz) { lbShow(); return; }
   if (t.dataset.hit) { pick(+t.dataset.hit); return; }
   switch (t.id) {
