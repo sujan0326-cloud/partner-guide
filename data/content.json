@@ -2491,10 +2491,17 @@
    "act": "",
    "table": [],
    "source": "물류센터 입고파트 안내 (2026-11-24)",
-   "nophoto": true,
+   "nophoto": false,
    "todo": "",
-   "media": [],
-   "topic": "팩·박스 스티커·라벨"
+   "media": [
+    [
+     "불량",
+     "box_info_blank.jpg",
+     "오른쪽 박스 · 좁은 면 내품 정보 칸이 비어 있음"
+    ]
+   ],
+   "topic": "팩·박스 스티커·라벨",
+   "nodraw": true
   },
   "c1h": {
    "text": "햇 윗면에 88 바코드 부착 · 벙거지는 로고와 겹치지 않게",
