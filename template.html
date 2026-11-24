@@ -694,7 +694,7 @@ async function loadSheet() {
     it.forEach(r => { const id = r['항목ID'], ref = r['같은 내용 가져오기']; if (!id || ref === id) return; /* 같은 항목ID = 다른 페이지에도 표시 */
       items[id] = ref ? {ref} :
       {text: r['문장'], topic: r['주제'], tag: r['표시'], rid: r['규칙번호'], why: r['이유'], exc: r['예외·주의'], act: r['확인·대응'], source: r['근거'],
-       table: (r['표'] || '').split('\n').filter(Boolean).map(l => l.split('|').map(c => c.trim())), nophoto: /^y/i.test(r['사진 없이 글로 충분']), todo: r['필요한 사진'], media: []}; });
+       table: (r['표'] || '').split('\n').filter(Boolean).map(l => l.split('|').map(c => c.trim())), nophoto: /^y/i.test(r['사진 없이 글로 충분']), nodraw: /^y/i.test(r['설명 그림 안 씀'] || ''), todo: r['필요한 사진'], media: []}; });
     const pseen = new Set();
     ph.sort(by('순서')).forEach(r => { const x = items[r['항목ID']], k = r['항목ID'] + '|' + r['파일']; if (pseen.has(k)) return; pseen.add(k); if (x && x.media) x.media.push([r['종류'], r['파일'], r['설명']]); });
     const M = {synonyms: sy.length ? sy.map(r => r['같은 뜻 낱말']).filter(Boolean) : BASE.synonyms,
@@ -790,7 +790,7 @@ function slideInner(id, k, big) {
   const x = IT[id], m = m3Of(x), pg = pageOfItem(id);
   const bad = m && m.scns ? SCN_NOTE[m.scns[1]] : (x.why ? '이유: ' + x.why : x.exc);
   return `<header><span class="en">${String(k).padStart(2, '0')}</span>${tag(x.tag)}${x.rid ? `<small>${esc(x.rid)}</small>` : ''}${big ? '' : '<span class="zoomhint" aria-hidden="true">크게 보기</span>'}</header><h3>${esc(x.text)}</h3>
-    ${(() => { const bads = x.media.filter(q => q[3] === 'bad'); return !x.media.some(q => q[3] === 'ok') && bads.length >= 2; })() ? `<div class="pair2">${x.media.filter(q => q[3] === 'bad').slice(0, 2).map(q => `<figure><figcaption class="r">불량</figcaption><div class="mkw"><div class="sph"><img src="${q[1]}" alt="${esc(q[2])}"></div>${MARK('bad')}</div><figcaption class="sc">${esc(q[2])}</figcaption></figure>`).join('')}</div>` : `<div class="pair2"><figure><figcaption class="g">정상</figcaption><div class="mkw">${staticVisual(x, 'ok')}${MARK('ok')}</div></figure><figure><figcaption class="r">불량</figcaption><div class="mkw">${staticVisual(x, 'bad')}${MARK('bad')}</div></figure></div>`}
+    ${(() => { const bads = x.media.filter(q => q[3] === 'bad'); return !x.media.some(q => q[3] === 'ok') && (bads.length >= 2 || (x.nodraw && bads.length)); })() ? `<div class="pair2">${x.media.filter(q => q[3] === 'bad').slice(0, 2).map(q => `<figure><figcaption class="r">불량</figcaption><div class="mkw"><div class="sph"><img src="${q[1]}" alt="${esc(q[2])}"></div>${MARK('bad')}</div><figcaption class="sc">${esc(q[2])}</figcaption></figure>`).join('')}</div>` : `<div class="pair2"><figure><figcaption class="g">정상</figcaption><div class="mkw">${staticVisual(x, 'ok')}${MARK('ok')}</div></figure><figure><figcaption class="r">불량</figcaption><div class="mkw">${staticVisual(x, 'bad')}${MARK('bad')}</div></figure></div>`}
     ${bad ? `<p>${esc(bad)}</p>` : ''}${pg ? `<button type="button" class="clink" data-go="${pg}" data-sel="${id}">기준 자세히 보기 →</button>` : ''}`;
 }
 function slidesHTML(b) {
@@ -887,7 +887,7 @@ function docVisuals(x) {
   let shown = ok.length && bad.length ? [ok[0], bad[0]] : (ok.length + bad.length) >= 2 ? [...ok, ...bad].slice(0, 2) : list.slice(0, 2);
   const fig = q => { const i = list.indexOf(q); return `<figure class="dfig"><button type="button" class="dph" data-zid="${x.id}" data-zi="${i}" aria-label="${esc(q[2])} 크게 보기"><img src="${q[1]}" alt="${esc(q[2])}" loading="lazy">${MARK(q[3])}</button><figcaption><b class="${q[3] === 'ok' ? 'g' : q[3] === 'bad' ? 'r' : ''}">${q[3] === 'ok' ? '정상' : q[3] === 'bad' ? '불량' : esc(q[0])}</b>${esc(q[2])}</figcaption></figure>`; };
   const model = kind => `<figure class="dfig"><div class="dmodel">${staticVisual(x, kind)}${MARK(kind)}</div><figcaption><b class="${kind === 'ok' ? 'g' : 'r'}">${kind === 'ok' ? '정상' : '불량'}</b>설명용 그림</figcaption></figure>`;
-  const hasModel = !!m3Of(x) || OK_MODEL[x.id];
+  const hasModel = !x.nodraw && (!!m3Of(x) || OK_MODEL[x.id]);  // nodraw: 사진 없는 쪽에 설명 그림을 채우지 않음
   let figs;
   if (shown.length === 2) figs = shown.map(fig).join('');
   else if (shown.length === 1) figs = (hasModel && shown[0][3] === 'bad' ? model('ok') : '') + fig(shown[0]) + (hasModel && shown[0][3] === 'ok' ? model('bad') : '');
