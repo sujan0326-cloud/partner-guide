@@ -724,7 +724,8 @@ try { S.flt = localStorage.getItem('k2g-flt2') || 'pair'; } catch (e) { S.flt = 
 const GN = {ok: '정상', bad: '불량'};
 const counts = md => ({all: md.length, ok: md.filter(m => m[3] === 'ok').length, bad: md.filter(m => m[3] === 'bad').length});
 /* 정상 = 초록 O, 불량 = 빨간 X 표시 (사진 위 오른쪽 위) */
-const MARK = g => g === 'ok' ? '<i class="mk mk-ok" aria-label="정상"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="11" fill="none" stroke="#fff" stroke-width="4.5"/></svg></i>'
+const MARK = g => '';  // O·X 원형 표시는 사용하지 않음 (정상·불량은 글자 라벨로 표시)
+const MARK_OLD = g => g === 'ok' ? '<i class="mk mk-ok" aria-label="정상"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="11" fill="none" stroke="#fff" stroke-width="4.5"/></svg></i>'
   : g === 'bad' ? '<i class="mk mk-bad" aria-label="불량"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M12 12l16 16M28 12L12 28" stroke="#fff" stroke-width="4.5" stroke-linecap="round"/></svg></i>' : '';
 function effFlt(md) { const c = counts(md); const f = S.flt; if (f === 'pair') return c.ok && c.bad ? 'pair' : 'all'; return f !== 'all' && !c[f] ? 'all' : f; }
 const listOf = (md, f) => f === 'all' ? md : md.filter(m => m[3] === f);
