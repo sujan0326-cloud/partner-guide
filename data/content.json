@@ -281,6 +281,7 @@
      "t": "모자 바코드",
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><path d=\"M60 110 C60 60 180 60 180 110 Z\" fill=\"#c9ced2\" stroke=\"#8f9aa0\" stroke-width=\"2\"></path><path d=\"M60 110 C90 126 200 126 222 108 L180 110 Z\" fill=\"#b2b9be\" stroke=\"#8f9aa0\" stroke-width=\"2\"></path><rect x=\"132\" y=\"84\" width=\"32\" height=\"18\" fill=\"#fff\" stroke=\"#8d989c\"></rect><path d=\"M136 94h24\" stroke=\"#222\" stroke-width=\"6\" stroke-dasharray=\"1.2 1.2\"></path><ellipse cx=\"148\" cy=\"93\" rx=\"24\" ry=\"17\" fill=\"none\" stroke=\"#345443\" stroke-width=\"3\"></ellipse><text x=\"120\" y=\"40\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#345443\">88 바코드 가리지 않게</text></svg>",
      "items": [
+      "c2c",
       "c2a",
       "c2b"
      ]
@@ -2520,6 +2521,21 @@
     ]
    ],
    "topic": "가격택·로고 위치"
+  },
+  "c2c": {
+   "text": "모자 폴리백 접착면은 윗면 쪽 (바닥 쪽 금지)",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "모자도 폴리백 접착면이 제품 바닥 쪽으로 가면 안 됩니다. 접착면은 반드시 위쪽, 88 바코드를 읽는 면과 같은 쪽에 오게 포장합니다.",
+   "act": "",
+   "table": [],
+   "source": "Ember (2026-11-25)",
+   "nophoto": true,
+   "todo": "",
+   "nodraw": true,
+   "media": [],
+   "topic": "폴리백 포장 방법"
   }
  },
  "centers": [
