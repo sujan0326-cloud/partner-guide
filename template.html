@@ -980,7 +980,8 @@ function renderPanel() {
   const segBtn = (k, label, n, dis) => `<button type="button" data-flt="${k}" class="${f === k ? 'on' : ''}" ${dis ? 'disabled' : ''} aria-pressed="${f === k}">${label}${n === null ? '' : `<b>${n}</b>`}</button>`;
   const seg = all.length ? `<div class="seg" role="group" aria-label="사진 골라 보기">${segBtn('all', '전체', cn.all, false)}${segBtn('ok', '정상', cn.ok, !cn.ok)}${segBtn('bad', '불량', cn.bad, !cn.bad)}${segBtn('pair', '나란히', null, !(cn.ok && cn.bad))}</div>` : '';
   let media;
-  const m3 = m3Of(x), hasPair = all.some(q => q[3] === 'ok') && all.some(q => q[3] === 'bad'), use3d = m3 && (S.mode === '3d' ? !hasPair || S.force3d : false || !all.length);
+  const m3 = m3Of(x), hasPair = all.some(q => q[3] === 'ok' || q[3] === 'bad'),  // 실제 정상/불량 사진이 하나라도 있으면 사진을 먼저 보여줌
+    use3d = m3 && (S.mode === '3d' ? !hasPair || S.force3d : false || !all.length);
   const modeBar = m3 && all.length ? `<div class="mtog" role="group" aria-label="보기 방식"><button type="button" data-mode="3d" class="${use3d ? 'on' : ''}">돌려보기</button><button type="button" data-mode="photo" class="${use3d ? '' : 'on'}">실제 사진 ${all.length}</button></div>` : '';
   if (use3d) {
     media = modeBar + modelHTML(m3);
