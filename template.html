@@ -477,14 +477,14 @@ body:not(.inb) #gnb{visibility:hidden}
 .bmf{display:flex;gap:12px;padding:0 32px 32px;flex-wrap:wrap}
 /* 전체 규칙 */
 .arh{margin-bottom:28px}.arh .en{color:var(--navy2)}.arh h2{margin:8px 0 8px;font-size:clamp(28px,2.6vw,38px);letter-spacing:-1px}.arh p{margin:0 0 18px;color:var(--sub)}
-.arbar{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.arcs{margin:0}
+.arbar{display:flex;gap:16px;align-items:center;flex-wrap:wrap}.arcs{margin:16px 0 0}.arcs button:not(.tlink){height:38px;padding:0 16px;font-size:13px}.arpg{font-size:12px;color:var(--mute);font-weight:400;white-space:nowrap;margin-left:auto;padding-left:12px}.artx b{min-width:0}
 .arq{display:flex;align-items:center;gap:12px;width:min(460px,100%);height:50px;padding:0 20px;background:#fff;border:1px solid var(--line);border-radius:999px}.arq input{flex:1;border:0;outline:0;font:inherit;font-size:15px;background:none}
 .arq:focus-within{border-color:var(--navy);box-shadow:0 0 0 4px rgba(22,32,54,.08)}.arh small{display:block;margin-top:12px;color:var(--mute)}
 .arw{display:grid;grid-template-columns:220px minmax(0,1fr);gap:clamp(20px,2.6vw,40px);align-items:start}
 .toc{position:sticky;top:96px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:18px 12px}.toc>.en{display:block;color:var(--navy2);margin:0 10px 10px}
 .toc button{width:100%;display:flex;justify-content:space-between;align-items:center;border:0;background:none;border-radius:10px;padding:9px 10px;font-size:14px;color:var(--ink);text-align:left}.toc button:hover{background:#f3f5f9}.toc button b{font:600 12px var(--en);color:var(--mute)}
 .arg{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 26px 10px;margin-bottom:20px}
-.arg h3{margin:0 0 6px;font-size:18px;display:flex;align-items:baseline;gap:10px}.arg h3 span{font-size:12px;font-weight:600;color:var(--mute)}.arg h3 em{font:600 12px var(--en);color:var(--mute);font-style:normal;margin-left:auto}
+.arg h3{margin:0 0 6px;font-size:18px;display:flex;align-items:baseline;gap:10px}.arg h3 span{font:600 12px var(--en);color:var(--navy2)}.arg h3 em{font:600 12px var(--en);color:var(--mute);font-style:normal;margin-left:auto}
 .arl{list-style:none;margin:0;padding:0}.arl li{border-top:1px solid #e3e6ec}.arl li:first-child{border-top:0}
 .rlrow{width:100%;display:grid;grid-template-columns:34px minmax(0,1fr) 46px 18px;gap:12px;align-items:center;border:0;background:none;padding:15px 4px;text-align:left;font-size:15px;color:var(--ink)}
 .rlrow:hover b{color:var(--navy)}.arno{font:600 12px var(--en);color:var(--mute)}.artx{display:flex;align-items:center;gap:10px;min-width:0}.arpc svg{width:13px;height:13px}.rlrow b{font-weight:600;line-height:1.45}.arpc{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--mute);justify-content:flex-end}
@@ -653,7 +653,7 @@ const BASE = __MODEL__;
 const IMGF = __IMGF__;
 const SHEET_ID = '__SHEET_ID__';
 const RED = ['입고 거부', '입고 불가', '반송'];
-let B = [], IT = {}, byId = {}, CATS = [], CENTERS = [], INDEX = [];
+let B = [], IT = {}, byId = {}, CATS = [], CENTERS = [], INDEX = [], TOPICS = [];
 const srcOf = f => IMGF[f] || (f ? 'img/' + f : '');
 const kindKey = k => /^정상/.test(k) ? 'ok' : /^불량/.test(k) ? 'bad' : /^설명 그림/.test(k) ? 'dia' : 'ref';
 const grpOf = k => /정상/.test(k) ? 'ok' : /불량/.test(k) ? 'bad' : 'ref';
@@ -666,6 +666,7 @@ function build(M) {
   byId = Object.fromEntries(B.map(b => [b.id, b]));
   CATS = M.cats.map(c => Object.assign({}, c, {pages: B.filter(b => b.cat === c.name)})).filter(c => c.pages.length);
   CENTERS = M.centers.length ? M.centers : [{id: '', name: '센터'}];
+  TOPICS = M.topics || (BASE.topics || []);
   INDEX = [];
   B.forEach(b => b.steps.forEach(s => s.items.forEach(id => { const x = IT[id]; INDEX.push({b, s, x, h: norm([x.text, x.rid, x.why, x.exc, x.act, x.todo, b.tab, s.t].join(' '))}); })));
 }
@@ -1028,23 +1029,23 @@ function allRulesList() {
   return out;
 }
 function allRulesHTML() {
-  const L = allRulesList(), q = ARQ.trim().toLowerCase();
-  const hit = r => (!ARC || r.p.cat === ARC) && (!q || [r.x.text, r.x.why, r.x.exc, r.x.act, r.p.tab, r.st.t].join(' ').toLowerCase().includes(q));
-  const groups = []; L.forEach(r => { let g = groups.find(g => g.p === r.p); if (!g) groups.push(g = {p: r.p, rows: []}); g.rows.push(r); });
-  const cats = [...new Set(L.map(r => r.p.cat))];
+  const L = allRulesList(), q = ARQ.trim().toLowerCase(), tp = r => r.x.topic || '기타';
+  const hit = r => (!ARC || tp(r) === ARC) && (!q || [r.x.text, r.x.why, r.x.exc, r.x.act, r.p.tab, r.st.t, tp(r)].join(' ').toLowerCase().includes(q));
+  const order = [...TOPICS, ...new Set(L.map(tp).filter(t => !TOPICS.includes(t)))];
+  const groups = order.map((t, k) => ({t, k, rows: L.filter(r => tp(r) === t)})).filter(g => g.rows.length);
   let n = 0;
-  const toc = groups.map(g => { const c = g.rows.filter(hit).length; return c ? `<button type="button" data-jump="arg-${g.p.id}"><span>${esc(g.p.tab)}</span><b>${c}</b></button>` : ''; }).join('');
+  const toc = groups.map(g => { const c = g.rows.filter(hit).length; return c ? `<button type="button" data-jump="arg-${g.k}"><span>${esc(g.t)}</span><b>${c}</b></button>` : ''; }).join('');
   const body = groups.map(g => { const rows = g.rows.filter(hit); if (!rows.length) return '';
-    return `<section class="arg" id="arg-${g.p.id}"><h3><span>${esc(g.p.cat)}</span>${esc(g.p.tab)}<em>${rows.length}</em></h3><ul class="arl">${rows.map(r => { n++; const open = ARO === r.id, x = r.x;
+    return `<section class="arg" id="arg-${g.k}"><h3><span>${String(g.k + 1).padStart(2, '0')}</span>${esc(g.t)}<em>${rows.length}</em></h3><ul class="arl">${rows.map(r => { n++; const open = ARO === r.id, x = r.x;
       const pics = x.media.slice(0, 4).map((m, k) => `<button type="button" class="art" data-zid="${r.id}" data-zi="${k}" aria-label="${esc(m[2])} 크게 보기"><img src="${m[1]}" alt="" loading="lazy"><span class="${m[3] === 'ok' ? 'g' : m[3] === 'bad' ? 'r' : ''}">${m[3] === 'ok' ? '정상' : m[3] === 'bad' ? '불량' : '참고'}</span></button>`).join('');
-      return `<li class="${open ? 'on' : ''}"><button type="button" class="rlrow" data-aro="${r.id}" aria-expanded="${open}"><span class="arno">${String(n).padStart(2, '0')}</span><span class="artx">${x.tag ? tag(x.tag) : ''}<b>${esc(x.text)}</b></span><span class="arpc">${x.media.length ? CAM + x.media.length : ''}</span><i class="arch" aria-hidden="true"></i></button>
+      return `<li class="${open ? 'on' : ''}"><button type="button" class="rlrow" data-aro="${r.id}" aria-expanded="${open}"><span class="arno">${String(n).padStart(2, '0')}</span><span class="artx">${x.tag ? tag(x.tag) : ''}<b>${esc(x.text)}</b><small class="arpg">${esc(r.p.tab)}</small></span><span class="arpc">${x.media.length ? CAM + x.media.length : ''}</span><i class="arch" aria-hidden="true"></i></button>
        ${open ? `<div class="ard"><div class="ardt">${x.why ? `<p><strong>이유</strong>${esc(x.why)}</p>` : ''}${x.exc ? `<p><strong>안내</strong>${esc(x.exc)}</p>` : ''}${x.act ? `<p><strong>대응</strong>${esc(x.act)}</p>` : ''}
          <button type="button" class="tlink" data-go="${r.p.id}" data-rule="${r.id}">${esc(r.p.tab)} 페이지에서 보기 <i aria-hidden="true">→</i></button></div>${pics ? `<div class="arts">${pics}</div>` : ''}</div>` : ''}</li>`; }).join('')}</ul></section>`; }).join('');
-  return `<div class="arh"><span class="en">ALL RULES</span><h2>전체 규칙</h2><p>규칙을 누르면 이 자리에서 바로 펼쳐 볼 수 있습니다.</p>
-    <div class="arbar"><label class="arq"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="arq" type="search" placeholder="예: 가격택, 테이프, 20kg, 스티커" value="${esc(ARQ)}"></label>
-    <div class="chips arcs"><button type="button" data-arc="" class="${!ARC ? 'on' : ''}">전체</button>${cats.map(c => `<button type="button" data-arc="${esc(c)}" class="${ARC === c ? 'on' : ''}">${esc(c)}</button>`).join('')}</div></div>
+  return `<div class="arh"><span class="en">ALL RULES</span><h2>전체 규칙</h2><p>주제별로 모았습니다. 규칙을 누르면 이 자리에서 바로 펼쳐 볼 수 있습니다.</p>
+    <div class="arbar"><label class="arq"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="arq" type="search" placeholder="예: 가격택, 테이프, 20kg, 스티커" value="${esc(ARQ)}"></label></div>
+    <div class="chips arcs"><button type="button" data-arc="" class="${!ARC ? 'on' : ''}">전체</button>${groups.map(g => `<button type="button" data-arc="${esc(g.t)}" class="${ARC === g.t ? 'on' : ''}">${esc(g.t)}</button>`).join('')}</div>
     <small id="arn">${q || ARC ? `결과 ${n}개` : `전체 ${L.length}개 규칙`}</small></div>
-   <div class="arw"><aside class="toc"><span class="en">CONTENTS</span>${toc}</aside><div class="arm">${body || '<p class="arempty">찾는 규칙이 없습니다. 다른 표현으로 검색해 보세요.</p>'}</div></div>`;
+   <div class="arw"><aside class="toc"><span class="en">TOPICS</span>${toc}</aside><div class="arm">${body || '<p class="arempty">찾는 규칙이 없습니다. 다른 표현으로 검색해 보세요.</p>'}</div></div>`;
 }
 let ARC = '', ARO = '';
 document.addEventListener('click', e => {
