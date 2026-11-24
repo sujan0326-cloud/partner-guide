@@ -490,6 +490,11 @@ body:not(.inb) #gnb{visibility:hidden}
 .ar>i{position:absolute;right:20px;top:20px;font-style:normal;color:var(--navy)}.arp{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--mute)}.arempty{color:var(--sub)}
 @media (max-width:1100px){.icards,.bcards{grid-template-columns:1fr 1fr}.lblw{grid-template-columns:1fr}.arw{grid-template-columns:1fr}.toc{position:static;max-height:none}.arc{grid-template-columns:1fr}.bmb{grid-template-columns:1fr}}
 @media (max-width:700px){.icards,.bcards{grid-template-columns:1fr}.stkv .m3.big{height:280px}.stkv .m3.big .carton.pc{scale:1.15}.pbtn.arb{display:none}}
+.drow{--rowh:clamp(240px,17vw,300px);min-height:calc(var(--rowh) + 148px);box-sizing:border-box;padding:28px 0!important;border-bottom:1px solid #dfe3ea!important}
+.drow:last-child{border-bottom:0!important}
+.drow .dph,.drow .dmodel{aspect-ratio:auto;height:var(--rowh)}
+.drow .dfig figcaption{height:40px;overflow:hidden}.drow .dvis{grid-template-rows:auto 30px}.drow .dmore{align-self:end;height:30px}.drow .dtbl th,.drow .dtbl td{padding:3px 10px}.drow .dtbl{margin:4px 0 8px;font-size:12.5px}.dtbl2{display:flex;gap:10px;align-items:flex-start;flex-wrap:wrap}
+@media (max-width:900px){.drow{min-height:0}.drow .dph,.drow .dmodel{height:auto;aspect-ratio:4/3}.drow .dfig figcaption{height:auto}}
 .mk{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.35);z-index:4;pointer-events:none}
 .mk svg{width:100%;height:100%}.mk-ok{background:#1f8a4c}.mk-bad{background:#d0021b}
 .mkw{position:relative}.pair2 .sc{font-size:13px;color:var(--sub);font-weight:400}.slide.big .mk{width:54px;height:54px;right:16px;top:16px}
@@ -881,7 +886,8 @@ function docHTML(b) {
     const x = IT[id]; k++; const vis = docVisuals(x);
     return `<article class="drow${vis ? '' : ' novis'}" id="r-${id}"><div class="dtxt"><div class="dno">${String(k).padStart(2, '0')}${x.tag ? tag(x.tag) : ''}</div><h4>${esc(x.text)}</h4>
       ${x.why ? `<p class="dwhy">${esc(x.why)}</p>` : ''}${x.exc ? `<p>${esc(x.exc)}</p>` : ''}${x.act ? `<p class="dact">${esc(x.act)}</p>` : ''}
-      ${x.table && x.table.length ? `<table class="dtbl"><tr>${x.table[0].map(h => `<th>${esc(h)}</th>`).join('')}</tr>${x.table.slice(1).map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</table>` : ''}
+      ${x.table && x.table.length ? (() => { const hd = `<tr>${x.table[0].map(h => `<th>${esc(h)}</th>`).join('')}</tr>`, rows = x.table.slice(1), tb = rs => `<table class="dtbl">${hd}${rs.map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</table>`;
+        return rows.length > 5 ? `<div class="dtbl2">${tb(rows.slice(0, Math.ceil(rows.length / 2)))}${tb(rows.slice(Math.ceil(rows.length / 2)))}</div>` : tb(rows); })() : ''}
       ${m3Of(x) ? `<button type="button" class="d3d" data-open3d="${id}">돌려보기로 보기 →</button>` : ''}</div>${vis}</article>`;
    }).join('')}</section>`).join('');
 }
