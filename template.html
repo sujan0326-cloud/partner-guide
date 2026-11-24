@@ -684,16 +684,18 @@ async function loadSheet() {
   if (!SHEET_ID) return;
   const tab = n => fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&sheet=${encodeURIComponent(n)}`).then(r => { if (!r.ok) throw 0; return r.text(); }).then(parseCSV);
   try {
-    const [cm, pg, st, it, ph, ce] = await Promise.all(['큰 메뉴', '페이지', '단계', '항목', '사진', '센터'].map(tab));
+    const [cm, pg, st, it, ph, ce, tp] = await Promise.all([...['큰 메뉴', '페이지', '단계', '항목', '사진', '센터'].map(tab), tab('주제').catch(() => [])]);
     if (!pg.length || !it.length) return;
     const by = k => (a, b) => (+a[k] || 0) - (+b[k] || 0);
     const art = (pid, n) => { const p = BASE.pages.find(x => x.id === pid); const s = p && p.steps.find(x => x.n === n); return s ? s.art : ''; };
     const items = {};
-    it.forEach(r => { const id = r['항목ID']; if (!id) return; items[id] = r['같은 내용 가져오기'] ? {ref: r['같은 내용 가져오기']} :
-      {text: r['문장'], tag: r['표시'], rid: r['규칙번호'], why: r['이유'], exc: r['예외·주의'], act: r['확인·대응'], source: r['근거'],
+    it.forEach(r => { const id = r['항목ID'], ref = r['같은 내용 가져오기']; if (!id || ref === id) return; /* 같은 항목ID = 다른 페이지에도 표시 */
+      items[id] = ref ? {ref} :
+      {text: r['문장'], topic: r['주제'], tag: r['표시'], rid: r['규칙번호'], why: r['이유'], exc: r['예외·주의'], act: r['확인·대응'], source: r['근거'],
        table: (r['표'] || '').split('\n').filter(Boolean).map(l => l.split('|').map(c => c.trim())), nophoto: /^y/i.test(r['사진 없이 글로 충분']), todo: r['필요한 사진'], media: []}; });
-    ph.sort(by('순서')).forEach(r => { const x = items[r['항목ID']]; if (x && x.media) x.media.push([r['종류'], r['파일'], r['설명']]); });
-    const M = {
+    const pseen = new Set();
+    ph.sort(by('순서')).forEach(r => { const x = items[r['항목ID']], k = r['항목ID'] + '|' + r['파일']; if (pseen.has(k)) return; pseen.add(k); if (x && x.media) x.media.push([r['종류'], r['파일'], r['설명']]); });
+    const M = {topics: tp.length ? tp.sort(by('순서')).map(r => r['주제']).filter(Boolean) : BASE.topics,
       cats: cm.sort(by('순서')).map(r => ({name: r['큰 메뉴'], en: r['영문 라벨'], desc: r['첫 화면 설명'], img: r['첫 화면 사진']})),
       pages: pg.sort(by('순서')).map(r => { const id = r['페이지ID'];
         return {cat: r['큰 메뉴'], sub: r['작은 메뉴'], id, title: r['페이지 제목'], desc: r['한 줄 설명'], en: r['영문 라벨'], layout: r['모양'] || '기본',
