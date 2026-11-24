@@ -628,7 +628,7 @@ function route(keepSel) {
 
 const OK_MODEL = {}; // 정상 사진이 없을 때 정상 쪽에 보여줄 설명 그림
 function staticVisual(x, kind) {
-  const m = m3Of(x);
+  const m = x.media.some(q => q[3] === kind) ? null : m3Of(x);  // 그 쪽(정상/불량) 실사진이 있으면 사진 우선, 없으면 모형
   if (m && m.type === 'scale') { const v = kind === 'ok' ? 20.0 : 22.0, ok = v <= 20;
     return `<div class="m3 scale st"><div class="sbox"><span>BOX</span></div><div class="splat"></div><div class="sdisp ${ok ? '' : 'bad'}"><b>${v.toFixed(1)}</b><small>kg</small></div></div>`; }
   if (m) { const sc = kind === 'ok' ? m.scns[0] : m.scns[1];
@@ -974,7 +974,7 @@ function renderPanel() {
   const segBtn = (k, label, n, dis) => `<button type="button" data-flt="${k}" class="${f === k ? 'on' : ''}" ${dis ? 'disabled' : ''} aria-pressed="${f === k}">${label}${n === null ? '' : `<b>${n}</b>`}</button>`;
   const seg = all.length ? `<div class="seg" role="group" aria-label="사진 골라 보기">${segBtn('all', '전체', cn.all, false)}${segBtn('ok', '정상', cn.ok, !cn.ok)}${segBtn('bad', '불량', cn.bad, !cn.bad)}${segBtn('pair', '나란히', null, !(cn.ok && cn.bad))}</div>` : '';
   let media;
-  const m3 = m3Of(x), use3d = m3 && (S.mode === '3d' || !all.length);
+  const m3 = m3Of(x), hasPair = all.some(q => q[3] === 'ok') && all.some(q => q[3] === 'bad'), use3d = m3 && (S.mode === '3d' ? !hasPair || S.force3d : false || !all.length);
   const modeBar = m3 && all.length ? `<div class="mtog" role="group" aria-label="보기 방식"><button type="button" data-mode="3d" class="${use3d ? 'on' : ''}">돌려보기</button><button type="button" data-mode="photo" class="${use3d ? '' : 'on'}">실제 사진 ${all.length}</button></div>` : '';
   if (use3d) {
     media = modeBar + modelHTML(m3);
@@ -1010,7 +1010,7 @@ function renderPanel() {
 }
 
 function select(id) {
-  S.sel = id; S.mi = 0; S.more = false; S.pi = {ok: 0, bad: 0};
+  S.force3d = false; S.sel = id; S.mi = 0; S.more = false; S.pi = {ok: 0, bad: 0};
   document.querySelectorAll('.row').forEach(r => r.classList.toggle('on', r.dataset.id === id));
   renderPanel(); if (narrow()) openSheet();
 }
@@ -1070,7 +1070,7 @@ document.addEventListener('click', e => {
   if (t.dataset.flow) { const st = byId[S.view].steps.find(x => x.n === t.dataset.flow); if (st) { select(st.items[0]); closeSheet(); const c = document.getElementById('st-' + st.n); if (c) { const y = c.getBoundingClientRect().top + scrollY - 150; window.scrollTo({top: y, behavior: 'smooth'}); c.classList.add('ping'); setTimeout(() => c.classList.remove('ping'), 900); } } return; }
   if (t.dataset.center) { cIdx = +t.dataset.center; $('#extra').innerHTML = centerHTML(); return; }
   if (t.dataset.mi) { S.mi = +t.dataset.mi; renderPanel(); return; }
-  if (t.dataset.mode) { S.mode = t.dataset.mode; renderPanel(); return; }
+  if (t.dataset.mode) { S.mode = t.dataset.mode; S.force3d = t.dataset.mode === '3d'; renderPanel(); return; }
   if (t.dataset.scn) { S.scn = t.dataset.scn; if (S.scn === 'missing') angle = ANG.B.slice(); bagY = S.scn === 'bagsame' ? 156 : -24; renderPanel(); return; }
   if (t.dataset.flip) { bagY = t.dataset.flip === 'back' ? 180 : 0; const c = $('#carton'); if (c) c.style.transform = `rotateX(-6deg) rotateY(${bagY}deg)`; return; }
   if (t.dataset.kg) { kg = +t.dataset.kg; renderPanel(); return; }
