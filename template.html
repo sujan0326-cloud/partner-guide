@@ -435,6 +435,61 @@ body:not(.inb) #gnb{visibility:hidden}
 .zx{position:absolute;right:22px;top:18px;width:48px;height:48px;border:0;background:none;color:#fff;font-size:28px}
 .zn{position:absolute;top:50%;transform:translateY(-50%);width:56px;height:56px;border:1px solid rgba(255,255,255,.35);background:rgba(255,255,255,.06);color:#fff;font-size:34px;line-height:1}.zn.p{left:2vw}.zn.n{right:2vw}
 @media (max-width:900px){.drow{grid-template-columns:minmax(0,1fr)}.dstep{padding:20px 16px 4px}.zn{top:auto;bottom:3vh;transform:none}.zv{padding:8vh 3vw 14vh}}
+/* ===== 드리블 톤: 둥근 카드·옅은 그림자 ===== */
+.dstep,.rbox,.card,.ptype,.hdc,.ccard,.rmini,.ptwide{border-radius:18px}
+.dstep,.rbox,.card{box-shadow:0 1px 2px rgba(16,24,40,.04),0 8px 24px rgba(16,24,40,.04)}
+.dph,.dmodel{border-radius:12px}.dtog,.gtabs,.chips button,.obtn,.cbtn{border-radius:999px}.dtog button:first-child,.gtabs button:first-child{border-radius:999px 0 0 999px}.dtog button:last-child,.gtabs button:last-child{border-radius:0 999px 999px 0}
+.dtog,.gtabs{overflow:hidden}.hero{border-radius:22px 22px 0 0}.hbar{border-radius:0 0 22px 22px;overflow:hidden}.hdrop{border-radius:0 0 18px 18px;margin-top:-1px}
+.drow.ping,.ar.ping{animation:ping 1.4s ease}@keyframes ping{0%,40%{background:#eef2fa}100%{background:transparent}}
+.pbtn.arb{margin-right:8px}
+/* 일러스트 카드 */
+.icards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,1.6vw,26px)}
+.icard,.bcard{display:flex;flex-direction:column;text-align:left;padding:0;border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden;transition:transform .25s,box-shadow .25s}
+.icard:hover,.bcard:hover{transform:translateY(-3px);box-shadow:0 14px 34px rgba(16,24,40,.08)}
+.iill{position:relative;display:flex;align-items:center;justify-content:center;aspect-ratio:16/9}.bsvg{width:min(78%,300px);height:auto}
+.ino{position:absolute;left:20px;top:16px;font:600 11px var(--en);letter-spacing:1.5px;color:#7d8679}.ino.r{left:auto;right:20px}
+.ibody{padding:22px 24px 20px;display:flex;flex-direction:column;gap:8px;flex:1}
+.ibody h3{margin:0;display:flex;justify-content:space-between;align-items:center;font-size:22px;letter-spacing:-.4px}.ibody h3 i{font-style:normal;font-size:18px;color:var(--navy);transition:transform .2s}
+.icard:hover h3 i{transform:translateX(4px)}.ibody p{margin:0;color:var(--sub);font-size:14px}.ibody small{color:var(--mute);font-size:13px}.ibody small em{font-style:normal;margin:0 4px}
+.ilink{margin-top:auto;padding-top:14px;border-top:1px solid var(--line2);display:flex;justify-content:space-between;font-size:13px;font-weight:600;color:var(--ink)}.ilink i{font-style:normal}
+.ifoot{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:18px 0 0;flex-wrap:wrap}.ifoot small{color:var(--mute);font-size:12px}
+.tlink{border:0;background:none;padding:0 0 4px;font-size:14px;font-weight:600;color:var(--ink);border-bottom:1px solid var(--navy2);display:inline-flex;gap:8px;align-items:center}.tlink i{font-style:normal}
+.sec2{margin-top:56px}.sech{margin-bottom:20px}.sech .en{color:var(--navy2)}.sech h2{margin:8px 0 6px;font-size:28px;letter-spacing:-.6px}.sech p{margin:0;color:var(--sub)}
+.chips{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:0 0 20px}.chips button:not(.tlink){height:44px;padding:0 20px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;color:var(--ink)}
+.chips button.on{background:var(--navy);border-color:var(--navy);color:#fff}
+.badge{align-self:flex-start;display:inline-block;padding:4px 10px;border-radius:6px;font-size:12px;font-weight:600;background:#f7f1e3;color:#8a6a2c;border:1px solid #eadcb9}
+.badge.g{background:#eaf4ee;color:#1f8a4c;border-color:#cde6d6}.badge.r{background:#fbeef0;color:#c0152a;border-color:#f1cdd2}
+.bcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,1.6vw,26px)}
+.bdim{margin:4px 0 0!important;color:var(--navy)!important;font-size:15px!important}.bdim b{font:700 clamp(24px,2vw,32px) var(--en);letter-spacing:-.5px}.bdim.big b{font-size:40px}
+.lblw{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);border:1px solid var(--line);border-radius:22px;overflow:hidden;background:#fff}
+.stkv{position:relative;background:#eef0ec;padding:56px 24px 24px;display:flex;flex-direction:column;align-items:center;gap:16px}.stkv>small{color:var(--mute);font-size:12px}
+.stkv .m3.big{width:100%;height:360px;background:transparent}.stkv .m3.big .carton.pc{scale:1.6}
+.angs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}.angs button{height:38px;padding:0 14px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:13px}.angs button:hover{border-color:var(--navy)}
+.stkt{padding:clamp(28px,3vw,48px);display:flex;flex-direction:column;gap:14px}.stkt h3{margin:4px 0 0;font-size:clamp(26px,2.2vw,36px);line-height:1.25;letter-spacing:-.8px}.stkt p{margin:0;color:var(--sub);line-height:1.7}
+.stkt ol{list-style:none;margin:8px 0;padding:0;border-top:1px solid var(--line2)}.stkt li{display:flex;gap:18px;padding:16px 0;border-bottom:1px solid var(--line2)}.stkt li i{font:600 13px var(--en);color:var(--mute);font-style:normal}
+.obtn{align-self:flex-start;height:50px;padding:0 24px;border:1px solid var(--line);background:#fff;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:10px}.obtn i{font-style:normal}.obtn:hover{border-color:var(--navy)}
+.obtn.fill{background:var(--navy);border-color:var(--navy);color:#fff}
+.bmod{position:fixed;inset:0;z-index:95;background:rgba(20,26,40,.45);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;padding:4vh 4vw}
+.bmw{width:min(1100px,100%);background:#fff;border-radius:22px;overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.25)}
+.bmw header{display:flex;justify-content:space-between;align-items:center;padding:24px 32px;border-bottom:1px solid var(--line2)}.bmw header h3{margin:0;font-size:24px}.bmx{border:0;background:none;font-size:22px;width:44px;height:44px}
+.bmb{display:grid;grid-template-columns:1fr 1fr;gap:32px;padding:32px}.bmb .iill{border-radius:14px}.bmb p{margin:10px 0 0;color:var(--sub);line-height:1.7}.bmb .mute{font-size:14px}
+.bmf{display:flex;gap:12px;padding:0 32px 32px;flex-wrap:wrap}
+/* 전체 규칙 */
+.arw{display:grid;grid-template-columns:280px minmax(0,1fr);gap:clamp(24px,3vw,48px);align-items:start}
+.toc{position:sticky;top:96px;max-height:calc(100vh - 120px);overflow:auto;background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 16px}.toc>.en{display:block;color:var(--navy2);margin:0 8px 14px}
+.tocg{margin-bottom:14px}.tocg button{width:100%;text-align:left;border:0;background:none;padding:6px 8px;font-size:14px;font-weight:700;color:var(--ink)}.tocg button b{font:700 12px var(--en);color:var(--navy2);margin-right:4px}
+.tocg a{display:block;margin-left:14px;padding:5px 8px 5px 12px;border-left:1px solid var(--line);font-size:13px;color:var(--sub);text-decoration:none;line-height:1.45}.tocg a:hover{color:var(--navy);border-left-color:var(--navy)}
+.arh{margin-bottom:28px}.arh .en{color:var(--navy2)}.arh h2{margin:10px 0 10px;font-size:clamp(30px,3vw,44px);letter-spacing:-1.2px}.arh p{margin:0 0 20px;color:var(--sub)}
+.arq{display:flex;align-items:center;gap:12px;max-width:620px;height:56px;padding:0 20px;background:#fff;border:1px solid var(--line);border-radius:999px}.arq input{flex:1;border:0;outline:0;font:inherit;font-size:16px;background:none}
+.arq:focus-within{border-color:var(--navy);box-shadow:0 0 0 4px rgba(22,32,54,.08)}.arh small{display:block;margin-top:10px;color:var(--mute)}
+.arg{margin-bottom:36px}.arg h3{margin:0 0 14px;font-size:20px;display:flex;align-items:baseline;gap:10px}.arg h3 span{font-size:13px;font-weight:600;color:var(--mute)}
+.arc{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.ar{position:relative;text-align:left;border:1px solid var(--line);border-radius:16px;background:#fff;padding:20px 48px 20px 22px;display:flex;flex-direction:column;gap:8px;transition:border-color .2s,box-shadow .2s}
+.ar:hover{border-color:var(--navy);box-shadow:0 10px 24px rgba(16,24,40,.06)}.arn{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mute);font-weight:600}
+.ar b{font-size:16px;line-height:1.45}.ar p{margin:0;font-size:13px;color:var(--sub);line-height:1.55;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ar>i{position:absolute;right:20px;top:20px;font-style:normal;color:var(--navy)}.arp{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--mute)}.arempty{color:var(--sub)}
+@media (max-width:1100px){.icards,.bcards{grid-template-columns:1fr 1fr}.lblw{grid-template-columns:1fr}.arw{grid-template-columns:1fr}.toc{position:static;max-height:none}.arc{grid-template-columns:1fr}.bmb{grid-template-columns:1fr}}
+@media (max-width:700px){.icards,.bcards{grid-template-columns:1fr}.stkv .m3.big{height:280px}.stkv .m3.big .carton.pc{scale:1.15}.pbtn.arb{display:none}}
 .mk{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.35);z-index:4;pointer-events:none}
 .mk svg{width:100%;height:100%}.mk-ok{background:#1f8a4c}.mk-bad{background:#d0021b}
 .mkw{position:relative}.pair2 .sc{font-size:13px;color:var(--sub);font-weight:400}.slide.big .mk{width:54px;height:54px;right:16px;top:16px}
@@ -548,7 +603,7 @@ body:not(.inb) #gnb{visibility:hidden}
   <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">규칙 검색</label>
   <input id="q" type="search" autocomplete="off" placeholder="규칙 검색 · 예: 가격택, 테이프">
   <div class="res" id="res" role="listbox"></div></form>
- <button class="pbtn" type="button" id="printBtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></svg>A4 인쇄</button>
+ <button class="pbtn arb" type="button" data-go="allrules"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h10"/></svg>전체 규칙</button><button class="pbtn" type="button" id="printBtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></svg>A4 인쇄</button>
 </div></header>
 
 <main id="home">
@@ -687,9 +742,10 @@ function route(keepSel) {
   if (v !== 'home') {
     const b = byId[v];
     S.sel = keepSel && stepOf(b, keepSel) ? keepSel : (b.steps[0] ? b.steps[0].items[0] : null);
-    renderBoard(); if (keepSel) { const r = document.querySelector(`.row[data-id="${keepSel}"]`); r && r.scrollIntoView({block: 'center'}); if (narrow()) openSheet(); }
+    renderBoard(); if (keepSel) { const r = document.querySelector(`.row[data-id="${keepSel}"]`); if (r) { r.scrollIntoView({block: 'center'}); if (narrow()) openSheet(); } else S.scrollRule = keepSel; }
   }
   const st = S.pendingStep; S.pendingStep = null; window.scrollTo({top: 0});
+  if (S.scrollRule) { const id = S.scrollRule; S.scrollRule = null; requestAnimationFrame(() => { const a = document.getElementById('r-' + id); if (a) { window.scrollTo({top: a.getBoundingClientRect().top + scrollY - 140}); a.classList.add('ping'); setTimeout(() => a.classList.remove('ping'), 1400); } }); }
   if (st && v !== 'home') { const b = byId[v], s0 = b.steps.find(x => x.n === st); if (s0) { select(s0.items[0]); closeSheet(); const c = document.getElementById('st-' + st); c && c.scrollIntoView({block: 'start'}); window.scrollBy(0, -150); } }
 }
 
@@ -823,7 +879,7 @@ function docHTML(b) {
   return `<div class="dtog" role="tablist" aria-label="보기 방식"><button type="button" class="on" data-vmode="doc">한눈 보기</button><button type="button" data-vmode="board">상세 보드</button></div>` +
    b.steps.map(st => `<section class="dstep" id="st-${st.n}"><header><span class="en">STEP ${st.n}</span><h3>${esc(st.t)}</h3></header>${st.items.map(id => {
     const x = IT[id]; k++; const vis = docVisuals(x);
-    return `<article class="drow${vis ? '' : ' novis'}"><div class="dtxt"><div class="dno">${String(k).padStart(2, '0')}${x.tag ? tag(x.tag) : ''}</div><h4>${esc(x.text)}</h4>
+    return `<article class="drow${vis ? '' : ' novis'}" id="r-${id}"><div class="dtxt"><div class="dno">${String(k).padStart(2, '0')}${x.tag ? tag(x.tag) : ''}</div><h4>${esc(x.text)}</h4>
       ${x.why ? `<p class="dwhy">${esc(x.why)}</p>` : ''}${x.exc ? `<p>${esc(x.exc)}</p>` : ''}${x.act ? `<p class="dact">${esc(x.act)}</p>` : ''}
       ${x.table && x.table.length ? `<table class="dtbl"><tr>${x.table[0].map(h => `<th>${esc(h)}</th>`).join('')}</tr>${x.table.slice(1).map(r => `<tr>${r.map(c => `<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</table>` : ''}
       ${m3Of(x) ? `<button type="button" class="d3d" data-open3d="${id}">돌려보기로 보기 →</button>` : ''}</div>${vis}</article>`;
@@ -880,6 +936,117 @@ function inflowHTML() {
    <ol class="ifl">${INFLOW.map((x, i) => `<li><span class="ig">${x[0]}</span><i>${String(i + 1).padStart(2, '0')}</i><b>${x[1]}</b><p>${x[2]}</p></li>`).join('')}</ol></section>`;
 }
 
+/* ===== 일러스트: 열린 박스 (아이소메트릭) ===== */
+function boxSVG(kind, opt) {
+  opt = opt || {};
+  const bag = (pts, fill, tag) => `<polygon points="${pts}" fill="${fill}" stroke="#7f9a85" stroke-width="1"/>${tag || ''}`;
+  const inner = kind === 'solid' ? bag('78,72 130,50 182,72 130,94', '#a9bfae', '<polygon points="150,64 160,60 166,63 156,67" fill="#fff"/>') + '<polyline points="86,72 130,54 174,72" fill="none" stroke="#c9d8cc" stroke-width="2"/>'
+    : kind === 'abox' ? bag('80,76 130,55 180,76 130,97', '#8fa996') + bag('78,70 130,48 182,70 130,92', '#a9bfae', '<polygon points="150,62 160,58 166,61 156,65" fill="#fff"/>')
+    : ['70,70 96,59 118,69 92,80', '104,57 130,46 152,56 126,67', '112,82 138,71 160,81 134,92'].map(q => { const n = q.split(/[ ,]/).map(Number); const cx = (n[0] + n[4]) / 2, cy = (n[1] + n[5]) / 2;
+        return `<polygon points="${q}" fill="#9fb8a4" stroke="#6f8b75" stroke-width="1"/><polygon points="${cx - 7},${cy - 1} ${cx + 1},${cy - 4} ${cx + 7},${cy - 1} ${cx - 1},${cy + 2}" fill="#fff"/>`; }).join('');
+  const dims = opt.dims ? `<g stroke="#8a9a8c" stroke-width="1" fill="none"><line x1="34" y1="140" x2="124" y2="180"/><line x1="136" y1="180" x2="226" y2="140"/><line x1="232" y1="80" x2="232" y2="128"/></g>
+    <g font-size="8" fill="#5d6b5f" font-family="Pretendard,sans-serif"><text x="62" y="172">가로</text><text x="186" y="172">세로</text><text x="236" y="106">높이</text></g>` : '';
+  return `<svg viewBox="0 0 260 200" class="bsvg" aria-hidden="true">
+   <ellipse cx="130" cy="178" rx="92" ry="12" fill="#000" opacity=".06"/>
+   <polygon points="40,70 130,30 112,6 22,46" fill="#e6d2ac"/><polygon points="130,30 220,70 238,46 148,6" fill="#ecdab6"/>
+   <polygon points="40,70 130,30 220,70 130,110" fill="#a88a5f"/><polygon points="48,70 130,34 212,70 130,106" fill="#8f7550" opacity=".55"/>
+   ${inner}
+   <polygon points="40,70 130,110 130,170 40,130" fill="#d2b88d"/><polygon points="130,110 220,70 220,130 130,170" fill="#c4a87a"/>
+   <polygon points="40,70 130,110 104,124 14,84" fill="#e3cda3"/><polygon points="130,110 220,70 246,84 156,124" fill="#d9c196"/>
+   <g transform="matrix(1,.44,0,1,58,112)"><text font-size="9" font-weight="700" fill="#7a6545" font-family="Montserrat,Pretendard,sans-serif">${opt.label || 'PACKING'}</text></g>
+   <g transform="matrix(1,-.44,0,1,168,138)"><rect width="30" height="18" fill="#fff"/>${Array.from({length: 11}, (_, i) => `<rect x="${4 + i * 2.2}" y="4" width="${i % 3 ? 1 : 1.6}" height="10" fill="#333"/>`).join('')}</g>
+   ${dims}</svg>`;
+}
+function closedBoxSVG() {
+  return `<svg viewBox="0 0 260 200" class="bsvg" aria-hidden="true"><ellipse cx="130" cy="178" rx="92" ry="12" fill="#000" opacity=".06"/>
+   <polygon points="40,70 130,30 220,70 130,110" fill="#dcc39a"/><polygon points="85,50 175,90 165,94 75,54" fill="#cfb68c" opacity=".8"/>
+   <polygon points="40,70 130,110 130,170 40,130" fill="#d2b88d"/><polygon points="130,110 220,70 220,130 130,170" fill="#c4a87a"/>
+   <g transform="matrix(1,-.44,0,1,152,128)"><rect width="40" height="24" fill="#fff"/>${Array.from({length: 14}, (_, i) => `<rect x="${5 + i * 2.2}" y="5" width="${i % 3 ? 1 : 1.6}" height="12" fill="#333"/>`).join('')}</g>
+   <g stroke="#8a9a8c" stroke-width="1" fill="none"><line x1="34" y1="140" x2="124" y2="180"/><line x1="136" y1="180" x2="226" y2="140"/><line x1="232" y1="74" x2="232" y2="132"/></g>
+   <g font-size="8" fill="#5d6b5f" font-family="Pretendard,sans-serif"><text x="62" y="172">가로</text><text x="186" y="172">세로</text><text x="236" y="106">높이</text></g></svg>`;
+}
+
+/* ===== 패킹 유형 비교: 일러스트 카드 ===== */
+const PCARDS = [
+  {k: 'solid', no: '01 / SOLID', name: '솔리드', go: 'solid', d: '제품 1PCS를 폴리백으로 포장해 담는 박스', flow: '개별 포장 → 박스', tint: '#eef0ea'},
+  {k: 'abox', no: '02 / ASSORT BOX', name: '아소트 박스', go: 'assort', d: '솔리드로 포장한 제품을 지정 구성대로 담는 박스', flow: '지정 구성 → 박스', tint: '#f1efe7'},
+  {k: 'apack', no: '03 / ASSORT PACK', name: '아소트 팩', go: 'assort', d: '지정 구성 한 묶음을 블리스터 백 팩으로 담는 박스', flow: '지정 구성 → 팩 → 박스', tint: '#e9efea'}];
+function typesHTML() {
+  return `<div class="icards">${PCARDS.map(c => `<button type="button" class="icard" data-go="${c.go}"><div class="iill" style="background:${c.tint}"><span class="ino">${c.no}</span>${boxSVG(c.k)}</div>
+     <div class="ibody"><h3>${c.name}<i aria-hidden="true">→</i></h3><p>${c.d}</p><small>${c.flow.replace(/→/g, '<em>→</em>')}</small><span class="ilink">사진으로 포장 방법 확인하기<i aria-hidden="true">→</i></span></div></button>`).join('')}</div>
+   <div class="ifoot"><button type="button" class="tlink" data-jump="ptcmp">포장 유형을 잘 모르겠어요 · 차이부터 보기 <i aria-hidden="true">→</i></button><small>일러스트와 예시 수량은 생산·포장 지시가 아닙니다.</small></div>
+   <section class="sec2" id="ptcmp"><header class="sech"><span class="en">COMPARE</span><h2>실제 사진으로 비교</h2></header>
+   <div class="ptypes">${PTYPES.map((t, i) => `<article class="ptype"><div class="ptimg${t.fit ? ' fit' : ''}">${t.img ? `<img src="${srcOf(t.img)}" alt="${t.name} 포장 예시">` : '<span>사진 준비 중</span>'}<span class="ptno">0${i + 1}</span></div>
+     <div class="ptbody"><span class="en">${t.en}</span><h2>${t.name}</h2><div class="ptflow">${t.flow.split(' → ').map(x => `<span>${x}</span>`).join('<i aria-hidden="true"></i>')}</div><p>${t.copy}</p><p class="ptc">${t.check}</p>
+     <button type="button" class="cbtn" data-go="${t.id}">${t.name} 기준 보기 →</button></div></article>`).join('')}</div>
+   <p class="ptnote">PCS는 상품 낱개, PACK은 지정된 구성 묶음, BOX는 상자입니다. 포장 지시가 없거나 사진으로도 구분되지 않으면 브랜드 담당자에게 적용 유형을 확인해 주세요.</p></section>`;
+}
+
+/* ===== 박스 규격 · 스티커 부착 위치 ===== */
+const BOXES = {keep: [{n: '보관용 소', d: [450, 300, 300]}, {n: '보관용 중', d: [590, 405, 280]}, {n: '보관용 대', d: [565, 505, 345]}],
+  shoe: [{n: '신발 OUT BOX', d: [565, 505, 345], x: 'SOLID 신발 변경 대상 · 8입'}]};
+let BX = {tab: 'keep', sc: 'normal'};
+const BSC = {normal: {b: '정상 · 양쪽 부착', h: '좁은 면 양쪽,<br>상단 중앙에 붙입니다.', p: '좁은 면 A와 반대편 B에 각각 한 장씩 붙입니다. 테이프가 라벨이나 바코드를 가리지 않게 확인해 주세요.', tag: '정상 부착 안내', ok: true},
+  missing: {b: '불량 · 한쪽 누락', h: '한쪽 면에만 붙이면<br>반송됩니다.', p: '박스를 어느 방향으로 쌓아도 읽을 수 있도록 양쪽 좁은 면 모두에 붙여야 합니다.', tag: '불량 예시'},
+  taped: {b: '불량 · 테이프 가림', h: '바코드 위에 테이프를<br>붙이지 않습니다.', p: '바코드 위 테이프는 스캔 인식률을 떨어뜨립니다. 스티커를 고정할 때 바코드를 피해 붙입니다.', tag: '불량 예시'}};
+function boxesHTML() {
+  const sc = BSC[BX.sc];
+  return `<section class="sec2"><header class="sech"><span class="en">BOX SIZE</span><h2>박스 규격</h2><p>용도에 맞는 규격 박스를 사용합니다. 카드를 누르면 크게 볼 수 있습니다.</p></header>
+   <div class="chips" role="tablist"><button type="button" data-btab="keep" class="${BX.tab === 'keep' ? 'on' : ''}">납품 보관용</button><button type="button" data-btab="shoe" class="${BX.tab === 'shoe' ? 'on' : ''}">신발 OUT</button><button type="button" class="tlink" data-go="solid" data-rule="s3b08">아소트·다른 용도 구분 <i aria-hidden="true">→</i></button></div>
+   <div class="bcards">${BOXES[BX.tab].map((b, i) => `<button type="button" class="bcard" data-bmod="${i}"><div class="iill" style="background:#ebeee8"><span class="ino">개념 도식 · 실제 브랜드 도안 아님</span>${closedBoxSVG()}</div>
+     <div class="ibody"><span class="badge">참고 규격 · 내경·외경 확인 필요</span><h3>${b.n}</h3><p class="bdim"><b>${b.d.join(' × ')}</b> mm</p><small>가로 × 세로 × 높이${b.x ? ' · ' + b.x : ''}</small><span class="ilink">크게 보기<i aria-hidden="true">→</i></span></div></button>`).join('')}</div></section>
+   <section class="sec2" id="stk"><header class="sech"><span class="en">BOX STICKER</span><h2>박스 스티커 부착 위치</h2><p>마우스로 드래그하거나 면 선택 버튼을 눌러 부착 위치를 확인합니다.</p></header>
+   <div class="chips">${Object.keys(BSC).map(k => `<button type="button" data-bsc="${k}" class="${BX.sc === k ? 'on' : ''}">${BSC[k].b}</button>`).join('')}</div>
+   <div class="lblw"><div class="stkv"><span class="ino">INTERACTIVE LABEL GUIDE</span><span class="ino r">드래그하여 회전 ↔</span>
+     <div class="m3 big" id="m3" data-kind="box">${cartonHTML(BX.sc, angle, true)}</div>
+     <div class="angs">${[['all', '전체'], ['A', '좁은 면 A'], ['B', '반대편 B'], ['top', '위에서']].map(([k, l]) => `<button type="button" data-bang="${k}">${l}</button>`).join('')}</div><small>설명용 모형 · 바코드는 모양 예시이며 인식용이 아닙니다.</small></div>
+    <div class="stkt"><span class="badge ${sc.ok ? 'g' : 'r'}">${sc.tag}</span><h3>${sc.h}</h3><p>${sc.p}</p>
+     <ol><li><i>01</i>박스의 두 좁은 면을 찾습니다.</li><li><i>02</i>양쪽 상단 중앙에 스티커를 붙입니다.</li><li><i>03</i>테이프·다른 라벨이 바코드를 가리지 않는지 확인합니다.</li></ol>
+     <button type="button" class="obtn" data-go="solid" data-rule="s4b03">기준 설명 보기 <i aria-hidden="true">→</i></button></div></div></section>`;
+}
+function boxModal(i) {
+  const b = BOXES[BX.tab][i];
+  document.body.insertAdjacentHTML('beforeend', `<div class="bmod" id="bmod" role="dialog" aria-modal="true" aria-label="${b.n}"><div class="bmw"><header><h3>K2 · ${b.n}</h3><button type="button" class="bmx" data-bmx="1" aria-label="닫기">✕</button></header>
+   <div class="bmb"><div class="iill" style="background:#ebeee8">${closedBoxSVG()}</div><div><span class="badge">참고 규격 · 승인 도안 아님</span><p class="bdim big"><b>${b.d.join(' × ')}</b> mm</p><p>가로 × 세로 × 높이${b.x ? ' · ' + b.x : ''}</p><p class="mute">규격 박스를 기준으로 하며, 비표준 규격은 담당 부서와 사전 협의합니다. 제작 전 내경·외경과 적용 조건을 확인해 주세요.</p></div></div>
+   <div class="bmf"><button type="button" class="obtn fill" data-bmx="1" data-jump="stk">스티커 부착 위치 보기 <i aria-hidden="true">→</i></button><button type="button" class="obtn" data-go="solid" data-rule="s3b01">용도별 규칙 보기 <i aria-hidden="true">→</i></button></div></div></div>`);
+  document.body.style.overflow = 'hidden';
+}
+function closeBoxModal() { const m = document.getElementById('bmod'); if (m) m.remove(); document.body.style.overflow = ''; }
+
+/* ===== 전체 규칙 ===== */
+let ARQ = '';
+function allRulesList() {
+  const out = [], seen = new Set();
+  B.filter(p => p.steps.length).forEach(p => p.steps.forEach(st => st.items.forEach(id => { const x = IT[id]; if (!x || seen.has(x.text)) return; seen.add(x.text); out.push({p, st, x, id}); })));
+  return out;
+}
+function allRulesHTML() {
+  const L = allRulesList(), q = ARQ.trim().toLowerCase();
+  const hit = r => !q || [r.x.text, r.x.why, r.x.exc, r.x.act, r.p.tab, r.st.t].join(' ').toLowerCase().includes(q);
+  const groups = []; L.forEach(r => { let g = groups.find(g => g.p === r.p); if (!g) groups.push(g = {p: r.p, rows: []}); g.rows.push(r); });
+  let n = 0;
+  const toc = groups.map((g, gi) => `<div class="tocg"><button type="button" data-jump="arg-${g.p.id}"><b>${String(gi + 1).padStart(2, '0')}</b> ${esc(g.p.cat)} · ${esc(g.p.tab)}</button>${g.rows.map(r => `<a href="#b-${r.p.id}" data-go="${r.p.id}" data-rule="${r.id}">${esc(r.x.text)}</a>`).join('')}</div>`).join('');
+  const body = groups.map(g => { const rows = g.rows.filter(hit); if (!rows.length) return '';
+    return `<section class="arg" id="arg-${g.p.id}"><h3><span>${esc(g.p.cat)}</span>${esc(g.p.tab)}</h3><div class="arc">${rows.map(r => { n++;
+      return `<button type="button" class="ar" data-go="${r.p.id}" data-rule="${r.id}"><span class="arn">${esc(r.st.t)}${r.x.tag ? tag(r.x.tag) : ''}</span><b>${esc(r.x.text)}</b><p>${esc(r.x.why || r.x.exc || '')}</p>${r.x.media.length ? `<span class="arp">${CAM}${r.x.media.length}</span>` : ''}<i aria-hidden="true">→</i></button>`; }).join('')}</div></section>`; }).join('');
+  return `<div class="arw"><aside class="toc"><span class="en">CONTENTS</span>${toc}</aside><div class="arm">
+   <div class="arh"><span class="en">PARTNER DELIVERY GUIDE</span><h2>필요한 규칙을 한눈에.</h2><p>규칙 이름이나 궁금한 표현으로 찾고, 누르면 사진과 함께 자세히 봅니다.</p>
+    <label class="arq"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="arq" type="search" placeholder="예: 가격택, 테이프, 20kg, 스티커" value="${esc(ARQ)}"></label>
+    <small id="arn">${q ? `검색 결과 ${n}개` : `전체 ${L.length}개 규칙`}</small></div>${body || '<p class="arempty">찾는 규칙이 없습니다. 다른 표현으로 검색해 보세요.</p>'}</div></div>`;
+}
+
+document.addEventListener('click', e => {
+  const r = e.target.closest('[data-rule]'); if (r && r.dataset.go) { e.preventDefault(); e.stopPropagation(); closeBoxModal(); if (S.vmode !== 'doc') { S.vmode = 'doc'; } go(r.dataset.go, r.dataset.rule); return; }
+  const j = e.target.closest('[data-jump]'); if (j) { if (j.dataset.bmx) closeBoxModal(); const t = document.getElementById(j.dataset.jump); if (t) window.scrollTo({top: t.getBoundingClientRect().top + scrollY - 130, behavior: 'smooth'}); return; }
+  const bt = e.target.closest('[data-btab]'); if (bt) { BX.tab = bt.dataset.btab; $('#extra').innerHTML = gtabsHTML(byId[S.view]) + boxesHTML(); bindBox(); return; }
+  const bs = e.target.closest('[data-bsc]'); if (bs) { BX.sc = bs.dataset.bsc; angle = (bs.dataset.bsc === 'missing' ? ANG.B : bs.dataset.bsc === 'taped' ? ANG.A : ANG.all).slice(); $('#extra').innerHTML = gtabsHTML(byId[S.view]) + boxesHTML(); bindBox(); return; }
+  const ba = e.target.closest('[data-bang]'); if (ba) { angle = ANG[ba.dataset.bang].slice(); const c = $('#carton'); if (c) c.style.transform = `rotateX(${angle[0]}deg) rotateY(${angle[1]}deg)`; return; }
+  const bm = e.target.closest('[data-bmod]'); if (bm) { boxModal(+bm.dataset.bmod); return; }
+  if (e.target.closest('[data-bmx]') || e.target.id === 'bmod') { closeBoxModal(); return; }
+}, true);
+document.addEventListener('input', e => { if (e.target.id !== 'arq') return; ARQ = e.target.value; const pos = e.target.selectionStart; $('#extra').innerHTML = allRulesHTML(); const i = $('#arq'); i.focus(); i.setSelectionRange(pos, pos); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeBoxModal(); });
+
 function renderBoard() {
   const b = byId[S.view];
   const cp = menuPages({pages: catPages(b.cat)}), cat = CATS.find(c => c.name === b.cat) || {}, im = srcOf(cat.img);
@@ -887,8 +1054,8 @@ function renderBoard() {
    ${cp.length > 1 ? `<nav class="btabs" role="tablist" aria-label="${esc(b.cat)}">${cp.map(x => `<button class="${x.id === b.id ? 'on' : ''}" type="button" role="tab" aria-selected="${x.id === b.id}" data-go="${x.id}">${esc(x.tab)}</button>`).join('')}</nav>` : ''}`.replace(/class="" type="button" role="tab" aria-selected="false" data-go="([a-z0-9]+)"/g, (m, id) => grpOfPage(byId[id] || {}) && grpOfPage(byId[id]) === grpOfPage(b) ? `class="on" type="button" role="tab" aria-selected="true" data-go="${id}"` : m);
   $('#bnr').classList.toggle('has-tabs', cp.length > 1);
   $('#bhead').innerHTML = `<div><nav class="crumb" aria-label="현재 위치"><button type="button" id="goHome2">홈</button><span aria-hidden="true">/</span><span>${esc(b.cat)}</span>${grpOfPage(b) ? `<span aria-hidden="true">/</span><span>${esc(grpOfPage(b))}</span>` : ''}${b.tab !== b.cat ? `<span aria-hidden="true">/</span><span>${esc(GTAB[b.id] || b.tab)}</span>` : ''}</nav><h1>${esc(b.title)}</h1><p>${esc(b.sub)}</p></div>`;
-  $('#extra').innerHTML = b.layout === '슬라이드' ? slidesHTML(b) : b.layout === '유형' ? typesHTML() : b.layout === '센터' ? centerHTML() : b.layout === '양식' ? formsHTML() : b.layout === '비용' ? costHTML() : b.layout === '예약마감' ? rcloseHTML() : b.layout === '입고순서' ? inflowHTML() : b.layout === '예약수정' ? rfixHTML() : b.layout === '재입고' ? rnoteHTML() : b.layout === '준비 중' ? `<div class="prep"><b>내용 준비 중입니다</b><p>${esc(b.sub)}. 확인되는 대로 이 자리에 올라옵니다.</p></div>` : '';
-  $('#extra').insertAdjacentHTML('afterbegin', gtabsHTML(b));
+  $('#extra').innerHTML = b.layout === '슬라이드' ? slidesHTML(b) : b.layout === '유형' ? typesHTML() : b.layout === '센터' ? centerHTML() : b.layout === '양식' ? formsHTML() : b.layout === '비용' ? costHTML() : b.layout === '예약마감' ? rcloseHTML() : b.layout === '박스' ? boxesHTML() : b.layout === '전체규칙' ? allRulesHTML() : b.layout === '입고순서' ? inflowHTML() : b.layout === '예약수정' ? rfixHTML() : b.layout === '재입고' ? rnoteHTML() : b.layout === '준비 중' ? `<div class="prep"><b>내용 준비 중입니다</b><p>${esc(b.sub)}. 확인되는 대로 이 자리에 올라옵니다.</p></div>` : '';
+  $('#extra').insertAdjacentHTML('afterbegin', gtabsHTML(b)); if (b.layout === '박스') bindBox();
   const noBoard = !b.steps.length || b.layout === '슬라이드'; document.querySelector('.lay').hidden = noBoard;
   if (noBoard) { $('#flow').innerHTML = ''; $('#cards').innerHTML = ''; $('#pnl').innerHTML = ''; return; }
   $('#flow').innerHTML = b.steps.length > 1 ? b.steps.map((s, i) => `${i ? '<span class="fa" aria-hidden="true"></span>' : ''}<button type="button" data-flow="${s.n}"><span class="en">STEP 0${s.n}</span><b>${esc(s.t)}</b><small>${s.items.length}개 기준</small></button>`).join('') : '';
