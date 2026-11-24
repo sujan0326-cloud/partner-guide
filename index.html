@@ -257,7 +257,7 @@ body:not(.inb) #gnb{visibility:hidden}
 .pf.left,.pf.right{width:165px;height:114px;margin:-57px 0 0 -82.5px}.pf.left{transform:rotateY(-90deg) translateZ(120px)}.pf.right{transform:rotateY(90deg) translateZ(120px)}
 .pf.top,.pf.bottom{width:240px;height:165px;margin:-82.5px 0 0 -120px}.pf.top{transform:rotateX(90deg) translateZ(57px)}.pf.bottom{transform:rotateX(-90deg) translateZ(57px);background:#b99f76}
 .pf .fn{position:absolute;left:0;right:0;bottom:-18px;text-align:center;font-size:10px;color:var(--sub)}
-.xmark.px{left:58px;top:14px;width:48px;height:36px}.xmark.px i{width:18px;height:18px;right:-9px;top:-9px}.xmark.px i::before,.xmark.px i::after{left:4px;top:8px;width:10px}.xmark.px em{font-size:9.5px;bottom:-18px}
+.xmark.px{left:58px;top:14px;width:48px;height:36px}.xmark.px i{display:none}.xmark.px i{width:18px;height:18px;right:-9px;top:-9px}.xmark.px i::before,.xmark.px i::after{left:4px;top:8px;width:10px}.xmark.px em{font-size:9.5px;bottom:-18px}
 .m3 .carton.pc{scale:1.25}.m3.st .carton.pc{scale:1.05}.slide.big .m3.st .carton.pc{scale:1.7}
 .bcap{position:absolute;left:0;right:0;bottom:-22px;text-align:center;font-size:11px;color:var(--sub)}
 .m3.scale{flex-direction:column;justify-content:flex-end;gap:0;padding-bottom:30px;cursor:default}
@@ -995,7 +995,7 @@ const BOXES = {keep: [{n: '보관용 소', d: [450, 300, 300]}, {n: '보관용 �
 let BX = {tab: 'keep', sc: 'normal'};
 const BSC = {normal: {b: '정상 · 양쪽 부착', h: '좁은 면 양쪽,<br>상단 중앙에 붙입니다.', p: '좁은 면 A와 반대편 B에 각각 한 장씩 붙입니다. 테이프가 라벨이나 바코드를 가리지 않게 확인해 주세요.', tag: '정상 부착 안내', ok: true},
   missing: {b: '불량 · 한쪽 누락', h: '한쪽 면에만 붙이면<br>반송됩니다.', p: '박스를 어느 방향으로 쌓아도 읽을 수 있도록 양쪽 좁은 면 모두에 붙여야 합니다.', tag: '불량 예시'},
-  taped: {b: '불량 · 테이프 가림', h: '바코드 위에 테이프를<br>붙이지 않습니다.', p: '바코드 위 테이프는 스캔 인식률을 떨어뜨립니다. 스티커를 고정할 때 바코드를 피해 붙입니다.', tag: '불량 예시'}};
+  taped: {b: '불량 · 테이프 가림', h: '테이프가 지나가면,<br>바코드가 가려집니다.', p: '박스를 봉할 때 테이프가 스티커 위를 지나가지 않게 해 주세요. 바코드 위 테이프는 스캔 인식률을 떨어뜨립니다.', tag: '불량 예시'}};
 function boxesHTML() {
   const sc = BSC[BX.sc];
   return `<section class="sec2"><header class="sech"><span class="en">BOX SIZE</span><h2>박스 규격</h2><p>용도에 맞는 규격 박스를 사용합니다. 카드를 누르면 크게 볼 수 있습니다.</p></header>
@@ -1257,7 +1257,7 @@ const PHOTO_SC = ['normal', 'missing', 'taped'];
 function pcartonHTML(sc, ang, withId) {
   const nar = i => sc === 'missing' && i === 1 ? 'p26_box_narrow_nostk.jpg' : sc === 'taped' ? 'p26_box_narrow_tape.jpg' : 'p26_box_narrow.jpg';
   const X = (label) => `<div class="xmark px"><i aria-hidden="true"></i><em>${label}</em></div>`;
-  const side = i => `<div class="pf ${i ? 'right' : 'left'}" style="background-image:url(${srcOf(nar(i))})">${sc === 'missing' && i === 1 ? X('스티커 없음') : ''}${sc === 'taped' ? X('바코드 가림') : ''}<span class="fn">좁은 면 ${i ? 'B' : 'A'}</span></div>`;
+  const side = i => `<div class="pf ${i ? 'right' : 'left'}" style="background-image:url(${srcOf(nar(i))})">${sc === 'missing' && i === 1 ? X('스티커 없음') : ''}<span class="fn">좁은 면 ${i ? 'B' : 'A'}</span></div>`;
   return `<div class="carton pc"${withId ? ' id="carton"' : ''} style="transform:rotateX(${ang[0]}deg) rotateY(${ang[1]}deg)"><div class="pf front" style="background-image:url(${srcOf('p26_box_long.jpg')})"></div><div class="pf back" style="background-image:url(${srcOf('p26_box_long.jpg')})"></div>${side(0)}${side(1)}<div class="pf top" style="background-image:url(${srcOf('p26_box_top.jpg')})"></div><div class="pf bottom"></div></div>`;
 }
 function cartonHTML(sc, ang, withId) {
