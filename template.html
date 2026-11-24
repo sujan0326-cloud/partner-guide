@@ -563,7 +563,7 @@ async function loadSheet() {
         return {cat: r['큰 메뉴'], sub: r['작은 메뉴'], id, title: r['페이지 제목'], desc: r['한 줄 설명'], en: r['영문 라벨'], layout: r['모양'] || '기본',
           steps: st.filter(x => x['페이지ID'] === id).map(x => ({n: String(x['단계']).replace(/\.0$/, ''), t: x['단계 제목']})).sort((a, b) => +a.n - +b.n)
             .map(s => ({n: s.n, t: s.t, art: art(id, s.n), items: it.filter(x => x['페이지ID'] === id && String(x['단계']).replace(/\.0$/, '') === s.n).sort(by('순서')).map(x => x['항목ID'])}))}; }),
-      items, centers: ce.map((r, i) => { const d = (BASE.centers || []).find(x => x.id === r['센터ID']) || (BASE.centers || [])[i] || {}; return {id: r['센터ID'], name: r['센터 이름'] || d.name, addr: r['도로명 주소'] || d.addr || '', jibun: r['지번 주소'] || d.jibun || '', map: r['지도 링크'] || d.map || ''}; })};
+      items, centers: ce.map((r, i) => { const d = (BASE.centers || []).find(x => x.id === r['센터ID']) || (BASE.centers || [])[i] || {}; return {id: r['센터ID'], name: r['센터 이름'] || d.name, addr: r['도로명 주소'] || d.addr || '', jibun: r['지번 주소'] || d.jibun || '', kinds: r['입고 가능 복종'] || d.kinds || '', map: r['지도 링크'] || d.map || ''}; })};
     build(M); renderChrome(); route();
   } catch (e) { /* keep built-in content */ }
 }
@@ -761,7 +761,7 @@ function centerHTML() {
   return `<div class="ctabs" role="tablist" aria-label="센터 선택">${CENTERS.map((x, i) => `<button type="button" role="tab" data-center="${i}" class="${i === cIdx ? 'on' : ''}" aria-selected="${i === cIdx}">${esc(x.name)}</button>`).join('')}</div>
    <div class="visit"><div class="ccard"><span class="en">K2 LOGISTICS CENTER</span><h2>${esc(c.name)}</h2>
     <div class="il"><span>도로명 주소</span><p>${v(c.addr, '주소 확인 필요')}</p></div>
-    <div class="il"><span>지번 주소</span><p>${v(c.jibun, '주소 확인 필요')}</p></div>
+    <div class="il"><span>지번 주소</span><p>${v(c.jibun, '주소 확인 필요')}</p></div>${c.kinds ? `<div class="il"><span>입고 가능 복종</span><p>${esc(c.kinds)}</p></div>` : ''}
     <div class="cact"><button class="cbtn" type="button" id="copyAddr"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="8" y="8" width="12" height="12"/><path d="M16 8V4H4v12h4"/></svg>도로명 주소 복사</button>
     ${map ? `<a class="clink" href="${esc(map)}" target="_blank" rel="noopener">지도에서 보기 <span aria-hidden="true">→</span></a>` : ''}
     <button class="clink" type="button" id="toRules">방문 전 규칙 <span aria-hidden="true">→</span></button></div></div>
