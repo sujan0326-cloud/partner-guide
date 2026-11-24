@@ -120,7 +120,6 @@
      "t": "폴리백 마감",
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\">\n<rect x=\"62\" y=\"14\" width=\"116\" height=\"142\" rx=\"8\" fill=\"#e3eaed\" stroke=\"#9fb0b8\" stroke-width=\"2.5\"></rect>\n<rect x=\"74\" y=\"26\" width=\"92\" height=\"118\" rx=\"5\" fill=\"#c7ccd0\"></rect>\n<rect x=\"70\" y=\"12\" width=\"100\" height=\"24\" rx=\"4\" fill=\"#d6dfe3\" stroke=\"#9fb0b8\" stroke-width=\"2\"></rect>\n<path d=\"M80 24h80\" stroke=\"#7f8d93\" stroke-width=\"2.5\" stroke-dasharray=\"7 5\"></path>\n<rect x=\"100\" y=\"56\" width=\"40\" height=\"66\" rx=\"3\" fill=\"#fff\" stroke=\"#8d989c\" stroke-width=\"1.5\"></rect>\n<g fill=\"#222\"><rect x=\"106\" y=\"94\" width=\"2\" height=\"20\"></rect><rect x=\"110\" y=\"94\" width=\"1\" height=\"20\"></rect><rect x=\"113\" y=\"94\" width=\"2\" height=\"20\"></rect><rect x=\"117\" y=\"94\" width=\"1\" height=\"20\"></rect><rect x=\"120\" y=\"94\" width=\"3\" height=\"20\"></rect><rect x=\"125\" y=\"94\" width=\"1\" height=\"20\"></rect><rect x=\"128\" y=\"94\" width=\"2\" height=\"20\"></rect><rect x=\"132\" y=\"94\" width=\"1\" height=\"20\"></rect></g>\n<ellipse cx=\"120\" cy=\"104\" rx=\"30\" ry=\"18\" fill=\"none\" stroke=\"#345443\" stroke-width=\"3\"></ellipse>\n<text x=\"182\" y=\"28\" font-size=\"13\" fill=\"#5f6a62\">접착부</text>\n<text x=\"182\" y=\"80\" font-size=\"15\" font-weight=\"700\" fill=\"#345443\">뒷면</text>\n<text x=\"182\" y=\"98\" font-size=\"13\" fill=\"#5f6a62\">가격택</text></svg>",
      "items": [
-      "s2a",
       "s2b",
       "s2c",
       "s2d"
@@ -653,31 +652,6 @@
    ],
    "topic": "상품 바코드·택"
   },
-  "s2a": {
-   "text": "폴리백 접착부와 가격택은 같은 면(앞면)",
-   "rid": "SOL-01",
-   "tag": "",
-   "why": "",
-   "exc": "모자·배낭 등 용품에는 별도 포장 기준이 있으므로 그대로 적용하지 않습니다.",
-   "act": "V1.4는 가격택 위치 기준 미준수를 입고거부 사유로 안내합니다.",
-   "table": [],
-   "source": "물류납품규칙 D6 / 솔리드 포장 예시 B5 / 솔리드 포장 예시 H5 · V1.4 및 기존 작성 시안 기반",
-   "nophoto": false,
-   "todo": "",
-   "media": [
-    [
-     "설명 그림 · 정상",
-     "SOL-01_정상_뒷면.png",
-     "설명 그림 · 뒷면에 가격택과 접착부"
-    ],
-    [
-     "정상",
-     "photo1.webp",
-     "뒷면 · 가격택면"
-    ]
-   ],
-   "topic": "가격택·로고 위치"
-  },
   "s2b": {
    "text": "폴리백 접착부·비닐이 바코드를 가리지 않게",
    "rid": "SOL-02",
@@ -834,9 +808,15 @@
     ]
    ],
    "source": "물류납품규칙 Q61 / 물류납품규칙 R61 / 물류납품규칙 R62 / 물류납품규칙 R63 / 물류납품규칙 R64 / 물류납품규칙 R49 / 물류납품규칙 R50 / 물류납품규칙 R55 / 물류납품규칙 R56 / 규격 외 박스 사용 M7 / 규격 외 박스 사용 M8 / 규격 외 박스 사용 M9 · V1.4 및 기존 작성 시안 기반",
-   "nophoto": true,
+   "nophoto": false,
    "todo": "",
-   "media": [],
+   "media": [
+    [
+     "참고",
+     "box_sizes.jpg",
+     "박스 규격 한눈에 보기 (cm, 크기 비율대로 그림)"
+    ]
+   ],
    "topic": "박스 규격·중량"
   },
   "s3b06": {
