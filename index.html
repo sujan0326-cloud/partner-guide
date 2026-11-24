@@ -416,6 +416,7 @@ body.inb .srch input{border-color:transparent}body.inb .pbtn{display:inline-flex
 .rflow{display:flex;align-items:center;gap:0;margin:4px 0 28px;flex-wrap:wrap}
 .rflow span{padding:10px 14px;border:1px solid var(--navy);font-size:14px;font-weight:600;color:var(--navy);background:#fff}.rflow span small{display:block;font:600 11px var(--en);color:var(--mute);letter-spacing:.5px}
 .rflow i{width:26px;height:1px;background:#b7bdc8;position:relative}.rflow i::after{content:'';position:absolute;right:0;top:-4px;width:8px;height:8px;border-top:1px solid #b7bdc8;border-right:1px solid #b7bdc8;transform:rotate(45deg)}
+.rsub{margin:6px 0 12px;font-size:17px;font-weight:700}
 .rstat{width:100%;border-collapse:collapse;font-size:15px}
 .rstat th{font-weight:500;font-size:13px;color:var(--mute);text-align:left;padding:10px 14px;border-bottom:1px solid var(--navy)}
 .rstat td{padding:16px 14px;border-bottom:1px solid var(--line2);vertical-align:top;line-height:1.6}
@@ -705,13 +706,13 @@ function rfixHTML() {
   return `<div class="rsv"><div>
    <section class="rbox"><span class="en">STATUS</span><h2>예약 상태를 먼저 확인하세요</h2>
     <p class="rlead">입고예약은 아래 순서로 진행됩니다. 예약을 고쳐야 할 때는 지금 어느 상태인지 확인하고, 그 상태를 처리하는 담당자에게 요청합니다.</p>
-    <div class="rflow"><span><small>REG</small>예약등록</span><i></i><span><small>PHY</small>물류입고승인</span><i></i><span><small>APP</small>본사승인</span></div>
-    <table class="rstat"><tr><th style="width:34%">입고예약 상태</th><th>수정 방법</th></tr>
-     <tr><td><code>REG</code>예약등록</td><td><span class="who">협력사에서 직접 수정</span><small>승인 전이라 자유롭게 고칠 수 있습니다</small></td></tr>
-     <tr><td><code>PHY</code>물류입고승인</td><td><span class="who">소싱에 '소싱취소' 요청</span><small>이 상태는 물류에서 취소할 수 없습니다</small></td></tr>
-     <tr><td><code>APP</code>본사승인</td><td><span class="who">소싱 또는 물류에 요청</span><small>물류 전산에서 취소해야 합니다</small></td></tr>
-     <tr class="rres"><td><code>CNL</code>소싱취소</td><td>물류입고승인 단계의 예약을 소싱에서 취소하면 이렇게 보입니다</td></tr>
-     <tr class="rres"><td><code>ERR</code>입고취소</td><td>본사승인 단계의 예약을 물류에서 종결 처리하면 이렇게 보입니다</td></tr>
+    <div class="rflow"><span>예약등록</span><i></i><span>물류입고승인</span><i></i><span>본사승인</span></div>
+    <h3 class="rsub">입고예약 상태에 따른 수정 담당자</h3><table class="rstat"><tr><th style="width:34%">입고예약 상태</th><th>수정 방법</th></tr>
+     <tr><td>예약등록</td><td><span class="who">협력사에서 직접 수정</span><small>승인 전이라 자유롭게 고칠 수 있습니다</small></td></tr>
+     <tr><td>물류입고승인</td><td><span class="who">소싱에 '소싱취소' 요청</span><small>이 상태는 물류에서 취소할 수 없습니다</small></td></tr>
+     <tr><td>본사승인</td><td><span class="who">소싱 또는 물류에 요청</span><small>물류 전산에서 취소해야 합니다</small></td></tr>
+     <tr class="rres"><td>소싱취소</td><td>물류입고승인 단계의 예약을 소싱에서 취소하면 이렇게 보입니다</td></tr>
+     <tr class="rres"><td>입고취소</td><td>본사승인 단계의 예약을 물류에서 종결 처리하면 이렇게 보입니다</td></tr>
     </table>
    </section></div>
    <aside class="rside"><section class="rbox"><span class="en">BEFORE YOU CANCEL</span><h2 style="font-size:20px">취소 뒤 재예약 시간이 다릅니다</h2>
