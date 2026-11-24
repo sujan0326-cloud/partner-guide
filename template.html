@@ -66,7 +66,8 @@ body:not(.inb) #gnb{visibility:hidden}
 .hb small{grid-column:1;font-size:12px;color:#aeb6c6;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .hb .hc{grid-column:2;grid-row:1/4;align-self:center;width:9px;height:9px;border-right:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(45deg);transition:transform .3s;margin-left:12px}
 .hb.on .hc{transform:rotate(-135deg)}.hb.on::after{content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:#fff}
-.hdrop{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease;background:#fff;border:1px solid var(--line);border-top:0;margin-bottom:80px}
+.hdwrap{height:var(--hdres,180px);margin-bottom:64px}
+.hdrop{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease;background:#fff;border:1px solid var(--line);border-top:0}
 .hdrop.is-open{grid-template-rows:1fr}.hdin{min-height:0;overflow:hidden;display:grid;grid-template-columns:minmax(220px,300px) minmax(0,1fr);gap:clamp(20px,3vw,56px);padding:0 clamp(24px,3vw,48px)}
 .hdrop.is-open .hdin{padding:26px clamp(24px,3vw,40px) 28px}.hdrop:not(.is-open){border-color:transparent}
 .hdh .en{color:var(--navy2)}.hdh h2{margin:6px 0 8px;font-size:21px}.hdh p{margin:0;color:var(--sub);line-height:1.7;font-size:14px}
@@ -76,7 +77,7 @@ body:not(.inb) #gnb{visibility:hidden}
 @keyframes hdcIn{to{opacity:1;transform:none}}
 .hdc .en{color:var(--mute)}.hdc b{font-size:15px}.hdc small{font-size:13px;color:var(--sub);line-height:1.5}.hdc i{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-style:normal;color:var(--navy);transition:transform .2s}
 .hdc:hover{border-color:var(--navy);background:#f6f7fa}.hdc:hover i{transform:translate(4px,-50%)}
-@media (max-width:900px){.hero{height:220px}.hbar{grid-template-columns:1fr 1fr}.hb:nth-child(3){border-left:0}.hb:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12)}.hdin{grid-template-columns:1fr}.hb small{display:none}}
+@media (max-width:900px){.hdwrap{height:auto}.hero{height:220px}.hbar{grid-template-columns:1fr 1fr}.hb:nth-child(3){border-left:0}.hb:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12)}.hdin{grid-template-columns:1fr}.hb small{display:none}}
 .intro{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:calc(var(--ddh,170px) + 32px) 0 40px}
 .intro h1{margin:12px 0 0;font-size:clamp(32px,4.4vw,50px);line-height:1.1;font-weight:700;letter-spacing:-1.5px}
 .intro p{margin:0;text-align:right;color:var(--sub);line-height:1.8}
@@ -548,7 +549,7 @@ body:not(.inb) #gnb{visibility:hidden}
   <section class="hero"><img id="heroImg" src="" alt="K2 여주 물류센터 외관"><div class="hov"></div>
    <div class="htx"><span class="hk">K2 KOREA · PARTNER GUIDE</span><h1>협력사<br>납품가이드</h1><p>사진으로 확인하고, 기준에 맞게 준비합니다.</p></div></section>
   <nav class="hbar" id="hbar" aria-label="메뉴"></nav>
-  <div class="hdrop" id="hdrop"><div class="hdin" id="hdin"></div></div>
+  <div class="hdwrap" id="hdwrap"><div class="hdrop" id="hdrop"><div class="hdin" id="hdin"></div></div></div>
  </div>
 </main>
 
@@ -648,7 +649,7 @@ function renderChrome() {
   $('#gnb').innerHTML = CATS.map(c => `<div class="gi"><a href="#b-${c.pages[0].id}" data-cat="${esc(c.name)}">${esc(c.name)}</a><div class="sub">${subOf(c)}</div></div>`).join(''); fitMenu();
   $('#mcat').innerHTML = CATS.map(c => `<a href="#b-${c.pages[0].id}" data-cat="${esc(c.name)}">${esc(c.name)}</a>`).join('');
   $('#heroImg').src = srcOf((CATS[0] || {}).img);
-  renderHbar();
+  renderHbar(); requestAnimationFrame(reserveHdrop); if (document.fonts) document.fonts.ready.then(reserveHdrop);
 }
 const narrow = () => matchMedia('(max-width:1100px)').matches;
 let S = {vmode: (() => { try { return localStorage.getItem('k2g-vmode') || 'doc'; } catch (e) { return 'doc'; } })(), view: 'home', sel: null, mi: 0, more: false, mode: '3d', scn: 'normal', pi: {ok: 0, bad: 0}, lbPair: false};
@@ -844,6 +845,10 @@ document.addEventListener('click', e => {
 
 /* 첫 화면: 사진 배너 아래 남색 메뉴 줄. 누르면 아래로 세부 메뉴가 펼쳐짐 */
 let HOPEN = -1;
+function reserveHdrop() { const w = $('#hdwrap'); if (!w || matchMedia('(max-width:900px)').matches) { if (w) w.style.removeProperty('--hdres'); return; }
+  const keep = HOPEN; let mx = 0; CATS.forEach((c, i) => { HOPEN = i; renderHbar(true); $('#hdrop').style.transition = 'none'; mx = Math.max(mx, $('#hdin').scrollHeight); });
+  HOPEN = keep; renderHbar(true); requestAnimationFrame(() => { $('#hdrop').style.transition = ''; }); w.style.setProperty('--hdres', Math.ceil(mx) + 2 + 'px'); }
+window.addEventListener('resize', () => { if (!$('#home').hidden) reserveHdrop(); });
 function renderHbar() {
   $('#hbar').innerHTML = CATS.map((c, i) => `<button type="button" class="hb${i === HOPEN ? ' on' : ''}" data-hb="${i}" aria-expanded="${i === HOPEN}" aria-controls="hdrop">
     <span class="hn">0${i + 1}</span><b>${esc(c.name)}</b><small>${menuPages(c).map(p => esc(p.tab)).join(' · ')}</small><i class="hc" aria-hidden="true"></i></button>`).join('');
