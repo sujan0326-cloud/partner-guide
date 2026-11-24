@@ -383,7 +383,7 @@ body.inb .srch input{border-color:transparent}body.inb .pbtn{display:inline-flex
 .slide>p{margin:0;font-size:14px;line-height:1.65;color:var(--sub)}.slide .clink{align-self:flex-start}
 .mk{position:absolute;right:10px;top:10px;width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.35);z-index:4;pointer-events:none}
 .mk svg{width:100%;height:100%}.mk-ok{background:#1f8a4c}.mk-bad{background:#d0021b}
-.mkw{position:relative}.slide.big .mk{width:54px;height:54px;right:16px;top:16px}
+.mkw{position:relative}.pair2 .sc{font-size:13px;color:var(--sub);font-weight:400}.slide.big .mk{width:54px;height:54px;right:16px;top:16px}
 .pair2{display:grid;grid-template-columns:1fr 1fr;gap:12px}.pair2 figure{margin:0;display:flex;flex-direction:column;gap:8px}
 .pair2 figcaption{align-self:flex-start;font-size:12px;font-weight:700;padding:2px 10px;border:1px solid var(--line)}.pair2 .g{color:var(--navy)}.pair2 .r{color:#fff;background:#d0021b;border-color:#d0021b}
 .pair2 .m3,.pair2 .sph{height:250px}.sph{background:#f4f5f7;display:flex;align-items:center;justify-content:center;overflow:hidden}.sph img{max-width:100%;max-height:100%;object-fit:contain}.sph.none span{font-size:13px;color:var(--mute)}
@@ -653,7 +653,7 @@ function slideInner(id, k, big) {
   const x = IT[id], m = m3Of(x), pg = pageOfItem(id);
   const bad = m && m.scns ? SCN_NOTE[m.scns[1]] : (x.why ? '이유: ' + x.why : x.exc);
   return `<header><span class="en">${String(k).padStart(2, '0')}</span>${tag(x.tag)}${x.rid ? `<small>${esc(x.rid)}</small>` : ''}${big ? '' : '<span class="zoomhint" aria-hidden="true">크게 보기</span>'}</header><h3>${esc(x.text)}</h3>
-    <div class="pair2"><figure><figcaption class="g">정상</figcaption><div class="mkw">${staticVisual(x, 'ok')}${MARK('ok')}</div></figure><figure><figcaption class="r">불량</figcaption><div class="mkw">${staticVisual(x, 'bad')}${MARK('bad')}</div></figure></div>
+    ${(() => { const bads = x.media.filter(q => q[3] === 'bad'); return !x.media.some(q => q[3] === 'ok') && bads.length >= 2; })() ? `<div class="pair2">${x.media.filter(q => q[3] === 'bad').slice(0, 2).map(q => `<figure><figcaption class="r">불량</figcaption><div class="mkw"><div class="sph"><img src="${q[1]}" alt="${esc(q[2])}"></div>${MARK('bad')}</div><figcaption class="sc">${esc(q[2])}</figcaption></figure>`).join('')}</div>` : `<div class="pair2"><figure><figcaption class="g">정상</figcaption><div class="mkw">${staticVisual(x, 'ok')}${MARK('ok')}</div></figure><figure><figcaption class="r">불량</figcaption><div class="mkw">${staticVisual(x, 'bad')}${MARK('bad')}</div></figure></div>`}
     ${bad ? `<p>${esc(bad)}</p>` : ''}${pg ? `<button type="button" class="clink" data-go="${pg}" data-sel="${id}">기준 자세히 보기 →</button>` : ''}`;
 }
 function slidesHTML(b) {
@@ -860,7 +860,7 @@ function formsHTML() {
 
 /* 돌려보는 박스 (기존 사이트의 입체 부착 안내를 옮김). 규칙번호로 연결 */
 const MODEL3D = {
-  s1c: {type: 'bag', scns: ['sizeok', 'sizeover']}, s1d: {type: 'bag', scns: ['rfidok', 'rfidbad']}, s1h: {type: 'bag', scns: ['rfidok', 'rfidbad']}, s2c: {type: 'bag', scns: ['flatok', 'sealgap']},
+  s1c: {type: 'bag', scns: ['sizeok', 'sizeover']}, s1d: {type: 'bag', scns: ['rfidok', 'rfidbad']}, s2c: {type: 'bag', scns: ['flatok', 'sealgap']},
   s3b06: {type: 'box', scns: ['padok', 'padno'], ang: [-62, -24]}, a2c: {type: 'bag', scns: ['marginok', 'marginbad']}, a2d: {type: 'bag', scns: ['pstkok', 'pstktape']},
   a3a: {type: 'box', scns: ['lblok', 'lblbad'], ang: [-46, -40]}, a3b: {type: 'box', scns: ['compok', 'compno'], ang: [-16, -24]},
   'BOX-03': {type: 'box', scns: ['normal', 'missing']}, 'BOX-04': {type: 'box', scns: ['normal', 'taped']},
