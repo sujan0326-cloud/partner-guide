@@ -272,7 +272,8 @@
      "t": "모자 가격택",
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><path d=\"M60 110 C60 60 180 60 180 110 Z\" fill=\"#c9ced2\" stroke=\"#8f9aa0\" stroke-width=\"2\"></path><path d=\"M60 110 C90 126 200 126 222 108 L180 110 Z\" fill=\"#b2b9be\" stroke=\"#8f9aa0\" stroke-width=\"2\"></path><rect x=\"96\" y=\"70\" width=\"26\" height=\"40\" rx=\"2\" fill=\"#fff\" stroke=\"#8d989c\"></rect><path d=\"M101 96h16\" stroke=\"#222\" stroke-width=\"6\" stroke-dasharray=\"1.2 1.2\"></path><text x=\"120\" y=\"40\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#345443\">모자 종류별 지정 위치</text></svg>",
      "items": [
-      "c1a"
+      "c1a",
+      "c1h"
      ]
     },
     {
@@ -1644,7 +1645,7 @@
    "ref": "s4b05"
   },
   "c1a": {
-   "text": "모자 가격택은 모자 안쪽, 88 바코드 스티커는 겉면 부착",
+   "text": "캡 가격택은 모자 안쪽, 88 바코드 스티커는 겉면 부착",
    "rid": "ACC-01",
    "tag": "",
    "why": "",
@@ -1663,7 +1664,7 @@
     [
      "불량",
      "cap_bad.jpg",
-     "가격택이 모자 밖으로 나와 있음"
+     "가격택이 모자 밖으로 나와 로고 위에 겹침"
     ],
     [
      "참고",
@@ -2493,6 +2494,27 @@
    "todo": "",
    "media": [],
    "topic": "팩·박스 스티커·라벨"
+  },
+  "c1h": {
+   "text": "햇 가격택은 로고와 겹치지 않게",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "햇은 가격택을 겉면에 두되, 로고 위에 겹치지 않게 패킹합니다.",
+   "act": "",
+   "table": [],
+   "source": "Ember (2026-11-25)",
+   "nophoto": false,
+   "todo": "",
+   "nodraw": true,
+   "media": [
+    [
+     "정상",
+     "hat_ok.jpg",
+     "가격택이 로고와 겹치지 않음"
+    ]
+   ],
+   "topic": "가격택·로고 위치"
   }
  },
  "centers": [
