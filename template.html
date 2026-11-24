@@ -43,7 +43,7 @@ button{font:inherit;color:inherit;cursor:pointer}
 .res.show{display:block}
 .res button{display:block;width:100%;text-align:left;border:0;border-bottom:1px solid var(--line2);background:#fff;padding:12px 16px}
 .res button:hover,.res button.k{background:#f4f6f9}
-.res small{display:block;color:var(--mute);font-size:12px}.res .none{padding:16px;color:var(--sub);font-size:14px}
+.res small{display:block;color:var(--mute);font-size:12px}.res .rhd{margin:0;padding:10px 16px 6px;font-size:12px;font-weight:600;color:var(--navy2);background:#f7f8fa;border-bottom:1px solid var(--line2)}.res .rfaq{font-size:14px}.res .tag{font-size:11px;vertical-align:1px}.res .none{padding:16px;color:var(--sub);font-size:14px}
 .pbtn{display:none;align-items:center;gap:8px;height:42px;padding:0 18px;border:1px solid rgba(255,255,255,.7);border-radius:21px;background:transparent;color:#fff;font-size:14px;flex:none}
 body.inb .hd{background:var(--navy);color:#fff;border-bottom:0}
 body.inb .logo .d{display:none}body.inb .logo .w{display:block}
@@ -614,7 +614,7 @@ body:not(.inb) #gnb{visibility:hidden}
  <nav class="nav" id="gnb" aria-label="주 메뉴"></nav>
  <form class="srch" role="search" id="sform"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>
   <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">규칙 검색</label>
-  <input id="q" type="search" autocomplete="off" placeholder="규칙 검색 · 예: 가격택, 테이프">
+  <input id="q" type="search" autocomplete="off" placeholder="궁금한 내용 검색 · 예: 박스 무게">
   <div class="res" id="res" role="listbox"></div></form>
  <button class="pbtn arb" type="button" data-go="allrules"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h10"/></svg>전체 규칙</button><button class="pbtn" type="button" id="printBtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></svg>A4 인쇄</button>
 </div></header>
@@ -653,7 +653,7 @@ const BASE = __MODEL__;
 const IMGF = __IMGF__;
 const SHEET_ID = '__SHEET_ID__';
 const RED = ['입고 거부', '입고 불가', '반송'];
-let B = [], IT = {}, byId = {}, CATS = [], CENTERS = [], INDEX = [], TOPICS = [];
+let B = [], IT = {}, byId = {}, CATS = [], CENTERS = [], INDEX = [], TOPICS = [], SYN = [], FAQ = [];
 const srcOf = f => IMGF[f] || (f ? 'img/' + f : '');
 const kindKey = k => /^정상/.test(k) ? 'ok' : /^불량/.test(k) ? 'bad' : /^설명 그림/.test(k) ? 'dia' : 'ref';
 const grpOf = k => /정상/.test(k) ? 'ok' : /불량/.test(k) ? 'bad' : 'ref';
@@ -667,6 +667,8 @@ function build(M) {
   CATS = M.cats.map(c => Object.assign({}, c, {pages: B.filter(b => b.cat === c.name)})).filter(c => c.pages.length);
   CENTERS = M.centers.length ? M.centers : [{id: '', name: '센터'}];
   TOPICS = M.topics || (BASE.topics || []);
+  SYN = (M.synonyms || BASE.synonyms || []).map(l => String(l).split(',').map(w => norm(w)).filter(Boolean)).filter(g => g.length > 1);
+  FAQ = (M.faq || BASE.faq || []).filter(f => f.q && f.to);
   INDEX = [];
   B.forEach(b => b.steps.forEach(s => s.items.forEach(id => { const x = IT[id]; INDEX.push({b, s, x, h: norm([x.text, x.rid, x.why, x.exc, x.act, x.todo, b.tab, s.t].join(' '))}); })));
 }
@@ -684,7 +686,7 @@ async function loadSheet() {
   if (!SHEET_ID) return;
   const tab = n => fetch(`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv&headers=1&sheet=${encodeURIComponent(n)}`).then(r => { if (!r.ok) throw 0; return r.text(); }).then(parseCSV);
   try {
-    const [cm, pg, st, it, ph, ce, tp] = await Promise.all([...['큰 메뉴', '페이지', '단계', '항목', '사진', '센터'].map(tab), tab('주제').catch(() => [])]);
+    const [cm, pg, st, it, ph, ce, tp, sy, fq] = await Promise.all([...['큰 메뉴', '페이지', '단계', '항목', '사진', '센터'].map(tab), ...['주제', '검색어', '자주 묻는 질문'].map(n => tab(n).catch(() => []))]);
     if (!pg.length || !it.length) return;
     const by = k => (a, b) => (+a[k] || 0) - (+b[k] || 0);
     const art = (pid, n) => { const p = BASE.pages.find(x => x.id === pid); const s = p && p.steps.find(x => x.n === n); return s ? s.art : ''; };
@@ -695,7 +697,9 @@ async function loadSheet() {
        table: (r['표'] || '').split('\n').filter(Boolean).map(l => l.split('|').map(c => c.trim())), nophoto: /^y/i.test(r['사진 없이 글로 충분']), todo: r['필요한 사진'], media: []}; });
     const pseen = new Set();
     ph.sort(by('순서')).forEach(r => { const x = items[r['항목ID']], k = r['항목ID'] + '|' + r['파일']; if (pseen.has(k)) return; pseen.add(k); if (x && x.media) x.media.push([r['종류'], r['파일'], r['설명']]); });
-    const M = {topics: tp.length ? tp.sort(by('순서')).map(r => r['주제']).filter(Boolean) : BASE.topics,
+    const M = {synonyms: sy.length ? sy.map(r => r['같은 뜻 낱말']).filter(Boolean) : BASE.synonyms,
+      faq: fq.length ? fq.sort(by('순서')).map(r => ({q: r['질문'], to: r['연결']})).filter(f => f.q && f.to) : BASE.faq,
+      topics: tp.length ? tp.sort(by('순서')).map(r => r['주제']).filter(Boolean) : BASE.topics,
       cats: cm.sort(by('순서')).map(r => ({name: r['큰 메뉴'], en: r['영문 라벨'], desc: r['첫 화면 설명'], img: r['첫 화면 사진']})),
       pages: pg.sort(by('순서')).map(r => { const id = r['페이지ID'];
         return {cat: r['큰 메뉴'], sub: r['작은 메뉴'], id, title: r['페이지 제목'], desc: r['한 줄 설명'], en: r['영문 라벨'], layout: r['모양'] || '기본',
@@ -1032,7 +1036,7 @@ function allRulesList() {
 }
 function allRulesHTML() {
   const L = allRulesList(), q = ARQ.trim().toLowerCase(), tp = r => r.x.topic || '기타';
-  const hit = r => (!ARC || tp(r) === ARC) && (!q || [r.x.text, r.x.why, r.x.exc, r.x.act, r.p.tab, r.st.t, tp(r)].join(' ').toLowerCase().includes(q));
+  const hit = r => (!ARC || tp(r) === ARC) && (!q || (mt => mt.n ? mt.m === mt.n : true)(qmatch(ARQ, norm([r.x.text, r.x.why, r.x.exc, r.x.act, r.p.tab, r.st.t, tp(r)].join(' ')))));
   const order = [...TOPICS, ...new Set(L.map(tp).filter(t => !TOPICS.includes(t)))];
   const groups = order.map((t, k) => ({t, k, rows: L.filter(r => tp(r) === t)})).filter(g => g.rows.length);
   let n = 0;
@@ -1371,16 +1375,44 @@ function lbStep(d) { const all = IT[S.sel].media, f = effFlt(all); if (f === 'pa
 function pairStep(g, d) { const n = listOf(IT[S.sel].media, g).length; S.pi[g] = (S.pi[g] + d + n) % n; renderPanel(); if ($('#lb').classList.contains('show')) lbShow(); }
 function lbClose() { $('#lb').classList.remove('show'); }
 
-/* search */
+/* search: 낱말 나눔 + 같은 뜻 낱말 + 질문형 말 제거 */
+const QSTOP = new Set(['몇', '어디', '어디에', '어떻게', '뭐', '무엇', '무슨', '어떤', '어느', '왜', '얼마', '얼마나', '해야', '하나요', '되나요', '돼요', '되요', '해요', '인가요', '건가요', '있나요', '없나요', '알려줘', '알려주세요', '궁금', '궁금해요', '궁금합니다', '방법', '좀', '혹시', '하나', '되나', '되는', '하는', '하면', '되면', '괜찮나요', '가능한가요', '주세요', '요']);
+const QJOSA = ['에서는', '에서', '으로', '까지', '에는', '부터', '은', '는', '을', '를', '에', '도', '만', '의', '요', '와', '과', '로', '이', '가'];
+function qtoks(q) {
+  return String(q).toLowerCase().replace(/[?!.,·~()\/"']/g, ' ').split(/\s+/).map(t => {
+    if (!t || QSTOP.has(t)) return '';
+    for (const j of QJOSA) { const rest = t.length - j.length; if (t.endsWith(j) && (rest >= 2 || (rest === 1 && '은는을를이도'.includes(j)))) { t = t.slice(0, -j.length); break; } }
+    return QSTOP.has(t) ? '' : norm(t);
+  }).filter(Boolean);
+}
+function qvars(t) { const v = new Set([t]); SYN.forEach(g => { if (g.some(w => w === t || (w.length >= 2 && t.includes(w)) || (t.length >= 2 && w.startsWith(t)))) g.forEach(w => v.add(w)); }); return [...v]; }
+/* q를 hay(띄어쓰기 지운 소문자 글)에 맞춰 봄. n=낱말 수, m=맞은 낱말 수, sc=점수 */
+function qmatch(q, hay, title) {
+  const ts = qtoks(q); let m = 0, sc = 0;
+  ts.forEach(t => { const vs = qvars(t); if (vs.some(v => hay.includes(v))) { m++; sc += title && vs.some(v => title.includes(v)) ? 3 : 2; } });
+  if (norm(q) && hay.includes(norm(q))) sc += 5;
+  return {n: ts.length, m, sc};
+}
 let hits = [], kSel = -1;
+const faqHit = f => { const pg = byId[f.to], x = IT[f.to], e = x && INDEX.find(z => z.x.id === f.to);
+  return pg ? {html: `${esc(f.q)}<small>${esc(pg.tab)}</small>`, act: () => go(pg.id)} : e ? {html: `${esc(f.q)}<small>${esc(e.b.tab)} · ${esc(x.text)}</small>`, act: () => go(e.b.id, e.x.id)} : null; };
 function search() {
-  const q = norm($('#q').value), r = $('#res');
-  if (!q) { r.classList.remove('show'); return; }
-  const seen = new Set(); hits = INDEX.filter(e => e.h.includes(q) && !seen.has(e.x.id + e.b.id) && seen.add(e.x.id + e.b.id)).slice(0, 20); kSel = -1;
-  r.innerHTML = hits.length ? hits.map((e, i) => `<button type="button" data-hit="${i}">${esc(e.x.text)}<small>${esc(e.b.tab)} · ${e.s.n}단계 ${esc(e.s.t)}${e.x.rid ? ' · ' + esc(e.x.rid) : ''}</small></button>`).join('') : '<div class="none">맞는 기준이 없습니다. 다른 낱말로 찾아보세요.</div>';
+  const raw = $('#q').value.trim(), r = $('#res');
+  const faqs = FAQ.map(faqHit).filter(Boolean);
+  if (!raw) { hits = faqs; kSel = -1; r.innerHTML = faqs.length ? `<p class="rhd">자주 묻는 질문</p>${faqs.map((h, i) => `<button type="button" class="rfaq" data-hit="${i}">${h.html}</button>`).join('')}` : ''; r.classList.toggle('show', !!faqs.length); return; }
+  const seen = new Set(), found = [];
+  B.forEach(b => { if (b.id === 'allrules') return; const mt = qmatch(raw, norm([b.title, b.tab, b.sub].join(' ')), norm(b.title)); if (mt.m && mt.m === mt.n) { const tm = qmatch(raw, norm(b.title + ' ' + b.tab)); found.push({m: mt.m, sc: mt.sc + (tm.m === tm.n ? 4 : tm.m >= 2 ? tm.m * 3 : -2), html: `${esc(b.title)}<small>페이지 · ${esc(b.sub || '')}</small>`, act: () => go(b.id)}); } });
+  INDEX.forEach(e => { const k = e.x.text; if (seen.has(k)) return; const mt = qmatch(raw, e.h, norm(e.x.text)); if (!mt.m) return; seen.add(k);
+    found.push({m: mt.m, sc: mt.sc, html: `${e.x.tag ? tag(e.x.tag) + ' ' : ''}${esc(e.x.text)}<small>${esc(e.b.tab)} · ${e.s.n}단계 ${esc(e.s.t)}</small>`, act: () => go(e.b.id, e.x.id)}); });
+  const n = qtoks(raw).length, best = Math.max(0, ...found.map(f => f.m));
+  hits = found.filter(f => f.m === best).sort((a, b) => b.sc - a.sc).slice(0, 12); kSel = -1;
+  const part = hits.length && best < n ? '<p class="rhd">모든 낱말이 맞는 기준이 없어, 일부가 맞는 기준을 보여드립니다</p>' : '';
+  r.innerHTML = hits.length ? part + hits.map((h, i) => `<button type="button" data-hit="${i}">${h.html}</button>`).join('')
+    : `<div class="none">맞는 기준이 없습니다. 다른 낱말로 찾아보시고, 그래도 없으면 소싱 담당자에게 문의해 주세요.</div>${faqs.length ? `<p class="rhd">자주 묻는 질문</p>${faqs.map((h, i) => `<button type="button" class="rfaq" data-hit="${i}">${h.html}</button>`).join('')}` : ''}`;
+  if (!hits.length) hits = faqs;
   r.classList.add('show');
 }
-function pick(i) { const e = hits[i]; if (!e) return; $('#res').classList.remove('show'); $('#q').value = ''; $('#q').blur(); go(e.b.id, e.x.id); }
+function pick(i) { const h = hits[i]; if (!h) return; $('#res').classList.remove('show'); $('#q').value = ''; $('#q').blur(); h.act(); }
 
 /* print */
 function buildPrint() {

@@ -45,7 +45,7 @@ def step_no(v):
 def main(path):
     old = json.loads(CJ.read_text(encoding='utf-8'))
     wb = load_workbook(path, read_only=True)
-    cm, pg, st, it, ph, ce, tp = (rows(wb, n) for n in ('큰 메뉴', '페이지', '단계', '항목', '사진', '센터', '주제'))
+    cm, pg, st, it, ph, ce, tp, sy, fq = (rows(wb, n) for n in ('큰 메뉴', '페이지', '단계', '항목', '사진', '센터', '주제', '검색어', '자주 묻는 질문'))
     if not pg or not it:
         raise SystemExit('페이지/항목 탭을 찾지 못했습니다. 탭 이름을 확인하세요.')
 
@@ -90,6 +90,8 @@ def main(path):
          'pages': pages, 'items': items,
          'centers': [{'id': r.get('센터ID', ''), 'name': r.get('센터 이름', ''), 'addr': r.get('도로명 주소', ''), 'jibun': r.get('지번 주소', ''),
                       'map': r.get('지도 링크', ''), 'kinds': r.get('입고 가능 복종', '')} for r in ce],
+         'synonyms': [r['같은 뜻 낱말'] for r in sy if r.get('같은 뜻 낱말')] or old.get('synonyms', []),
+         'faq': [{'q': r['질문'], 'to': r['연결']} for r in sorted(fq, key=lambda r: num(r.get('순서'))) if r.get('질문') and r.get('연결')] or old.get('faq', []),
          'topics': [r['주제'] for r in sorted(tp, key=lambda r: num(r.get('순서'))) if r.get('주제')] or old.get('topics', [])}
     shutil.copy(CJ, CJ.with_suffix('.json.bak'))
     CJ.write_text(json.dumps(M, ensure_ascii=False, indent=1), encoding='utf-8')

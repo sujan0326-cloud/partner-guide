@@ -18,7 +18,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-SHEET_ID = '1hsSNc5iBJeCsj9Mdn8Vs0wCJmt4wxNxQpPsxU8csOZg'  # K2 협력사 납품가이드 · 사이트 내용 (사이트 연결)
+SHEET_ID = '1abCGl8hOxAcvggjHbxWKFwZwF0rjNSI-S742NaEPfBc'  # K2 협력사 납품가이드 · 사이트 내용 (사이트 연결)
 log = logging.getLogger('build')
 
 
