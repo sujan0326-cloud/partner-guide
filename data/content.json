@@ -49,6 +49,16 @@
   },
   {
    "cat": "센터 안내",
+   "id": "inflow",
+   "sub": "입고 순서",
+   "title": "입고 순서",
+   "desc": "예약부터 입고 확정까지의 순서",
+   "en": "CENTER",
+   "layout": "입고순서",
+   "steps": []
+  },
+  {
+   "cat": "센터 안내",
    "id": "onsite",
    "sub": "납품 시 주의사항",
    "title": "납품 시 주의사항",
@@ -61,9 +71,11 @@
      "t": "센터 안에서",
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><rect x=\"20\" y=\"40\" width=\"200\" height=\"90\" fill=\"#e3e6e1\" stroke=\"#9c958a\" stroke-width=\"2\"></rect><rect x=\"34\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M34 70h48\" stroke=\"#b2b9be\"></path><rect x=\"34\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M34 80h48\" stroke=\"#b2b9be\"></path><rect x=\"34\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M34 90h48\" stroke=\"#b2b9be\"></path><rect x=\"34\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M34 100h48\" stroke=\"#b2b9be\"></path><rect x=\"34\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M34 110h48\" stroke=\"#b2b9be\"></path><rect x=\"96\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M96 70h48\" stroke=\"#b2b9be\"></path><rect x=\"96\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M96 80h48\" stroke=\"#b2b9be\"></path><rect x=\"96\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M96 90h48\" stroke=\"#b2b9be\"></path><rect x=\"96\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M96 100h48\" stroke=\"#b2b9be\"></path><rect x=\"96\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M96 110h48\" stroke=\"#b2b9be\"></path><rect x=\"158\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M158 70h48\" stroke=\"#b2b9be\"></path><rect x=\"158\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M158 80h48\" stroke=\"#b2b9be\"></path><rect x=\"158\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M158 90h48\" stroke=\"#b2b9be\"></path><rect x=\"158\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M158 100h48\" stroke=\"#b2b9be\"></path><rect x=\"158\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M158 110h48\" stroke=\"#b2b9be\"></path><text x=\"120\" y=\"30\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#345443\">현장 안내에 따라</text><text x=\"120\" y=\"154\" font-size=\"12\"  text-anchor=\"middle\" fill=\"#5f6a62\">RFID·수정은 승인 후</text></svg>",
      "items": [
+      "o1",
       "v4a",
-      "v4b",
+      "o2",
       "v4c",
+      "v4b",
       "v4d",
       "v4e"
      ]
@@ -133,6 +145,7 @@
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\">\n<polygon points=\"34,62 146,62 146,150 34,150\" fill=\"#d0b995\" stroke=\"#aa916b\" stroke-width=\"2\"></polygon>\n<polygon points=\"146,62 198,40 198,128 146,150\" fill=\"#bda580\" stroke=\"#aa916b\" stroke-width=\"2\"></polygon>\n<polygon points=\"34,62 86,40 198,40 146,62\" fill=\"#e0ccaa\" stroke=\"#aa916b\" stroke-width=\"2\"></polygon>\n<path d=\"M60 51h112\" stroke=\"#c9b273\" stroke-width=\"6\" opacity=\".6\"></path>\n<polygon points=\"160,70 186,59 186,79 160,90\" fill=\"#fff\" stroke=\"#8d989c\" stroke-width=\"1.5\"></polygon>\n<path d=\"M165 78l16-7M165 83l16-7\" stroke=\"#222\" stroke-width=\"1.5\"></path>\n<ellipse cx=\"173\" cy=\"74\" rx=\"22\" ry=\"20\" fill=\"none\" stroke=\"#345443\" stroke-width=\"3\"></ellipse>\n<path d=\"M200 96 Q222 104 226 124\" stroke=\"#5f6a62\" stroke-width=\"1.5\" fill=\"none\" stroke-dasharray=\"4 3\"></path>\n<text x=\"150\" y=\"166\" font-size=\"12\" fill=\"#5f6a62\">좁은 면 상단 정중앙</text>\n<text x=\"40\" y=\"22\" font-size=\"12\" fill=\"#5f6a62\">반대편 좁은 면에도 1장</text></svg>",
      "items": [
       "s4b03",
+      "s4b06",
       "s4b04",
       "s4b05",
       "s4b02"
@@ -337,6 +350,7 @@
       "h4c",
       "a3c",
       "s4b03",
+      "s4b06",
       "s3b07",
       "s3b06",
       "s4b04",
@@ -351,29 +365,38 @@
    "id": "reserve",
    "sub": "예약 안내",
    "title": "예약 안내",
-   "desc": "주간 계획 등록, 예약과 승인, 시간 변경",
+   "desc": "예약 전 확인, 배차·상차, 승인 확인",
    "en": "SUPPORT",
    "layout": "기본",
    "steps": [
     {
      "n": "1",
-     "t": "납품 전 확인",
-     "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><rect x=\"60\" y=\"34\" width=\"120\" height=\"110\" rx=\"8\" fill=\"#fff\" stroke=\"#9fb0b8\" stroke-width=\"2.5\"></rect><rect x=\"60\" y=\"34\" width=\"120\" height=\"26\" rx=\"8\" fill=\"#345443\"></rect><rect x=\"74\" y=\"72\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#d6dfe3\"></rect><rect x=\"98\" y=\"72\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#d6dfe3\"></rect><rect x=\"122\" y=\"72\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#d6dfe3\"></rect><rect x=\"146\" y=\"72\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#d6dfe3\"></rect><rect x=\"74\" y=\"94\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#d6dfe3\"></rect><rect x=\"98\" y=\"94\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#d6dfe3\"></rect><rect x=\"122\" y=\"94\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#345443\"></rect><rect x=\"146\" y=\"94\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#d6dfe3\"></rect><rect x=\"74\" y=\"116\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#d6dfe3\"></rect><rect x=\"98\" y=\"116\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#d6dfe3\"></rect><rect x=\"122\" y=\"116\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#d6dfe3\"></rect><rect x=\"146\" y=\"116\" width=\"16\" height=\"14\" rx=\"2\" fill=\"#d6dfe3\"></rect><text x=\"120\" y=\"162\" font-size=\"12\"  text-anchor=\"middle\" fill=\"#5f6a62\">브랜드·센터·버전 확인</text></svg>",
+     "t": "예약 전 확인",
      "items": [
-      "v1a",
-      "v1b",
-      "v1c"
-     ]
+      "r1",
+      "v2b",
+      "r3",
+      "v1b"
+     ],
+     "art": ""
     },
     {
      "n": "2",
-     "t": "예약·승인",
-     "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><rect x=\"40\" y=\"40\" width=\"70\" height=\"90\" rx=\"6\" fill=\"#fff\" stroke=\"#9fb0b8\" stroke-width=\"2.5\"></rect><path d=\"M52 62h46M52 78h46M52 94h30\" stroke=\"#c9cfd1\" stroke-width=\"5\"></path><path d=\"M120 85h20\" stroke=\"#5f6a62\" stroke-width=\"2\"></path><path d=\"M136 80l6 5-6 5\" fill=\"none\" stroke=\"#5f6a62\" stroke-width=\"2\"></path><circle cx=\"180\" cy=\"85\" r=\"30\" fill=\"#eef2ea\" stroke=\"#345443\" stroke-width=\"3\"></circle><path d=\"m166 86 10 10 20-22\" fill=\"none\" stroke=\"#345443\" stroke-width=\"5\" stroke-linecap=\"round\"></path><text x=\"75\" y=\"150\" font-size=\"12\"  text-anchor=\"middle\" fill=\"#5f6a62\">예약 등록</text><text x=\"180\" y=\"150\" font-size=\"12\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#345443\">승인 확인</text></svg>",
+     "t": "배차·상차",
      "items": [
-      "v2a",
-      "v2b",
-      "v2c"
-     ]
+      "r4",
+      "r5"
+     ],
+     "art": ""
+    },
+    {
+     "n": "3",
+     "t": "승인 확인",
+     "items": [
+      "r6",
+      "r7"
+     ],
+     "art": ""
     }
    ]
   },
@@ -835,8 +858,8 @@
    "rid": "BOX-03",
    "tag": "반송",
    "why": "",
-   "exc": "‘양쪽’은 같은 면에 두 장을 붙이라는 뜻이 아닙니다. 가장자리에서 몇 cm인지 같은 거리는 이 시안에서 만들지 않습니다.",
-   "act": "V1.4는 한쪽에만 부착한 경우 반송사유로 안내합니다.",
+   "exc": "박스 스티커는 박스의 좁은 면에 붙입니다.",
+   "act": "한쪽 면에만 부착하면 반송됩니다.",
    "table": [],
    "source": "물류납품규칙 D22 · V1.4 및 기존 작성 시안 기반",
    "nophoto": false,
@@ -884,12 +907,12 @@
    ]
   },
   "s4b05": {
-   "text": "과패킹·부풀음·찌그러짐·젖음 금지",
+   "text": "깨끗한 박스 사용 (파손·젖음·무너짐 금지)",
    "rid": "BOX-05",
-   "tag": "",
+   "tag": "반송",
    "why": "",
-   "exc": "변형 사진만으로 젖음이 원인이라고 단정하지 않습니다. 판정은 실제 박스 상태로 확인합니다.",
-   "act": "V1.4는 과패킹·부풀음·찌그러짐·젖은 박스를 금지합니다.",
+   "exc": "파손된 박스, 젖은 박스, 무너진 박스처럼 재활용하거나 적치할 수 없는 박스는 반송됩니다.",
+   "act": "",
    "table": [],
    "source": "물류납품규칙 D16 / 물류납품규칙 D17 / 물류납품규칙 D18 / 물류납품규칙 D19 / 기타사항 B30 / 기타사항 B32 · V1.4 및 기존 작성 시안 기반",
    "nophoto": false,
@@ -1774,26 +1797,13 @@
    "todo": "",
    "media": []
   },
-  "v1a": {
-   "text": "적용 브랜드·센터·포장 구분 확인",
-   "rid": "PRE-01",
-   "tag": "",
-   "why": "",
-   "exc": "다른 브랜드나 센터의 기준을 그대로 적용하지 않습니다.",
-   "act": "적용 여부가 명확하지 않으면 담당자에게 확인합니다.",
-   "table": [],
-   "source": "물류납품규칙 B2 / 물류납품규칙 D3 · V1.4 및 기존 작성 시안 기반",
-   "nophoto": true,
-   "todo": "",
-   "media": []
-  },
   "v1b": {
    "text": "PCS·PACK·BOX 단위 구분",
    "rid": "PRE-02",
    "tag": "",
    "why": "",
-   "exc": "한 팩에 들어가는 실제 PCS 수는 상품별로 다릅니다. 1PACK을 상품 1개로 해석하지 않습니다.",
-   "act": "임의로 구성을 변경하지 않고 지정된 포장 정보를 확인합니다.",
+   "exc": "한 팩에 들어가는 실제 PCS 수는 상품별로 다릅니다. 1PACK을 상품 1개로 보지 않습니다.",
+   "act": "",
    "table": [
     [
      "용어",
@@ -1841,75 +1851,15 @@
    "todo": "",
    "media": []
   },
-  "v1c": {
-   "text": "주간 입고계획 별도 등록",
-   "rid": "PRE-03",
-   "tag": "",
-   "why": "",
-   "exc": "V1.4에는 전주 목요일 17시 마감이 기재되어 있습니다. 이 시안은 해당 시간을 현행 마감으로 확정하지 않습니다.",
-   "act": "누락 시 처리와 현행 마감은 실제 게시 버전의 안내에 따릅니다.",
-   "table": [],
-   "source": "물류납품규칙 D32 / 물류납품규칙 F32 · V1.4 및 기존 작성 시안 기반",
-   "nophoto": true,
-   "todo": "",
-   "media": []
-  },
-  "v2a": {
-   "text": "예약 승인 상태 확인 후 출발",
-   "rid": "PRE-04",
-   "tag": "",
-   "why": "",
-   "exc": "V1.4의 2일 전 마감과 월·화요일 예외는 현행 운영 확인 대상입니다. 공휴일 계산을 임의로 적용하지 않습니다.",
-   "act": "승인 상태가 불명확하면 출발 전에 담당자에게 확인합니다.",
-   "table": [],
-   "source": "물류납품규칙 D33 · V1.4 및 기존 작성 시안 기반",
-   "nophoto": true,
-   "todo": "",
-   "media": []
-  },
   "v2b": {
-   "text": "예약 수량·포장 구분 실물과 일치",
+   "text": "실제 입고 상품과 예약 내용 일치",
    "rid": "PRE-05",
    "tag": "",
    "why": "",
-   "exc": "등록 가능한 코드 수량과 실제 입고예약 수량을 같은 의미로 해석하지 않습니다.",
-   "act": "원문은 예약수량과 실입고수량 불일치를 금지하고 사전 공유를 안내합니다. 사전 공유 자체가 예외 승인은 아닙니다.",
+   "exc": "예약한 상품·수량·포장 구분이 실제로 입고되는 상품과 같은지 확인합니다.",
+   "act": "",
    "table": [],
    "source": "물류납품규칙 D25 / 물류납품규칙 F25 / 물류납품규칙 D9 / 물류납품규칙 F10 · V1.4 및 기존 작성 시안 기반",
-   "nophoto": true,
-   "todo": "",
-   "media": []
-  },
-  "v2c": {
-   "text": "시간 변경·취소·미입고는 지정 경로로 전달",
-   "rid": "PRE-06",
-   "tag": "",
-   "why": "",
-   "exc": "시간 변경과 주간 계획 변경의 마감은 다를 수 있습니다. 통보와 변경 승인을 구분합니다.",
-   "act": "연락 시점·수신자·채널은 현행 안내 기준을 적용합니다.",
-   "table": [
-    [
-     "전달 항목",
-     "작성 내용"
-    ],
-    [
-     "대상 예약",
-     "업체 / 브랜드 / 예약일시"
-    ],
-    [
-     "변경 유형",
-     "시간변경 / 일자변경 / 취소 / 미입고"
-    ],
-    [
-     "변경 사항",
-     "변경 전후 일시·수량과 사유"
-    ],
-    [
-     "결과 확인",
-     "수신 여부와 처리 결과"
-    ]
-   ],
-   "source": "물류납품규칙 D33 / 물류납품규칙 D34 / 물류납품규칙 D29 · V1.4 및 기존 작성 시안 기반",
    "nophoto": true,
    "todo": "",
    "media": []
@@ -1920,7 +1870,7 @@
    "tag": "",
    "why": "",
    "exc": "입고 시작은 09시, 마지막 입고 시간은 16시입니다.",
-   "act": "입고 예정 시간을 지키지 않으면 그날 가장 마지막 순서로 재배치됩니다. 늦거나 이슈가 있으면 사전에 소싱 담당자에게 공유해 주세요.",
+   "act": "도착 지연, 이른 도착, 입고 취소 등 특이사항이 있으면 사전에 소싱 담당자에게 공유해 주세요. 사전 공유 없이 늦으면 그날 가장 마지막 순서로 입고합니다.",
    "table": [
     [
      "구분",
@@ -1941,11 +1891,11 @@
    "media": []
   },
   "v3b": {
-   "text": "복장: 반바지·슬리퍼 금지, 방문 명찰 패용",
+   "text": "복장: 반바지·슬리퍼(크록스)·샌들 금지, 방문증 패용",
    "rid": "PRE-08",
    "tag": "",
    "why": "",
-   "exc": "경비실에서 '방문' 명찰을 받아 센터 안에서는 반드시 패용합니다. 납품 대행업체를 이용할 때도 납품처 담당자가 최소 1명 동행합니다.",
+   "exc": "경비실에서 방문증을 받아 센터 안에서는 반드시 패용합니다.",
    "act": "",
    "table": [],
    "source": "물류센터 입고파트 안내 (2026-11-24)",
@@ -1983,7 +1933,7 @@
    "tag": "",
    "why": "",
    "exc": "사고 예방을 위해 컨테이너 차량 주차·입고 때 매입처 담당자가 차량을 유도합니다.",
-   "act": "현장의 승인된 대응 절차에 따릅니다.",
+   "act": "",
    "table": [],
    "source": "기타사항 B84 / 기타사항 B86 / 기타사항 G86 / 기타사항 L87 · V1.4 및 기존 작성 시안 기반",
    "nophoto": true,
@@ -2031,12 +1981,12 @@
    ]
   },
   "v4c": {
-   "text": "센터 내 수정·GATE 이후 개봉은 승인 후 가능",
+   "text": "현장 박스 임의 개봉 금지",
    "rid": "SITE-04",
    "tag": "",
    "why": "",
-   "exc": "원문은 센터 내 수정 불허와 사전 협의 예외, GATE 이후 금지와 소량 리젝 예외를 구분합니다. 소량·성수기 범위는 이 시안에서 정하지 않습니다.",
-   "act": "사전 공유가 작업 승인은 아닙니다. 원문 대응란의 ‘-’를 반송으로 임의 변경하지 않습니다.",
+   "exc": "개봉이 필요하면 개봉 허용 공간을 도급사 담당자와 공유한 뒤 개봉합니다. 개봉 대상은 RFID 칩 미인식 박스이며, 10박스 이내만 현장 작업을 허용합니다.",
+   "act": "성수기나 입고가 많은 날에는 현장 개봉 작업을 진행할 수 없습니다.",
    "table": [],
    "source": "물류납품규칙 D24 / 물류납품규칙 E24 / 물류납품규칙 F24 / 물류납품규칙 D31 / 물류납품규칙 F31 · V1.4 및 기존 작성 시안 기반",
    "nophoto": true,
@@ -2044,12 +1994,12 @@
    "media": []
   },
   "v4d": {
-   "text": "RFID 수정은 승인·태그 회수·재검수까지",
+   "text": "RFID 태그 임의 교체 금지",
    "rid": "SITE-05",
    "tag": "",
    "why": "리젝 라인에서 임의로 태그를 바꾸면 버려진 칩이 물류 입고 상태로 남아 재고 부족이나 라벨 미발행 재고가 생깁니다",
-   "exc": "이 순서는 안내 구조 예시이며 실제 작업 SOP가 아닙니다. 칩 처리·보관·폐기·단말 조작은 승인된 절차가 필요합니다.",
-   "act": "챗봇은 태그 교체나 예외 입고를 승인하지 않습니다.",
+   "exc": "리젝 라인에서 RFID 태그를 임의로 교체하지 않습니다. 수정이 필요하면 현장 담당자의 승인을 받아 진행합니다.",
+   "act": "",
    "table": [],
    "source": "기타사항 B138 / 기타사항 B140 / 기타사항 G140 / 기타사항 L140 / 기타사항 Q141 / 기타사항 Q142 / 기타사항 B165 / 물류납품규칙 F31 · V1.4 및 기존 작성 시안 기반",
    "nophoto": true,
@@ -2094,9 +2044,9 @@
   "s3b08": {
    "text": "포장 유형에 맞는 박스, 동일 입고 건 규격 통일",
    "rid": "",
-   "tag": "",
+   "tag": "반송",
    "why": "",
-   "exc": "솔리드 제품을 아소트 박스에 담고 아소트 코드를 지우지 않으면 안 됩니다. 사전 협의 없이 다른 유형의 박스를 쓰거나, 매직으로 내품 정보를 적지 않습니다.",
+   "exc": "솔리드 박스, 아소트 박스(폴리백·BOX 동일)를 포장 유형에 맞게 사용합니다. 사전 소통 없이 다른 박스에 종이를 덧붙여 입고하면 반송됩니다.",
    "act": "",
    "table": [],
    "source": "Ember 제공 PPT (2026-11-24)",
@@ -2343,10 +2293,151 @@
    "rid": "",
    "tag": "시정요구",
    "why": "",
-   "exc": "납품 대행업체를 이용할 때도 납품처 담당자가 최소 1명 동행합니다.",
+   "exc": "납품 대행업체를 이용할 때도 납품처 담당자가 최소 1명 동행해 RFID 오류에 대응합니다.",
    "act": "",
    "table": [],
    "source": "물류납품규칙 V1.5 (엑셀)",
+   "nophoto": true,
+   "todo": "",
+   "media": []
+  },
+  "o1": {
+   "text": "하역 인원: 40피트 최소 4명, 20피트 최소 3명",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "컨테이너 규격에 맞는 하역 인원을 확보해 입고를 진행합니다.",
+   "act": "",
+   "table": [
+    [
+     "컨테이너",
+     "최소 하역 인원"
+    ],
+    [
+     "40피트",
+     "4명"
+    ],
+    [
+     "20피트",
+     "3명"
+    ]
+   ],
+   "source": "물류센터 입고파트 안내 (2026-11-24)",
+   "nophoto": true,
+   "todo": "",
+   "media": []
+  },
+  "o2": {
+   "text": "게이트 배정 전 도크에 박스 적치 금지",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "게이트를 배정받은 뒤 하역합니다. 배정 전에 임의로 도크에 박스를 쌓아두지 않습니다.",
+   "act": "",
+   "table": [],
+   "source": "물류센터 입고파트 안내 (2026-11-24)",
+   "nophoto": true,
+   "todo": "",
+   "media": []
+  },
+  "r1": {
+   "text": "상품 패킹·출고등록 완료 후 예약",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "입고예약 전에 상품 패킹과 출고등록이 끝났는지 확인합니다.",
+   "act": "",
+   "table": [],
+   "source": "물류센터 입고파트 안내 (2026-11-24)",
+   "nophoto": true,
+   "todo": "",
+   "media": []
+  },
+  "r3": {
+   "text": "ASSORT는 실물 포장 구분 그대로 예약 (폴리백·박스)",
+   "rid": "",
+   "tag": "반송",
+   "why": "실물과 다르게 예약해 입고하면 반송됩니다",
+   "exc": "예약 화면의 팩구분(폴리백·박스)이 실물과 같은지 확인합니다. 박스에 담겨 와도 안에 블리스터 백 팩이 들어 있다면 아소트 팩(폴리백)입니다.",
+   "act": "",
+   "table": [],
+   "source": "물류센터 입고파트 안내 (2026-11-24)",
+   "nophoto": false,
+   "todo": "",
+   "media": [
+    [
+     "참고",
+     "rsv_packtype_screen.jpg",
+     "입고예약 화면의 아소트구분·팩구분"
+    ],
+    [
+     "참고",
+     "rsv_assort_pack_in_box.jpg",
+     "박스 안에 팩(폴리백)이 담긴 아소트 팩"
+    ]
+   ]
+  },
+  "r4": {
+   "text": "입고전표 1건은 차량 1대로 입고",
+   "rid": "",
+   "tag": "",
+   "why": "한 전표를 여러 차량에 나눠 입고하면 입고확정이 늦어집니다",
+   "exc": "",
+   "act": "",
+   "table": [],
+   "source": "물류센터 입고파트 안내 (2026-11-24)",
+   "nophoto": true,
+   "todo": "",
+   "media": []
+  },
+  "r5": {
+   "text": "차량 1대 여러 브랜드 혼적 지양",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "불가피하게 혼적할 때는 브랜드별로 묶어 상차합니다. 예를 들어 K2 → EIDER → K2처럼 섞어 실으면 성수기에는 외부에서 정리를 요청할 수 있습니다.",
+   "act": "",
+   "table": [],
+   "source": "물류센터 입고파트 안내 (2026-11-24)",
+   "nophoto": true,
+   "todo": "",
+   "media": []
+  },
+  "r6": {
+   "text": "승인 순서: 업체 예약 → 물류입고승인 → 본사승인",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "협력사가 입고예약을 하면 물류에서 물류입고승인, 소싱 담당자가 본사승인을 합니다. 예약 내역 수정은 예약 상태에 맞는 담당자에게 요청합니다.",
+   "act": "",
+   "table": [],
+   "source": "물류센터 입고파트 안내 (2026-11-24)",
+   "nophoto": true,
+   "todo": "",
+   "media": []
+  },
+  "r7": {
+   "text": "본사승인 여부와 최종 승인 시간 확인",
+   "rid": "",
+   "tag": "",
+   "why": "예약한 시간에 입고가 어려우면 물류에서 다른 시간으로 조정해 승인할 수 있습니다",
+   "exc": "출발 전에 본사승인이 됐는지, 몇 시로 최종 승인됐는지 꼭 확인합니다.",
+   "act": "",
+   "table": [],
+   "source": "물류센터 입고파트 안내 (2026-11-24)",
+   "nophoto": true,
+   "todo": "",
+   "media": []
+  },
+  "s4b06": {
+   "text": "내품 정보는 양쪽 좁은 면 모두 정확히 기재",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "한쪽 면에만 기재해 입고하면 경고 조치하고, 누적되면 반송됩니다.",
+   "act": "",
+   "table": [],
+   "source": "물류센터 입고파트 안내 (2026-11-24)",
    "nophoto": true,
    "todo": "",
    "media": []
@@ -2367,7 +2458,7 @@
    "addr": "경기도 여주시 가남읍 여주남로 750",
    "jibun": "경기도 여주시 가남읍 본두리 703-5",
    "map": "",
-   "kinds": "의류 (다운 포함), 신발, 사은품"
+   "kinds": "의류 (다운 포함), 신발, 사은품, 코스트코 상품"
   }
  ]
 }

@@ -498,6 +498,13 @@ body:not(.inb) #gnb{visibility:hidden}
 .rpts li>i{font:600 16px var(--en);color:var(--navy2);font-style:normal}.rpts li b{display:block;font-size:16px;margin-bottom:4px}.rpts li p{margin:0;color:var(--sub);font-size:14px}
 .rpts .q{display:inline-block;margin:6px 0 0;padding:6px 12px;background:#eef1f6;color:var(--navy);font-weight:700;font-size:14px}
 .rpts .bad{margin-top:8px;color:var(--red);font-weight:600;font-size:14px}
+.ifl{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;border-top:2px solid var(--navy)}
+.ifl li{position:relative;padding:18px 16px 22px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);display:flex;flex-direction:column;gap:6px}
+.ifl li:nth-child(6n){border-right:0}.ifl .ig{font:600 11px var(--en);letter-spacing:1px;color:var(--mute)}.ifl i{font:700 18px var(--en);color:var(--navy2);font-style:normal}
+.ifl b{font-size:15px}.ifl p{margin:0;font-size:13px;color:var(--sub);line-height:1.55}
+.ifl li:not(:nth-child(6n))::after{content:'';position:absolute;right:-6px;top:24px;width:10px;height:10px;border-top:1.5px solid #b7bdc8;border-right:1.5px solid #b7bdc8;background:#fff;transform:rotate(45deg);z-index:1}
+@media (max-width:1100px){.ifl{grid-template-columns:repeat(3,minmax(0,1fr))}.ifl li:nth-child(6n){border-right:1px solid var(--line2)}.ifl li:nth-child(3n){border-right:0}.ifl li::after{display:none}}
+@media (max-width:600px){.ifl{grid-template-columns:1fr}.ifl li{border-right:0!important}}
 .rshot{margin:0 0 6px;border:1px solid var(--line);background:#fafbfc;padding:10px;cursor:zoom-in}.rshot img{display:block;width:100%;max-width:1140px;height:auto;margin:0 auto}.rshot figcaption{margin-top:8px;font-size:13px;color:var(--mute)}
 .rshot.big{position:fixed;inset:0;z-index:80;margin:0;border:0;background:rgba(10,15,28,.92);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:4vh 3vw;cursor:zoom-out}.rshot.big img{width:auto;max-width:100%;max-height:86vh;background:#fff}.rshot.big figcaption{color:#c9d0dc}
 .rcmp .key{border-color:var(--navy);background:#f3f5f9}.rcmp .key h4{color:var(--navy)}.rcmp b{color:var(--ink)}
@@ -721,7 +728,7 @@ function svShow() {
 }
 function svClose() { $('#sv').classList.remove('show'); document.body.style.overflow = ''; }
 const PTYPES = [
-  {id: 'solid', name: '솔리드', en: 'SOLID', flow: '개별 포장 → 박스', copy: '상품은 개별 포장하고, 포장한 상품을 박스에 담는 유형입니다.', check: '개별 폴리백·가격택·박스 입수량을 확인합니다.', img: 'pt_solid_card.jpg', fit: 'contain'},
+  {id: 'solid', name: '솔리드', en: 'SOLID', flow: '개별 포장 → 박스', copy: '제품 1PCS를 폴리백으로 포장하고, 포장한 상품을 박스에 담는 유형입니다.', check: '개별 폴리백·가격택·박스 입수량을 확인합니다.', img: 'pt_solid_card.jpg', fit: 'contain'},
   {id: 'assort', name: '아소트 팩', en: 'ASSORT PACK', flow: '지정 구성 → 팩 → 박스', copy: '지정 구성을 블리스터 백으로 묶고, 1박스에 팩 3개 이상 담는 유형입니다.', check: '팩 스티커는 정가운데, 가격택은 반대면입니다. 잔량은 마지막 박스에 한해 1~2팩까지 허용합니다.', img: 'pt_pack_card.jpg', fit: 'contain', img2: 'pt_pack2.jpg'},
   {id: 'assort', name: '아소트 박스', en: 'ASSORT BOX', flow: '지정 구성 → 박스', copy: '1박스에 3팩이 안 될 때, 솔리드로 포장한 제품을 그대로 박스에 담는 유형입니다.', check: '블리스터 백은 필요 없습니다. 2팩만 들어가면 1팩으로 바꾸고 박스를 줄입니다.', img: 'pt_box_card.jpg', fit: 'contain'}];
 function typesHTML() {
@@ -774,6 +781,7 @@ function rfixHTML() {
      <tr class="rres"><td>소싱취소</td><td>물류입고승인 단계의 예약을 소싱에서 취소하면 이렇게 보입니다</td></tr>
      <tr class="rres"><td>입고취소</td><td>본사승인 단계의 예약을 물류에서 종결 처리하면 이렇게 보입니다</td></tr>
     </table>
+    <p class="rwarn"><b>최종 승인 시간을 꼭 확인하세요.</b> 예약한 시간에 입고가 어려우면 물류에서 다른 시간으로 조정해 물류입고승인을 할 수 있습니다. 출발 전에 본사승인이 됐는지, 몇 시로 최종 승인됐는지 확인해 주세요.</p>
    </section></div>
    <aside class="rside"><section class="rbox"><span class="en">BEFORE YOU CANCEL</span><h2 style="font-size:20px">취소 뒤 재예약 시간이 다릅니다</h2>
     <div class="rcmp" style="grid-template-columns:1fr">
@@ -859,6 +867,19 @@ function renderHbar() {
 document.addEventListener('click', e => { const h = e.target.closest('[data-hb]'); if (!h) return; const i = +h.dataset.hb; HOPEN = HOPEN === i ? -1 : i; renderHbar();
   if (HOPEN >= 0) setTimeout(() => { const r = $('#hdrop').getBoundingClientRect(); if (r.bottom > innerHeight) window.scrollBy({top: Math.min(r.bottom - innerHeight + 24, r.top - 90), behavior: 'smooth'}); }, 380); });
 
+/* 센터 안내 · 입고 순서 */
+const INFLOW = [
+  ['예약', '입고예약', '협력사가 입고예약을 등록합니다'], ['예약', '본사승인 완료', '물류입고승인과 본사승인까지 끝났는지 확인합니다'],
+  ['도착', '예약 시간에 차량 도착', '최종 승인된 시간에 맞춰 도착합니다'], ['도착', '도크에 차량 접안', '안내받은 도크에 차량을 댑니다'],
+  ['도착', '패킹리스트 전달', '입고 담당자에게 패킹리스트를 전달합니다'], ['하역', '게이트 배정', '접안한 도크 쪽 게이트를 배정받습니다'],
+  ['하역', '박스 하역', '배정받은 게이트로 박스를 내립니다'], ['하역', 'SKU별 파렛트 적재', '뒷단에서 SKU별 파렛트에 박스를 쌓습니다'],
+  ['검수', '상품 샘플 검수', '입고 현장 담당자가 샘플을 검수합니다'], ['검수', '입고 확정', '문제가 있으면 K2 담당자와 처리 방안을 확인하고, 없으면 입고를 확정합니다'],
+  ['종료', '납품일지 작성', '협력사(대행사) 담당자가 납품일지를 작성합니다'], ['종료', '입고 확인서 수령', '입고 확인서를 받으면 입고가 끝납니다']];
+function inflowHTML() {
+  return `<section class="rbox"><span class="en">INBOUND FLOW</span><h2>예약부터 입고 종료까지</h2><p class="rlead">센터에 도착한 뒤에는 아래 순서로 입고가 진행됩니다.</p>
+   <ol class="ifl">${INFLOW.map((x, i) => `<li><span class="ig">${x[0]}</span><i>${String(i + 1).padStart(2, '0')}</i><b>${x[1]}</b><p>${x[2]}</p></li>`).join('')}</ol></section>`;
+}
+
 function renderBoard() {
   const b = byId[S.view];
   const cp = menuPages({pages: catPages(b.cat)}), cat = CATS.find(c => c.name === b.cat) || {}, im = srcOf(cat.img);
@@ -866,7 +887,7 @@ function renderBoard() {
    ${cp.length > 1 ? `<nav class="btabs" role="tablist" aria-label="${esc(b.cat)}">${cp.map(x => `<button class="${x.id === b.id ? 'on' : ''}" type="button" role="tab" aria-selected="${x.id === b.id}" data-go="${x.id}">${esc(x.tab)}</button>`).join('')}</nav>` : ''}`.replace(/class="" type="button" role="tab" aria-selected="false" data-go="([a-z0-9]+)"/g, (m, id) => grpOfPage(byId[id] || {}) && grpOfPage(byId[id]) === grpOfPage(b) ? `class="on" type="button" role="tab" aria-selected="true" data-go="${id}"` : m);
   $('#bnr').classList.toggle('has-tabs', cp.length > 1);
   $('#bhead').innerHTML = `<div><nav class="crumb" aria-label="현재 위치"><button type="button" id="goHome2">홈</button><span aria-hidden="true">/</span><span>${esc(b.cat)}</span>${grpOfPage(b) ? `<span aria-hidden="true">/</span><span>${esc(grpOfPage(b))}</span>` : ''}${b.tab !== b.cat ? `<span aria-hidden="true">/</span><span>${esc(GTAB[b.id] || b.tab)}</span>` : ''}</nav><h1>${esc(b.title)}</h1><p>${esc(b.sub)}</p></div>`;
-  $('#extra').innerHTML = b.layout === '슬라이드' ? slidesHTML(b) : b.layout === '유형' ? typesHTML() : b.layout === '센터' ? centerHTML() : b.layout === '양식' ? formsHTML() : b.layout === '비용' ? costHTML() : b.layout === '예약마감' ? rcloseHTML() : b.layout === '예약수정' ? rfixHTML() : b.layout === '재입고' ? rnoteHTML() : b.layout === '준비 중' ? `<div class="prep"><b>내용 준비 중입니다</b><p>${esc(b.sub)}. 확인되는 대로 이 자리에 올라옵니다.</p></div>` : '';
+  $('#extra').innerHTML = b.layout === '슬라이드' ? slidesHTML(b) : b.layout === '유형' ? typesHTML() : b.layout === '센터' ? centerHTML() : b.layout === '양식' ? formsHTML() : b.layout === '비용' ? costHTML() : b.layout === '예약마감' ? rcloseHTML() : b.layout === '입고순서' ? inflowHTML() : b.layout === '예약수정' ? rfixHTML() : b.layout === '재입고' ? rnoteHTML() : b.layout === '준비 중' ? `<div class="prep"><b>내용 준비 중입니다</b><p>${esc(b.sub)}. 확인되는 대로 이 자리에 올라옵니다.</p></div>` : '';
   $('#extra').insertAdjacentHTML('afterbegin', gtabsHTML(b));
   const noBoard = !b.steps.length || b.layout === '슬라이드'; document.querySelector('.lay').hidden = noBoard;
   if (noBoard) { $('#flow').innerHTML = ''; $('#cards').innerHTML = ''; $('#pnl').innerHTML = ''; return; }
