@@ -492,6 +492,9 @@ body:not(.inb) #gnb{visibility:hidden}
 .pvg input{width:18px;height:18px;accent-color:#162036}.pvg span{font-weight:600;font-size:14.5px}.pvg small{margin-left:auto;color:var(--mute);font-size:12px}
 .pvf{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line)}.pvf span{flex:1}.pvl{border:0;background:none;color:var(--sub);font-size:13px;text-decoration:underline;padding:0}.pvf .cbtn[disabled]{opacity:.4;cursor:not-allowed}
 @media (max-width:600px){.pvg{grid-template-columns:1fr}}
+/* 문제→보완 화살표 */
+.dvis:has(.dfx){position:relative}.dfx{position:absolute;left:50%;top:var(--dfxy,calc(var(--rowh,260px) / 2));transform:translate(-50%,-50%);z-index:2;width:34px;height:34px;border-radius:50%;background:#162036;color:#fff;display:grid;place-items:center;font-size:16px;box-shadow:0 0 0 4px #fff}
+@media (max-width:700px){.dfx{width:28px;height:28px;font-size:13px;top:calc((100vw - 64px) / 2 * .4)}}
 /* 처음 납품하시나요? */
 .hfst{margin-top:22px;height:42px;padding:0 18px;border:1px solid rgba(255,255,255,.55);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:10px}.hfst:hover{background:#fff;color:#162036}.hfst i{font-style:normal}
 .fst{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(24px,3vw,40px);margin:0 0 64px}
@@ -725,7 +728,7 @@ const SHEET_ID = '__SHEET_ID__';
 const RED = ['입고 거부', '입고 불가', '반송'];
 let B = [], IT = {}, byId = {}, CATS = [], CENTERS = [], INDEX = [], TOPICS = [], SYN = [], FAQ = [];
 const srcOf = f => IMGF[f] || (f ? 'img/' + f : '');
-const kindKey = k => /^정상/.test(k) ? 'ok' : /^불량/.test(k) ? 'bad' : /^설명 그림/.test(k) ? 'dia' : 'ref';
+const kindKey = k => /^정상/.test(k) ? 'ok' : /^불량/.test(k) ? 'bad' : /^설명 그림/.test(k) ? 'dia' : /^문제/.test(k) ? 'prob' : /^보완/.test(k) ? 'fix' : 'ref';  /* 문제→보완: 정상·불량 비교가 아닌 '이렇게 해결' 순서 예시 */
 const grpOf = k => /정상/.test(k) ? 'ok' : /불량/.test(k) ? 'bad' : 'ref';
 function build(M) {
   const res = id => { let x = M.items[id]; if (x && x.ref) x = M.items[x.ref]; return x && !x.ref ? x : null; };
@@ -784,7 +787,8 @@ const norm = s => String(s).toLowerCase().replace(/\s+/g, '');
 const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const tag = t => t ? `<span class="tag${RED.includes(t) ? '' : ' dk'}">${esc(t)}</span>` : '';
 const CAM = '<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg>';
-const KIND = {ok: ['k-ok', '정상'], bad: ['k-bad', '불량'], dia: ['k-dia', '설명 그림'], ref: ['k-ref', '참고']};
+const KIND = {ok: ['k-ok', '정상'], bad: ['k-bad', '불량'], dia: ['k-dia', '설명 그림'], ref: ['k-ref', '참고'], prob: ['k-bad', '문제'], fix: ['k-ok', '보완']};
+const kcls = q => q[3] === 'ok' || q[0] === 'fix' ? 'g' : q[3] === 'bad' || q[0] === 'prob' ? 'r' : '';
 let cIdx = 0; // 센터 정보는 시트의 '센터' 탭에서 고칩니다
 const catOf = v => (byId[v] || {}).cat;
 const catPages = name => (CATS.find(c => c.name === name) || {pages: []}).pages;
@@ -955,11 +959,11 @@ function docVisuals(x) {
   const ok = x.media.filter(q => q[3] === 'ok'), bad = x.media.filter(q => q[3] === 'bad'), etc = x.media.filter(q => q[3] !== 'ok' && q[3] !== 'bad');
   const list = [...ok, ...bad, ...etc];
   let shown = ok.length && bad.length ? [ok[0], bad[0]] : (ok.length + bad.length) >= 2 ? [...ok, ...bad].slice(0, 2) : list.slice(0, 2);
-  const fig = q => { const i = list.indexOf(q); return `<figure class="dfig"><button type="button" class="dph" data-zid="${x.id}" data-zi="${i}" aria-label="${esc(q[2])} 크게 보기"><img src="${q[1]}" alt="${esc(q[2])}" loading="lazy">${MARK(q[3])}</button><figcaption><b class="${q[3] === 'ok' ? 'g' : q[3] === 'bad' ? 'r' : ''}">${q[3] === 'ok' ? '정상' : q[3] === 'bad' ? '불량' : (KIND[q[0]] || [0, '참고'])[1]}</b>${esc(q[2])}</figcaption></figure>`; };
+  const fig = q => { const i = list.indexOf(q); return `<figure class="dfig"><button type="button" class="dph" data-zid="${x.id}" data-zi="${i}" aria-label="${esc(q[2])} 크게 보기"><img src="${q[1]}" alt="${esc(q[2])}" loading="lazy">${MARK(q[3])}</button><figcaption><b class="${kcls(q)}">${q[3] === 'ok' ? '정상' : q[3] === 'bad' ? '불량' : (KIND[q[0]] || [0, '참고'])[1]}</b>${esc(q[2])}</figcaption></figure>`; };
   const model = kind => `<figure class="dfig"><div class="dmodel">${staticVisual(x, kind)}${MARK(kind)}</div><figcaption><b class="${kind === 'ok' ? 'g' : 'r'}">${kind === 'ok' ? '정상' : '불량'}</b>설명용 그림</figcaption></figure>`;
   const hasModel = !x.nodraw && (!!m3Of(x) || OK_MODEL[x.id]);  // nodraw: 사진 없는 쪽에 설명 그림을 채우지 않음
   let figs;
-  if (shown.length === 2) figs = shown.map(fig).join('');
+  if (shown.length === 2) figs = shown[0][0] === 'prob' && shown[1][0] === 'fix' ? `${fig(shown[0])}<span class="dfx" aria-hidden="true">→</span>${fig(shown[1])}` : shown.map(fig).join('');
   else if (shown.length === 1) figs = (hasModel && shown[0][3] === 'bad' ? model('ok') : '') + fig(shown[0]) + (hasModel && shown[0][3] === 'ok' ? model('bad') : '');
   else figs = hasModel ? model('ok') + model('bad') : '';
   const more = list.length - shown.length;
@@ -995,7 +999,7 @@ function zvShow() {
   if (!z) { document.body.insertAdjacentHTML('beforeend', '<div class="zv" id="zv" role="dialog" aria-modal="true" aria-label="사진 크게 보기"><button type="button" class="zx" data-zv="close" aria-label="닫기">✕</button><button type="button" class="zn p" data-zv="-1" aria-label="이전 사진">‹</button><figure><div class="zimg"></div><figcaption></figcaption></figure><button type="button" class="zn n" data-zv="1" aria-label="다음 사진">›</button></div>'); z = document.getElementById('zv'); }
   const q = ZV.list[ZV.i];
   z.querySelector('.zimg').innerHTML = `<img src="${q[1]}" alt="${esc(q[2])}">${MARK(q[3])}`;
-  z.querySelector('figcaption').innerHTML = `<b class="${q[3] === 'ok' ? 'g' : q[3] === 'bad' ? 'r' : ''}">${q[3] === 'ok' ? '정상' : q[3] === 'bad' ? '불량' : (KIND[q[0]] || [0, '참고'])[1]}</b>${esc(q[2])}<span>${ZV.i + 1} / ${ZV.list.length}</span>`;
+  z.querySelector('figcaption').innerHTML = `<b class="${kcls(q)}">${q[3] === 'ok' ? '정상' : q[3] === 'bad' ? '불량' : (KIND[q[0]] || [0, '참고'])[1]}</b>${esc(q[2])}<span>${ZV.i + 1} / ${ZV.list.length}</span>`;
   z.querySelectorAll('.zn').forEach(n => n.hidden = ZV.list.length < 2);
   z.classList.add('on'); document.body.style.overflow = 'hidden';
 }
@@ -1548,7 +1552,7 @@ function printSheet(b) {
 function printDocSheet(b) {  /* 세로형: 사진 포함, 페이지가 이어서 흐름 */
   let k = 0;
   const pics = x => { const ok = x.media.filter(q => q[3] === 'ok'), bad = x.media.filter(q => q[3] === 'bad'); const sh = ok.length && bad.length ? [ok[0], bad[0]] : [...ok, ...bad, ...x.media.filter(q => q[3] !== 'ok' && q[3] !== 'bad')].slice(0, 2);
-    return sh.map(q => `<figure><div class="pdi"><img src="${q[1]}" alt=""></div><figcaption><b class="${q[3] === 'ok' ? 'g' : q[3] === 'bad' ? 'r' : ''}">${q[3] === 'ok' ? '정상' : q[3] === 'bad' ? '불량' : '참고'}</b>${esc(q[2])}</figcaption></figure>`).join(''); };
+    return sh.map(q => `<figure><div class="pdi"><img src="${q[1]}" alt=""></div><figcaption><b class="${kcls(q)}">${q[3] === 'ok' ? '정상' : q[3] === 'bad' ? '불량' : (KIND[q[0]] || [0, '참고'])[1]}</b>${esc(q[2])}</figcaption></figure>`).join(''); };
   return `<section class="pd"><div class="pdh"><img src="${$('.logo .d').src}" alt="K2 KOREA"><div><span>K2 협력사 납품 가이드 · ${esc(b.cat)}</span><h1>${esc(b.title)}</h1></div></div>
    ${b.steps.map(st => `<div class="pds"><h2><span>STEP 0${st.n}</span>${esc(st.t)}</h2>${st.items.map(id => { const x = IT[id]; if (!x) return ''; k++; const ph = pics(x);
      return `<article class="pdr${ph ? '' : ' np'}"><div class="pdt"><div class="pdn">${String(k).padStart(2, '0')}${x.tag ? ' ' + tag(x.tag) : ''}</div><h3>${esc(x.text)}</h3>${x.why ? `<p><b>이유</b> ${esc(x.why)}</p>` : ''}${x.exc ? `<p>${esc(x.exc)}</p>` : ''}${x.act ? `<p><b>대응</b> ${esc(x.act)}</p>` : ''}</div>${ph ? `<div class="pdp">${ph}</div>` : ''}</article>`; }).join('')}</div>`).join('')}</section>`;

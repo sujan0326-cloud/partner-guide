@@ -15,7 +15,7 @@ from openpyxl.worksheet.datavalidation import DataValidation
 ROOT = Path(__file__).resolve().parent.parent
 OUT = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / 'dist' / 'K2_납품가이드_사이트내용.xlsx'
 TAGS = '반송,입고 거부,입고 불가,시정요구,필수'
-KINDS = '정상,불량,참고,설명 그림 · 정상,설명 그림 · 불량'
+KINDS = '정상,불량,참고,문제,보완,설명 그림 · 정상,설명 그림 · 불량'
 
 GUIDE = [
     'K2 협력사 납품가이드 · 사이트 내용', '',
