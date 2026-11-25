@@ -387,22 +387,38 @@ body:not(.inb) #gnb{visibility:hidden}
  .row .tx{font-size:15px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}.card:hover{transform:none}}
-/* print: one A4 landscape page of the current board */
+/* print: 고른 페이지마다 A4 가로 1장. 글자 크기(--fs)는 printFit()이 칸을 꽉 채우도록 맞춤 */
 @page{size:A4 landscape;margin:0}
 @page form{size:A4 portrait;margin:16mm 18mm}
+@page doc{size:A4 portrait;margin:10mm 11mm 11mm}
+#print.doc{page:doc;width:188mm;color:var(--ink);font-size:9.5pt}
+#print .pd{break-after:auto}#print .pd+.pd{margin-top:8mm}#print .pdh{break-after:avoid}
+#print .pdh{display:flex;align-items:center;gap:6mm;padding:0 0 3mm;border-bottom:2pt solid var(--navy);margin-bottom:2mm}#print .pdh img{height:5mm}#print .pdh span{font-size:7pt;color:var(--mute)}#print .pdh h1{margin:0;font-size:17pt}
+#print .pds h2{display:flex;align-items:baseline;gap:3mm;margin:4mm 0 0;padding:1.6mm 2.5mm;background:#eef1f6;font-size:11.5pt;break-after:avoid}#print .pds h2 span{font-size:7pt;color:var(--navy2);letter-spacing:.5px}
+#print .pdr{display:grid;grid-template-columns:1fr 92mm;gap:5mm;padding:3mm 0;border-bottom:.6pt solid #d6dae1;break-inside:avoid}#print .pdr.np{grid-template-columns:1fr}
+#print .pdn{font:700 8pt var(--en);color:var(--navy)}#print .pdn .tag{font-size:6.5pt;margin-left:1mm}
+#print .pdt h3{margin:.8mm 0 1.2mm;font-size:11pt;line-height:1.35}#print .pdt p{margin:0 0 1mm;color:var(--sub);font-size:8.6pt;line-height:1.5}#print .pdt p b{color:var(--navy)}
+#print .pdp{display:grid;grid-template-columns:1fr 1fr;gap:2.5mm}#print .pdp figure{margin:0}#print .pdi{height:34mm;background:#f4f5f7;display:flex;align-items:center;justify-content:center;overflow:hidden}#print .pdi img{max-width:100%;max-height:100%;object-fit:contain}
+#print .pdp figcaption{font-size:7pt;color:var(--sub);margin-top:.8mm;line-height:1.35}#print .pdp figcaption b{margin-right:1mm}#print .pdp .g{color:#1f8a4c}#print .pdp .r{color:#d0021b}
+#print .pp{--fs:10pt;display:flex;flex-direction:column;width:297mm;height:209.5mm;overflow:hidden;background:#fff;color:var(--ink);box-sizing:border-box}
+#print .ph-h{flex:none;display:flex;align-items:center;justify-content:space-between;gap:20px;height:17mm;padding:0 8mm;background:var(--navy);color:#fff}
+#print .ph-h img{height:4.6mm}#print .ph-h h1{margin:0;font-size:16pt;font-weight:700}#print .ph-h .en{font-size:6.5pt;color:#aeb6c6;letter-spacing:.3px}#print .ph-h p{margin:0;font-size:8.5pt;color:#dfe4ec;text-align:right}
+#print .ph-m{flex:1;display:grid;grid-template-rows:minmax(0,1fr);gap:5mm;padding:4mm 8mm 0;align-items:stretch;min-height:0}
+#print .ph-m>section{display:flex;flex-direction:column;min-height:0;overflow:hidden}#print .ph-m ul{flex:1;min-height:0}
+#print .ph-m h3{margin:.5mm 0 1.5mm;padding-bottom:1.2mm;border-bottom:1.2pt solid var(--navy);font-size:calc(var(--fs) * 1.2)}#print .ph-m .en{font-size:6.5pt;color:var(--mute);letter-spacing:.5px}
+#print .ph-a{flex:none;height:calc(var(--fs) * 2.6);background:#f4f5f7;display:flex;align-items:center;justify-content:center;margin-bottom:1mm}#print .ph-a svg{max-height:100%;max-width:100%}
+#print .ph-m ul{margin:0;padding:0;list-style:none;column-gap:5mm}
+#print .ph-m li{break-inside:avoid;padding:calc(var(--fs) * .38) 0 calc(var(--fs) * .38) 3mm;border-bottom:.6pt solid #e3e6eb;font-size:var(--fs);line-height:1.38;position:relative;font-weight:600}
+#print .ph-m li::before{content:'';position:absolute;left:0;top:calc(var(--fs) * .95);width:1.1mm;height:1.1mm;border-radius:50%;background:var(--navy)}
+#print .ph-m li small{display:block;color:var(--sub);font-size:calc(var(--fs) * .8);font-weight:400;line-height:1.4;margin-top:.4mm}#print .ph-m .tag{font-size:calc(var(--fs) * .7);height:auto;padding:0 1.4mm}
+#print .ph-f{flex:none;display:flex;justify-content:space-between;margin:0 8mm;padding:2mm 0 3mm;border-top:.6pt solid #e3e5e9;font-size:6.5pt;color:var(--mute)}
+#print.measure{display:block!important;position:fixed;left:-400mm;top:0;visibility:hidden}
 @media print{
  body>*:not(#print){display:none!important}
- #print{display:flex!important;flex-direction:column;width:297mm;height:209mm;overflow:hidden;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ html,body{width:297mm!important;min-width:0!important;margin:0!important;padding:0!important;overflow:visible!important}
+ #print{display:block!important;position:static;visibility:visible;width:297mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+ #print .pp{break-after:page;page-break-after:always}#print .pp:last-child{break-after:auto;page-break-after:auto}
  #print.form{display:block!important;width:auto;height:auto;page:form;font-size:11pt;line-height:1.9}#print.form .fdoc h2{font-size:22pt}#print.form .fdoc th,#print.form .fdoc td{font-size:10.5pt;padding:6px}#print.form .fdoc .fs{font-size:9pt}
- .ph-h{display:flex;align-items:center;justify-content:space-between;gap:20px;height:22mm;padding:0 10mm;background:var(--navy);color:#fff}
- .ph-h img{height:5mm}.ph-h h1{margin:0;font-size:17pt;font-weight:700}.ph-h .en{font-size:7pt;color:#aeb6c6}.ph-h p{margin:0;font-size:9pt;color:#dfe4ec;text-align:right}
- .ph-m{flex-grow:1;display:grid;gap:7mm;padding:6mm 10mm 0;align-items:start}
- .ph-m h3{margin:1mm 0 2mm;padding-bottom:1.6mm;border-bottom:1px solid var(--navy);font-size:12pt}.ph-m .en{font-size:7pt;color:var(--mute)}
- .ph-a{height:29mm;background:#f4f5f7;display:flex;align-items:center;justify-content:center;margin-bottom:1mm}.ph-a svg{max-height:100%}
- .ph-m ul{margin:0;padding:0;list-style:none}.ph-m li{padding:1.6mm 0 1.6mm 3mm;border-bottom:1px solid #eceef1;font-size:9.5pt;line-height:1.4;position:relative}
- .ph-m li::before{content:'';position:absolute;left:0;top:3.2mm;width:1mm;height:1mm;border-radius:50%;background:var(--navy)}
- .ph-m li small{display:block;color:var(--sub);font-size:8pt}.ph-m .tag{height:4mm;font-size:7pt}
- .ph-f{display:flex;justify-content:space-between;margin:0 10mm;padding:2.5mm 0 4mm;border-top:1px solid #e3e5e9;font-size:7pt;color:var(--mute)}
 }
 
 .slides{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(16px,1.6vw,28px)}
@@ -465,6 +481,16 @@ body:not(.inb) #gnb{visibility:hidden}
 .hbar{transition:border-radius .2s}.hbar.dd{border-radius:0 !important}.hdrop{border-radius:0 0 22px 22px !important}.hdrop:not(.is-open){border-radius:0 !important}
 .hdg{grid-template-columns:repeat(auto-fill,minmax(190px,240px)) !important;justify-content:start;border-top:0 !important}.hdg{padding:0 1px 1px 0}.hdc,.hdc+.hdc{border:1px solid #dfe3ea !important;margin:0 -1px -1px 0;padding-left:18px !important;box-shadow:none !important}
 @media (max-width:900px){.hdg{grid-template-columns:1fr !important}}
+/* 인쇄 페이지 고르기 */
+.pbtn.pico{width:42px;height:42px;padding:0;justify-content:center;font-size:21px;line-height:1;border:0!important;background:transparent!important;border-radius:50%;position:relative;margin-right:2px}.pbtn.pico:hover{background:rgba(255,255,255,.14)!important}.pbtn.pico::after{content:attr(title);position:absolute;top:calc(100% + 6px);left:50%;transform:translateX(-50%);white-space:nowrap;background:#162036;color:#fff;font-size:12px;padding:4px 9px;border-radius:6px;opacity:0;pointer-events:none;transition:opacity .15s}.pbtn.pico:hover::after{opacity:1}
+.pvw .pvb{background:#fff;border-radius:22px;padding:26px 28px 22px;width:min(680px,94vw);max-height:90vh;overflow:auto}
+.pvh{display:flex;justify-content:space-between;align-items:center}.pvh h3{margin:0;font-size:20px}.pvx{border:0;background:none;font-size:20px;color:var(--mute)}
+.pvs{margin:4px 0 16px;color:var(--sub);font-size:14px}.pvm{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0 16px}.pvm label{display:flex;flex-direction:column;gap:2px;padding:12px 14px 12px 40px;border:1px solid var(--line);border-radius:14px;position:relative;cursor:pointer}.pvm label.on{border-color:#162036;background:#f5f7fa}.pvm input{position:absolute;left:14px;top:15px;accent-color:#162036;width:16px;height:16px}.pvm b{font-size:14.5px}.pvm small{font-size:12px;color:var(--mute)}
+.pvg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px 12px;padding:12px 0;border-top:1px solid var(--line)}.pvg>b{grid-column:1/-1;font-size:13px;color:var(--navy2)}
+.pvg label{display:flex;align-items:center;gap:10px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;cursor:pointer}.pvg label:has(input:checked){border-color:#162036;background:#f5f7fa}
+.pvg input{width:18px;height:18px;accent-color:#162036}.pvg span{font-weight:600;font-size:14.5px}.pvg small{margin-left:auto;color:var(--mute);font-size:12px}
+.pvf{display:flex;align-items:center;gap:12px;padding-top:16px;border-top:1px solid var(--line)}.pvf span{flex:1}.pvl{border:0;background:none;color:var(--sub);font-size:13px;text-decoration:underline;padding:0}.pvf .cbtn[disabled]{opacity:.4;cursor:not-allowed}
+@media (max-width:600px){.pvg{grid-template-columns:1fr}}
 /* 처음 납품하시나요? */
 .hfst{margin-top:22px;height:42px;padding:0 18px;border:1px solid rgba(255,255,255,.55);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:10px}.hfst:hover{background:#fff;color:#162036}.hfst i{font-style:normal}
 .fst{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(24px,3vw,40px);margin:0 0 64px}
@@ -658,7 +684,7 @@ body:not(.inb) #gnb{visibility:hidden}
   <label for="q" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">규칙 검색</label>
   <input id="q" type="search" autocomplete="off" placeholder="궁금한 내용 검색 · 예: 박스 무게">
   <div class="res" id="res" role="listbox"></div></form>
- <button class="pbtn arb" type="button" data-go="allrules"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 5h16M4 12h16M4 19h10"/></svg>전체 규칙</button><button class="pbtn" type="button" id="printBtn"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></svg>A4 인쇄</button>
+ <button class="pbtn arb pico" type="button" data-go="allrules" title="전체 규칙" aria-label="전체 규칙"><span aria-hidden="true">📋</span></button><button class="pbtn pprn pico" type="button" id="printBtn" title="인쇄" aria-label="인쇄"><span aria-hidden="true">🖨️</span></button>
 </div></header>
 
 <main id="home">
@@ -1509,12 +1535,51 @@ function search() {
 function pick(i) { const h = hits[i]; if (!h) return; $('#res').classList.remove('show'); $('#q').value = ''; $('#q').blur(); h.act(); }
 
 /* print */
-function buildPrint() {
-  const b = byId[S.view]; $('#print').className = '';
-  $('#print').innerHTML = `<div class="ph-h"><div style="display:flex;align-items:center;gap:6mm"><img src="${$('.logo .w').src}" alt="K2 KOREA"><div><div class="en">PARTNER DELIVERY GUIDE · PACKING BOARD</div><h1>${esc(b.title)}</h1></div></div><p>${esc(b.sub)}</p></div>
-   <div class="ph-m" style="grid-template-columns:repeat(${b.steps.length},minmax(0,1fr))">${b.steps.map(s => `<section><span class="en">STEP 0${s.n}</span><h3>${esc(s.t)}</h3>${s.art ? `<div class="ph-a">${s.art}</div>` : ''}<ul>${s.items.map(id => { const x = IT[id]; return `<li>${esc(x.text)}${x.why ? `<small>이유: ${esc(x.why)}</small>` : ''}${x.tag || x.rid ? `<small>${tag(x.tag)} ${esc(x.rid)}</small>` : ''}</li>`; }).join('')}</ul></section>`).join('')}</div>
-   <div class="ph-f"><span>기준: 물류납품규칙 V1.4 및 기존 작성 시안(최신 승인본 아님) · 설명 그림은 실제 승인 도안이 아님 · 사진과 예외는 납품가이드 사이트에서 확인</span><span>K2 KOREA · YEOJU LOGISTICS CENTER</span></div>`;
+/* 인쇄: 페이지를 골라 A4 가로 한 장씩 */
+const printable = () => B.filter(b => b.steps && b.steps.some(st => st.items.length));
+let PSEL = null, PFMT = 'sum';
+function printSheet(b) {
+  const n = b.steps.length, per = n >= 3 ? 1 : n === 2 ? 2 : 3;   /* 단계가 적으면 한 단계를 여러 단으로 나눔 → 항상 3~4단 */
+  return `<section class="pp"><div class="ph-h"><div style="display:flex;align-items:center;gap:6mm"><img src="${$('.logo .w').src}" alt="K2 KOREA"><div><div class="en">K2 협력사 납품 가이드 · ${esc(b.cat)}</div><h1>${esc(b.title)}</h1></div></div><p>${esc(b.sub)}</p></div>
+   <div class="ph-m" style="grid-template-columns:${b.steps.map(() => `${per}fr`).join(' ')}">${b.steps.map(st => `<section><span class="en">STEP 0${st.n}</span><h3>${esc(st.t)}</h3>${st.art ? `<div class="ph-a">${st.art}</div>` : ''}<ul style="column-count:${per};column-fill:${per > 1 ? 'balance' : 'auto'}">${st.items.map(id => { const x = IT[id]; if (!x) return ''; return `<li>${esc(x.text)}${x.why ? `<small>이유: ${esc(x.why)}</small>` : ''}${x.tag ? `<small>${tag(x.tag)}</small>` : ''}</li>`; }).join('')}</ul></section>`).join('')}</div>
+   <div class="ph-f"><span>사진과 자세한 안내는 납품 가이드 사이트에서 확인하세요 · sujan0326-cloud.github.io/partner-guide</span><span>K2 KOREA · YEOJU LOGISTICS CENTER</span></div></section>`;
 }
+function printDocSheet(b) {  /* 세로형: 사진 포함, 페이지가 이어서 흐름 */
+  let k = 0;
+  const pics = x => { const ok = x.media.filter(q => q[3] === 'ok'), bad = x.media.filter(q => q[3] === 'bad'); const sh = ok.length && bad.length ? [ok[0], bad[0]] : [...ok, ...bad, ...x.media.filter(q => q[3] !== 'ok' && q[3] !== 'bad')].slice(0, 2);
+    return sh.map(q => `<figure><div class="pdi"><img src="${q[1]}" alt=""></div><figcaption><b class="${q[3] === 'ok' ? 'g' : q[3] === 'bad' ? 'r' : ''}">${q[3] === 'ok' ? '정상' : q[3] === 'bad' ? '불량' : '참고'}</b>${esc(q[2])}</figcaption></figure>`).join(''); };
+  return `<section class="pd"><div class="pdh"><img src="${$('.logo .d').src}" alt="K2 KOREA"><div><span>K2 협력사 납품 가이드 · ${esc(b.cat)}</span><h1>${esc(b.title)}</h1></div></div>
+   ${b.steps.map(st => `<div class="pds"><h2><span>STEP 0${st.n}</span>${esc(st.t)}</h2>${st.items.map(id => { const x = IT[id]; if (!x) return ''; k++; const ph = pics(x);
+     return `<article class="pdr${ph ? '' : ' np'}"><div class="pdt"><div class="pdn">${String(k).padStart(2, '0')}${x.tag ? ' ' + tag(x.tag) : ''}</div><h3>${esc(x.text)}</h3>${x.why ? `<p><b>이유</b> ${esc(x.why)}</p>` : ''}${x.exc ? `<p>${esc(x.exc)}</p>` : ''}${x.act ? `<p><b>대응</b> ${esc(x.act)}</p>` : ''}</div>${ph ? `<div class="pdp">${ph}</div>` : ''}</article>`; }).join('')}</div>`).join('')}</section>`;
+}
+function printFit() {  /* 각 장마다 내용이 칸을 넘지 않는 가장 큰 글자 크기를 찾음 */
+  const P = $('#print'); P.classList.add('measure');
+  P.querySelectorAll('.pp').forEach(pp => {
+    const over = () => [...pp.querySelectorAll('.ph-m>section')].some(sc => sc.scrollHeight > sc.clientHeight + 1) || [...pp.querySelectorAll('.ph-m ul')].some(u => u.scrollWidth > u.clientWidth + 1);
+    let lo = 8, hi = 15;
+    for (let k = 0; k < 9; k++) { const m = (lo + hi) / 2; pp.style.setProperty('--fs', m + 'pt'); if (over()) hi = m; else lo = m; }
+    pp.style.setProperty('--fs', lo.toFixed(2) + 'pt');
+  });
+  P.classList.remove('measure');
+}
+function printOpen() {
+  const L = printable(); if (!PSEL) PSEL = new Set(byId[S.view] && L.includes(byId[S.view]) ? [S.view] : []);
+  let v = document.getElementById('pv');
+  if (!v) { document.body.insertAdjacentHTML('beforeend', '<div class="zv pvw" id="pv" role="dialog" aria-modal="true" aria-label="인쇄할 페이지 고르기"><div class="pvb"></div></div>'); v = document.getElementById('pv'); }
+  const cats = [...new Set(L.map(b => b.cat))];
+  v.querySelector('.pvb').innerHTML = `<div class="pvh"><h3>인쇄할 페이지 고르기</h3><button type="button" class="pvx" data-pv="close" aria-label="닫기">✕</button></div><div class="pvm"><label class="${PFMT === 'sum' ? 'on' : ''}"><input type="radio" name="pfmt" value="sum" ${PFMT === 'sum' ? 'checked' : ''}><b>한 장 요약 (가로)</b><small>페이지마다 A4 가로 1장, 기준만 글로 정리</small></label><label class="${PFMT === 'doc' ? 'on' : ''}"><input type="radio" name="pfmt" value="doc" ${PFMT === 'doc' ? 'checked' : ''}><b>사진 포함 상세 (세로)</b><small>A4 세로로 이어서, 기준마다 정상·불량 사진</small></label></div>
+    ${cats.map(c => `<div class="pvg"><b>${esc(c)}</b>${L.filter(b => b.cat === c).map(b => `<label><input type="checkbox" data-pvc="${b.id}" ${PSEL.has(b.id) ? 'checked' : ''}><span>${esc(b.tab)}</span><small>${b.steps.reduce((a, st) => a + st.items.length, 0)}개 기준</small></label>`).join('')}</div>`).join('')}
+    <div class="pvf"><button type="button" class="pvl" data-pv="all">전체 선택</button><button type="button" class="pvl" data-pv="none">선택 해제</button><span></span><button type="button" class="cbtn" data-pv="go" ${PSEL.size ? '' : 'disabled'}>${PFMT === 'sum' ? PSEL.size + '장 인쇄' : '인쇄'}</button></div>`;
+  v.classList.add('on'); document.body.style.overflow = 'hidden';
+}
+function printClose() { const v = document.getElementById('pv'); if (v) v.classList.remove('on'); document.body.style.overflow = ''; }
+document.addEventListener('change', e => { if (e.target.name === 'pfmt') { PFMT = e.target.value; printOpen(); return; } const c = e.target.closest('[data-pvc]'); if (!c) return; c.checked ? PSEL.add(c.dataset.pvc) : PSEL.delete(c.dataset.pvc); printOpen(); });
+document.addEventListener('click', e => { const t = e.target.closest('[data-pv]'); if (!t && e.target.id !== 'pv') return; const a = t ? t.dataset.pv : 'close';
+  if (a === 'close') printClose();
+  else if (a === 'all') { PSEL = new Set(printable().map(b => b.id)); printOpen(); }
+  else if (a === 'none') { PSEL = new Set(); printOpen(); }
+  else if (a === 'go') { const ids = printable().filter(b => PSEL.has(b.id)); const P = $('#print'); if (PFMT === 'doc') { P.className = 'doc'; P.innerHTML = ids.map(printDocSheet).join(''); } else { P.className = ''; P.innerHTML = ids.map(printSheet).join(''); printFit(); } printClose();
+    setTimeout(() => { try { window.print(); } catch (err) { toast('이 화면에서는 인쇄가 막혀 있습니다.'); } }, 120); } });
 
 /* events */
 document.addEventListener('click', e => {
@@ -1552,7 +1617,7 @@ document.addEventListener('click', e => {
     case 'copyAddr': (async () => { try { await navigator.clipboard.writeText(CENTERS[cIdx].addr || ''); toast('도로명 주소를 복사했습니다.'); } catch (err) { toast('복사가 막혀 있습니다. 브라우저에서 사이트 파일을 열면 복사됩니다.'); } })(); break;
     case 'toRules': { const c = document.getElementById('st-1'); c && c.scrollIntoView({behavior: 'smooth', block: 'start'}); } break;
     case 'askBtn': toast('질문하기는 기존 사이트의 납품 길잡이(챗봇)를 연결할 자리입니다.'); break;
-    case 'printBtn': buildPrint(); try { window.print(); } catch (err) { toast('이 화면에서는 인쇄가 막혀 있습니다. 사이트 파일을 브라우저로 열면 A4 한 장으로 인쇄됩니다.'); } break;
+    case 'printBtn': PSEL = null; printOpen(); break;
   }
 });
 $('#dim').addEventListener('click', closeSheet);
@@ -1588,7 +1653,8 @@ function shutMenu() { const a = document.activeElement; if (a && a.closest && a.
 $('#gnb').addEventListener('click', e => { if (e.target.closest('a')) shutMenu(); });
 $('#gnb').addEventListener('mouseleave', () => $('.hd').classList.remove('shut'));
 $('#gnb').addEventListener('keydown', e => { if (e.key === 'Tab') $('.hd').classList.remove('shut'); });
-window.addEventListener('beforeprint', () => { if (S.view !== 'home' && $('#print').className !== 'form') buildPrint(); });
+window.addEventListener('beforeprint', () => { const p = $('#print'); if (p.className === 'form' || p.innerHTML.trim()) return; const b = byId[S.view]; if (b && printable().includes(b)) { p.className = ''; p.innerHTML = printSheet(b); printFit(); } });
+window.addEventListener('afterprint', () => { const p = $('#print'); if (p.className !== 'form') { p.innerHTML = ''; p.className = ''; } });
 window.addEventListener('afterprint', () => { $('#print').className = ''; });
 build(BASE); renderChrome(); route(); loadSheet();
 }
