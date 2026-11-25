@@ -461,6 +461,8 @@ body:not(.inb) #gnb{visibility:hidden}
 .hdc:hover i{background:#162036;border-color:#162036;color:#fff;transform:translateY(-50%) rotate(-45deg)}
 @media (max-width:900px){.hb:nth-child(n+3){border-top:1px solid rgba(255,255,255,.14)}.hdc+.hdc{box-shadow:none;padding-left:4px}}
 .hbar{transition:border-radius .2s}.hbar.dd{border-radius:0 !important}.hdrop{border-radius:0 0 22px 22px !important}.hdrop:not(.is-open){border-radius:0 !important}
+.hdg{grid-template-columns:repeat(auto-fill,minmax(190px,240px)) !important;justify-content:start;border-top:0 !important}.hdc,.hdc+.hdc{border-top:1px solid #dfe3ea !important;padding-left:18px !important;box-shadow:inset 1px 0 0 #dfe3ea !important}
+@media (max-width:900px){.hdg{grid-template-columns:1fr !important}}
 /* 일러스트 카드 */
 .icards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,1.6vw,26px)}
 .icard,.bcard{display:flex;flex-direction:column;text-align:left;padding:0;border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden;transition:transform .25s,box-shadow .25s}
