@@ -730,7 +730,7 @@ const grpOf = k => /정상/.test(k) ? 'ok' : /불량/.test(k) ? 'bad' : 'ref';
 function build(M) {
   const res = id => { let x = M.items[id]; if (x && x.ref) x = M.items[x.ref]; return x && !x.ref ? x : null; };
   B = M.pages.map(p => ({id: p.id, tab: p.sub || p.title, title: p.title, sub: p.desc, en: p.en, layout: p.layout, cat: p.cat,
-    steps: p.steps.map(s => ({n: String(s.n), t: s.t, art: s.art || '', items: s.items.filter(id => res(id))})).filter(s => s.items.length)})).filter(b => b.steps.length || (b.layout && b.layout !== '기본'));
+    steps: p.steps.filter(s => !s.hide).map(s => ({n: String(s.n), t: s.t, art: s.art || '', items: s.items.filter(id => res(id))})).filter(s => s.items.length).map((s, i) => Object.assign(s, {n: String(i + 1)}))})  /* hide: 숨긴 단계, 번호는 보이는 단계만 1부터 다시 매김 */).filter(b => b.steps.length || (b.layout && b.layout !== '기본'));
   IT = {};
   B.forEach(b => b.steps.forEach(s => s.items.forEach(id => { const x = res(id); IT[id] = Object.assign({}, x, {id, table: x.table || [], media: (x.media || []).map(m => [kindKey(m[0]), srcOf(m[1]), m[2] || '', grpOf(m[0])])}); })));
   byId = Object.fromEntries(B.map(b => [b.id, b]));
@@ -773,7 +773,7 @@ async function loadSheet() {
       cats: cm.sort(by('순서')).map(r => ({name: r['큰 메뉴'], en: r['영문 라벨'], desc: r['첫 화면 설명'], img: r['첫 화면 사진']})),
       pages: pg.sort(by('순서')).map(r => { const id = r['페이지ID'];
         return {cat: r['큰 메뉴'], sub: r['작은 메뉴'], id, title: r['페이지 제목'], desc: r['한 줄 설명'], en: r['영문 라벨'], layout: r['모양'] || '기본',
-          steps: st.filter(x => x['페이지ID'] === id).map(x => ({n: String(x['단계']).replace(/\.0$/, ''), t: x['단계 제목']})).sort((a, b) => +a.n - +b.n)
+          steps: st.filter(x => x['페이지ID'] === id).map(x => ({n: String(x['단계']).replace(/\.0$/, ''), t: x['단계 제목'], hide: /^y/i.test(x['숨김'] || '')})).sort((a, b) => +a.n - +b.n)
             .map(s => ({n: s.n, t: s.t, art: art(id, s.n), items: it.filter(x => x['페이지ID'] === id && String(x['단계']).replace(/\.0$/, '') === s.n).sort(by('순서')).map(x => x['항목ID'])}))}; }),
       items, centers: ce.map((r, i) => { const d = (BASE.centers || []).find(x => x.id === r['센터ID']) || (BASE.centers || [])[i] || {}; return {id: r['센터ID'], name: r['센터 이름'] || d.name, addr: r['도로명 주소'] || d.addr || '', jibun: r['지번 주소'] || d.jibun || '', kinds: r['입고 가능 복종'] || d.kinds || '', map: r['지도 링크'] || d.map || ''}; })};
     build(M); renderChrome(); route();

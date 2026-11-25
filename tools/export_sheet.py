@@ -91,8 +91,8 @@ def main():
     sheet('페이지', ['순서', '큰 메뉴', '작은 메뉴', '페이지ID', '페이지 제목', '한 줄 설명', '영문 라벨', '모양'],
           [[i + 1, p['cat'], p.get('sub'), p['id'], p['title'], p.get('desc'), p.get('en'), p.get('layout')] for i, p in enumerate(M['pages'])],
           [6, 14, 18, 12, 24, 50, 20, 10], ('한 줄 설명',))
-    sheet('단계', ['페이지ID', '단계', '단계 제목'],
-          [[p['id'], st['n'], st['t']] for p in M['pages'] for st in p['steps']], [12, 6, 40])
+    sheet('단계', ['페이지ID', '단계', '단계 제목', '숨김'],
+          [[p['id'], st['n'], st['t'], 'Y' if st.get('hide') else ''] for p in M['pages'] for st in p['steps']], [12, 6, 40, 8])
 
     rows, photos, seen, placed = [], [], set(), []
     for p in M['pages']:

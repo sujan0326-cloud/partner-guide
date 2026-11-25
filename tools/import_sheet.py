@@ -79,7 +79,7 @@ def main(path):
     pages = []
     for r in sorted(pg, key=lambda r: num(r.get('순서'))):
         pid = r['페이지ID']
-        steps = sorted(({'n': step_no(x['단계']), 't': x.get('단계 제목', '')} for x in st if x.get('페이지ID') == pid), key=lambda s: num(s['n']))
+        steps = sorted(({'n': step_no(x['단계']), 't': x.get('단계 제목', ''), **({'hide': True} if x.get('숨김', '').lower().startswith('y') else {})} for x in st if x.get('페이지ID') == pid), key=lambda s: num(s['n']))
         for s in steps:
             s['art'] = art(pid, s['n'])
             s['items'] = [x['항목ID'] for x in sorted((x for x in it if x.get('페이지ID') == pid and step_no(x.get('단계')) == s['n']),
