@@ -460,6 +460,7 @@ body:not(.inb) #gnb{visibility:hidden}
 .hdc:hover{background:#fff;border-color:var(--line)}.hdc:hover b{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
 .hdc:hover i{background:#162036;border-color:#162036;color:#fff;transform:translateY(-50%) rotate(-45deg)}
 @media (max-width:900px){.hb:nth-child(n+3){border-top:1px solid rgba(255,255,255,.14)}.hdc+.hdc{box-shadow:none;padding-left:4px}}
+.hbar{transition:border-radius .2s}.hbar.dd{border-radius:0 !important}.hdrop{border-radius:0 0 22px 22px !important}.hdrop:not(.is-open){border-radius:0 !important}
 /* 일러스트 카드 */
 .icards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,1.6vw,26px)}
 .icard,.bcard{display:flex;flex-direction:column;text-align:left;padding:0;border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden;transition:transform .25s,box-shadow .25s}
@@ -970,7 +971,7 @@ function renderHbar() {
   $('#hbar').innerHTML = CATS.map((c, i) => `<button type="button" class="hb${i === HOPEN ? ' on' : ''}" data-hb="${i}" aria-expanded="${i === HOPEN}" aria-controls="hdrop">
     <span class="hn">0${i + 1}</span><b>${esc(c.name)}</b><small>${menuPages(c).map(p => esc(p.tab)).join(' · ')}</small><i class="hc" aria-hidden="true"></i></button>`).join('');
   const d = $('#hdrop'), c = CATS[HOPEN];
-  d.classList.toggle('is-open', !!c);
+  d.classList.toggle('is-open', !!c); $('#hbar').classList.toggle('dd', !!c);  // 하위 메뉴가 열리면 메뉴 바 아래 모서리를 각지게 해서 패널과 이어지게
   if (c) $('#hdin').innerHTML = `<div class="hdh"><span class="en">${esc(c.en || '')}</span><h2>${esc(c.name)}</h2><p>${esc(c.desc || '')}</p></div><div class="hdg">${menuPages(c).map((p, k) => `<button type="button" class="hdc" data-go="${p.id}" style="--d:${k * 45}ms"><span class="en">0${k + 1}</span><b>${esc(p.tab)}</b><small>${esc(GRP[p.id] ? catPages(c.name).filter(x => GRP[x.id] === GRP[p.id]).map(x => GTAB[x.id] || x.tab).join(' · ') : (p.desc || ''))}</small><i aria-hidden="true">→</i></button>`).join('')}</div>`;
 }
 document.addEventListener('click', e => { const h = e.target.closest('[data-hb]'); if (!h) return; const i = +h.dataset.hb; HOPEN = HOPEN === i ? -1 : i; renderHbar();
