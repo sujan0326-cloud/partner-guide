@@ -730,7 +730,7 @@ const grpOf = k => /정상/.test(k) ? 'ok' : /불량/.test(k) ? 'bad' : 'ref';
 function build(M) {
   const res = id => { let x = M.items[id]; if (x && x.ref) x = M.items[x.ref]; return x && !x.ref ? x : null; };
   B = M.pages.map(p => ({id: p.id, tab: p.sub || p.title, title: p.title, sub: p.desc, en: p.en, layout: p.layout, cat: p.cat,
-    steps: p.steps.filter(s => !s.hide).map(s => ({n: String(s.n), t: s.t, art: s.art || '', items: s.items.filter(id => res(id))})).filter(s => s.items.length).map((s, i) => Object.assign(s, {n: String(i + 1)}))})  /* hide: 숨긴 단계, 번호는 보이는 단계만 1부터 다시 매김 */).filter(b => b.steps.length || (b.layout && b.layout !== '기본'));
+    steps: p.steps.filter(s => !s.hide).map(s => ({n: String(s.n), t: s.t, art: s.art || '', items: s.items.filter(id => res(id) && !res(id).hide)})).filter(s => s.items.length).map((s, i) => Object.assign(s, {n: String(i + 1)}))})  /* hide: 숨긴 단계, 번호는 보이는 단계만 1부터 다시 매김 */).filter(b => b.steps.length || (b.layout && b.layout !== '기본'));
   IT = {};
   B.forEach(b => b.steps.forEach(s => s.items.forEach(id => { const x = res(id); IT[id] = Object.assign({}, x, {id, table: x.table || [], media: (x.media || []).map(m => [kindKey(m[0]), srcOf(m[1]), m[2] || '', grpOf(m[0])])}); })));
   byId = Object.fromEntries(B.map(b => [b.id, b]));
@@ -763,7 +763,7 @@ async function loadSheet() {
     const items = {};
     it.forEach(r => { const id = r['항목ID'], ref = r['같은 내용 가져오기']; if (!id || ref === id) return; /* 같은 항목ID = 다른 페이지에도 표시 */
       items[id] = ref ? {ref} :
-      {text: r['문장'], topic: r['주제'], tag: r['표시'], rid: r['규칙번호'], why: r['이유'], exc: r['예외·주의'], act: r['확인·대응'], source: r['근거'],
+      {text: r['문장'], topic: r['주제'], hide: /^y/i.test(r['숨김'] || ''), tag: r['표시'], rid: r['규칙번호'], why: r['이유'], exc: r['예외·주의'], act: r['확인·대응'], source: r['근거'],
        table: (r['표'] || '').split('\n').filter(Boolean).map(l => l.split('|').map(c => c.trim())), nophoto: /^y/i.test(r['사진 없이 글로 충분']), nodraw: /^y/i.test(r['설명 그림 안 씀'] || ''), todo: r['필요한 사진'], media: []}; });
     const pseen = new Set();
     ph.sort(by('순서')).forEach(r => { const x = items[r['항목ID']], k = r['항목ID'] + '|' + r['파일']; if (pseen.has(k)) return; pseen.add(k); if (x && x.media) x.media.push([r['종류'], r['파일'], r['설명']]); });

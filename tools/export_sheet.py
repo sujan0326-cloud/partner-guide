@@ -101,18 +101,18 @@ def main():
                 x = items[iid]
                 base = [p['id'], st['n'], k + 1, iid]
                 if x.get('ref') or iid in seen:  # 다른 항목 내용 사용 / 같은 규칙을 다른 페이지에도 표시
-                    rows.append(base + [''] * 11 + [x.get('ref') or iid, ''])
+                    rows.append(base + [''] * 11 + [x.get('ref') or iid, '', ''])
                     placed.append(len(rows) + 1)
                     continue
                 seen.add(iid)
                 rows.append(base + [x.get('topic'), x.get('text'), x.get('tag'), x.get('rid'), x.get('why'), x.get('exc'), x.get('act'),
                                     x.get('source'), '\n'.join(' | '.join(map(s, r)) for r in x.get('table') or []),
-                                    'Y' if x.get('nophoto') else '', x.get('todo'), '', 'Y' if x.get('nodraw') else ''])
+                                    'Y' if x.get('nophoto') else '', x.get('todo'), '', 'Y' if x.get('nodraw') else '', 'Y' if x.get('hide') else ''])
                 for j, m in enumerate(x.get('media') or []):
                     photos.append([iid, j + 1, m[0], m[1], m[2] if len(m) > 2 else ''])
     head = ['페이지ID', '단계', '순서', '항목ID', '주제', '문장', '표시', '규칙번호', '이유', '예외·주의', '확인·대응', '근거', '표',
-            '사진 없이 글로 충분', '필요한 사진', '같은 내용 가져오기', '설명 그림 안 씀']
-    ws = sheet('항목', head, rows, [10, 6, 6, 9, 18, 46, 10, 10, 40, 40, 40, 24, 30, 10, 24, 14, 12],
+            '사진 없이 글로 충분', '필요한 사진', '같은 내용 가져오기', '설명 그림 안 씀', '숨김']
+    ws = sheet('항목', head, rows, [10, 6, 6, 9, 18, 46, 10, 10, 40, 40, 40, 24, 30, 10, 24, 14, 12, 8],
                ('문장', '이유', '예외·주의', '확인·대응', '근거', '표', '필요한 사진'))
     ws.freeze_panes = 'G2'
     for r in range(2, len(rows) + 2):
@@ -127,6 +127,7 @@ def main():
     listv(ws, 'G', f'"{TAGS}"', last)
     listv(ws, 'N', '"Y"', last)
     listv(ws, 'Q', '"Y"', last)
+    listv(ws, 'R', '"Y"', last)
 
     sheet('주제', ['순서', '주제'], [[i + 1, t] for i, t in enumerate(M.get('topics', []))], [6, 28])
     ws = sheet('사진', ['항목ID', '순서', '종류', '파일', '설명'], photos, [9, 6, 18, 30, 50], ('설명',))
