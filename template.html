@@ -391,7 +391,7 @@ body:not(.inb) #gnb{visibility:hidden}
 @page{size:A4 landscape;margin:0}
 @page form{size:A4 portrait;margin:16mm 18mm}
 @page doc{size:A4 portrait;margin:10mm 11mm 11mm}
-#print.doc{page:doc;width:188mm;color:var(--ink);font-size:9.5pt}
+#print.doc{page:doc;width:auto;color:var(--ink);font-size:9.5pt}
 #print .pd{break-after:auto}#print .pd+.pd{margin-top:8mm}#print .pdh{break-after:avoid}
 #print .pdh{display:flex;align-items:center;gap:6mm;padding:0 0 3mm;border-bottom:2pt solid var(--navy);margin-bottom:2mm}#print .pdh img{height:5mm}#print .pdh span{font-size:7pt;color:var(--mute)}#print .pdh h1{margin:0;font-size:17pt}
 #print .pds h2{display:flex;align-items:baseline;gap:3mm;margin:4mm 0 0;padding:1.6mm 2.5mm;background:#eef1f6;font-size:11.5pt;break-after:avoid}#print .pds h2 span{font-size:7pt;color:var(--navy2);letter-spacing:.5px}
@@ -416,6 +416,7 @@ body:not(.inb) #gnb{visibility:hidden}
 @media print{
  body>*:not(#print){display:none!important}
  html,body{width:297mm!important;min-width:0!important;margin:0!important;padding:0!important;overflow:visible!important}
+ html:has(#print.doc),html:has(#print.doc) body{width:auto!important}html:has(#print.doc) #print{width:auto}
  #print{display:block!important;position:static;visibility:visible;width:297mm;-webkit-print-color-adjust:exact;print-color-adjust:exact}
  #print .pp{break-after:page;page-break-after:always}#print .pp:last-child{break-after:auto;page-break-after:auto}
  #print.form{display:block!important;width:auto;height:auto;page:form;font-size:11pt;line-height:1.9}#print.form .fdoc h2{font-size:22pt}#print.form .fdoc th,#print.form .fdoc td{font-size:10.5pt;padding:6px}#print.form .fdoc .fs{font-size:9pt}
@@ -1537,7 +1538,7 @@ function pick(i) { const h = hits[i]; if (!h) return; $('#res').classList.remove
 /* print */
 /* 인쇄: 페이지를 골라 A4 가로 한 장씩 */
 const printable = () => B.filter(b => b.steps && b.steps.some(st => st.items.length));
-let PSEL = null, PFMT = 'sum';
+let PSEL = null, PFMT = 'doc';
 function printSheet(b) {
   const n = b.steps.length, per = n >= 3 ? 1 : n === 2 ? 2 : 3;   /* 단계가 적으면 한 단계를 여러 단으로 나눔 → 항상 3~4단 */
   return `<section class="pp"><div class="ph-h"><div style="display:flex;align-items:center;gap:6mm"><img src="${$('.logo .w').src}" alt="K2 KOREA"><div><div class="en">K2 협력사 납품 가이드 · ${esc(b.cat)}</div><h1>${esc(b.title)}</h1></div></div><p>${esc(b.sub)}</p></div>
@@ -1567,7 +1568,7 @@ function printOpen() {
   let v = document.getElementById('pv');
   if (!v) { document.body.insertAdjacentHTML('beforeend', '<div class="zv pvw" id="pv" role="dialog" aria-modal="true" aria-label="인쇄할 페이지 고르기"><div class="pvb"></div></div>'); v = document.getElementById('pv'); }
   const cats = [...new Set(L.map(b => b.cat))];
-  v.querySelector('.pvb').innerHTML = `<div class="pvh"><h3>인쇄할 페이지 고르기</h3><button type="button" class="pvx" data-pv="close" aria-label="닫기">✕</button></div><div class="pvm"><label class="${PFMT === 'sum' ? 'on' : ''}"><input type="radio" name="pfmt" value="sum" ${PFMT === 'sum' ? 'checked' : ''}><b>한 장 요약 (가로)</b><small>페이지마다 A4 가로 1장, 기준만 글로 정리</small></label><label class="${PFMT === 'doc' ? 'on' : ''}"><input type="radio" name="pfmt" value="doc" ${PFMT === 'doc' ? 'checked' : ''}><b>사진 포함 상세 (세로)</b><small>A4 세로로 이어서, 기준마다 정상·불량 사진</small></label></div>
+  v.querySelector('.pvb').innerHTML = `<div class="pvh"><h3>인쇄할 페이지 고르기</h3><button type="button" class="pvx" data-pv="close" aria-label="닫기">✕</button></div><div class="pvm"><label class="${PFMT === 'doc' ? 'on' : ''}"><input type="radio" name="pfmt" value="doc" ${PFMT === 'doc' ? 'checked' : ''}><b>사진 포함 상세 (세로)</b><small>A4 세로로 이어서, 기준마다 정상·불량 사진</small></label><label class="${PFMT === 'sum' ? 'on' : ''}"><input type="radio" name="pfmt" value="sum" ${PFMT === 'sum' ? 'checked' : ''}><b>한 장 요약 (가로)</b><small>페이지마다 A4 가로 1장, 기준만 글로 정리</small></label></div>
     ${cats.map(c => `<div class="pvg"><b>${esc(c)}</b>${L.filter(b => b.cat === c).map(b => `<label><input type="checkbox" data-pvc="${b.id}" ${PSEL.has(b.id) ? 'checked' : ''}><span>${esc(b.tab)}</span><small>${b.steps.reduce((a, st) => a + st.items.length, 0)}개 기준</small></label>`).join('')}</div>`).join('')}
     <div class="pvf"><button type="button" class="pvl" data-pv="all">전체 선택</button><button type="button" class="pvl" data-pv="none">선택 해제</button><span></span><button type="button" class="cbtn" data-pv="go" ${PSEL.size ? '' : 'disabled'}>${PFMT === 'sum' ? PSEL.size + '장 인쇄' : '인쇄'}</button></div>`;
   v.classList.add('on'); document.body.style.overflow = 'hidden';
