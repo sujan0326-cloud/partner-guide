@@ -301,6 +301,8 @@ body:not(.inb) #gnb{visibility:hidden}
 @media (max-width:700px){.gtabs{display:flex;width:100%}.gtabs button{flex:1;padding:0 6px;font-size:13px}}
 .det.tonly{border-top:0}.det.tonly .bd{padding-top:4px}
 .prep{background:#fff;border:1px solid var(--line);padding:56px 40px;text-align:center;color:var(--sub)}.prep b{display:block;color:var(--ink);font-size:18px;margin-bottom:8px}.prep p{margin:0}
+.nmg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}.nmi{display:flex;gap:14px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}.nmi h3{margin:0 0 6px;font-size:16px}.nmi p{margin:0;color:var(--sub);line-height:1.7;font-size:14.5px}.nmi b{color:var(--ink,#162036)}.nmn{flex:none;width:30px;height:30px;border-radius:50%;background:#162036;color:#fff;display:grid;place-items:center;font:700 12px var(--en)}.nmi.warn{border-color:#f0c9cf;background:#fff8f8}.nmi.warn .nmn{background:#d0021b}.nmbtn{display:inline-flex;align-items:center;gap:14px;height:48px;padding:0 22px;border:1px solid #162036;border-radius:999px;background:#fff;color:#162036;font-weight:700;font-size:15px;margin-bottom:22px}.nmbtn i{font-style:normal;font-size:18px}.nmbtn:hover{background:#162036;color:#fff}@media (max-width:900px){.nmg{grid-template-columns:1fr}}
+.nmprev{max-width:760px}.nmprev .paper{box-shadow:0 10px 30px rgba(16,24,40,.08)}
 .forms{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,2.6vw,48px);align-items:start}
 .fcard{background:#fff;border:1px solid var(--line);padding:36px}.fcard .en{color:var(--navy2)}.fcard h2{margin:10px 0 10px;font-size:26px;font-weight:700;letter-spacing:-.6px}
 .fdesc{margin:0 0 24px;color:var(--sub);font-size:15px}
@@ -1206,9 +1208,18 @@ function consentDoc(sample) {
    <p class="fdt">${dt2}</p>
    <p class="fsg">매입처 담당 : <span class="fl">${f.who ? esc(f.who) : ''}</span> (인)</p><p class="fsg">물류부 담당 : <span class="fl"></span> (인)</p></div>`;
 }
+let FOPEN = false;
 function formsHTML() {
   const f = FORM;
-  return `<div class="forms"><div class="fcard"><span class="en">FORM 01</span><h2>무측정 입고 동의서</h2>
+  const guide = `<div class="nmg">
+    <div class="nmi"><span class="nmn">01</span><div><h3>언제 작성하나요</h3><p>바코드 상품 중 <b>중량 검증 없이 입고</b>를 진행할 경우 무측정 동의서 작성이 필요합니다.</p></div></div>
+    <div class="nmi"><span class="nmn">02</span><div><h3>어떻게 전달하나요</h3><p>납품 <b>당일 패킹리스트와 함께</b> 작성해 현장에 전달해 주세요.</p></div></div>
+    <div class="nmi warn"><span class="nmn">!</span><div><h3>작성하지 않으면</h3><p>바코드 상품인데 무측정 동의서를 작성하지 않은 경우, 현장에서 납품처(대행사)에 <b>박스별 중량 별도 책정</b> 또는 <b>수량 검수</b>를 요청할 수 있습니다.</p></div></div>
+   </div>
+   <button type="button" class="nmbtn" id="fToggle" aria-expanded="${FOPEN}">${FOPEN ? '샘플 닫기' : '무측정 동의서 샘플'}<i aria-hidden="true">${FOPEN ? '−' : '+'}</i></button>`;
+  if (!FOPEN) return guide;
+  return guide + `<div class="nmprev"><div class="paper">${consentDoc(true)}</div></div>`;  /* 양식 작성·인쇄는 숨김 (아래 코드는 남겨 둠) */
+  return guide + `<div class="forms"><div class="fcard"><span class="en">FORM 01</span><h2>무측정 입고 동의서</h2>
     <p class="fdesc">입고 중량체크 없이 측정 진행하는 건에 대해 매입처 동의를 받는 양식입니다. 브랜드, 업체, 납품일자, 상품을 넣으면 양식이 완성됩니다. 인쇄해서 서명만 하면 됩니다.</p>
     <div class="fgrid">
      <label>브랜드<select data-f="brand">${['', 'K2', 'EIDER', 'WIDEANGLE', 'DYNAFIT', 'NORDISK'].map(x => `<option value="${x}" ${x === f.brand ? 'selected' : ''}>${x || '선택'}</option>`).join('')}</select></label>
@@ -1224,6 +1235,7 @@ function formsHTML() {
    <div class="fprev"><span class="en">PREVIEW</span><div class="paper" id="paper">${consentDoc(false)}</div></div></div>`;
 }
 
+document.addEventListener('click', e => { if (e.target.closest('#fToggle')) { FOPEN = !FOPEN; $('#extra').innerHTML = formsHTML(); } });
 /* 돌려보는 박스 (기존 사이트의 입체 부착 안내를 옮김). 규칙번호로 연결 */
 const MODEL3D = {
   s1c: {type: 'bag', scns: ['sizeok', 'sizeover']}, s1d: {type: 'bag', scns: ['rfidok', 'rfidbad']}, s2c: {type: 'bag', scns: ['flatok', 'sealgap']},
