@@ -2402,7 +2402,7 @@
    "topic": "입고 예약·일정"
   },
   "r3": {
-   "text": "ASSORT는 실물 포장 구분 그대로 예약 (폴리백·박스)",
+   "text": "ASSORT 실물과 전산 유형에 맞게 예약 및 패킹 필요",
    "rid": "",
    "tag": "반송",
    "why": "실물과 다르게 예약해 입고하면 반송됩니다",
@@ -2414,17 +2414,13 @@
    "todo": "",
    "media": [
     [
-     "참고",
-     "rsv_packtype_screen.jpg",
-     "입고예약 화면의 아소트구분·팩구분"
-    ],
-    [
-     "참고",
-     "rsv_assort_pack_in_box.jpg",
-     "박스 안에 팩(폴리백)이 담긴 아소트 팩"
+     "불량",
+     "rsv_assort_mismatch.png",
+     "전산은 ASSORT 폴리백으로 예약, 실물은 ASSORT 박스로 입고"
     ]
    ],
-   "topic": "입고 예약·일정"
+   "topic": "입고 예약·일정",
+   "nodraw": true
   },
   "r4": {
    "text": "입고전표 1건은 차량 1대로 입고",
