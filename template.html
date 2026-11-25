@@ -496,15 +496,22 @@ body:not(.inb) #gnb{visibility:hidden}
 .dvis:has(.dfx){position:relative}.dfx{position:absolute;left:50%;top:var(--dfxy,calc(var(--rowh,260px) / 2));transform:translate(-50%,-50%);z-index:2;width:34px;height:34px;border-radius:50%;background:#162036;color:#fff;display:grid;place-items:center;font-size:16px;box-shadow:0 0 0 4px #fff}
 @media (max-width:700px){.dfx{width:28px;height:28px;font-size:13px;top:calc((100vw - 64px) / 2 * .4)}}
 /* 체크리스트 진행 바 */
-.fbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;width:min(860px,calc(100vw - 24px))}
-.fbi{display:flex;align-items:center;gap:12px;background:#162036;color:#fff;border-radius:999px;padding:8px 8px 8px 10px;box-shadow:0 12px 32px rgba(16,24,40,.28)}
-.fbi button{border:0;font:inherit;cursor:pointer}.fbk{display:inline-flex;align-items:center;height:38px;padding:0 14px;border-radius:999px;background:rgba(255,255,255,.12);color:#fff;font-size:13.5px;font-weight:600;white-space:nowrap}.fbk:hover{background:rgba(255,255,255,.22)}
+.fbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;width:min(760px,calc(100vw - 24px))}
+.fbi{display:flex;align-items:center;gap:10px;background:#162036;color:#fff;border-radius:999px;padding:8px 8px 8px 8px;box-shadow:0 12px 32px rgba(16,24,40,.28)}
+.fbi button,.fbm button{border:0;font:inherit;cursor:pointer}
+.fbh{width:42px;height:42px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;flex:none}.fbh i{display:block;width:17px;height:2px;border-radius:2px;background:#fff;transition:transform .2s,opacity .2s}
+.fbh:hover{background:rgba(255,255,255,.22)}.fbh.on i:nth-child(1){transform:translateY(6px) rotate(45deg)}.fbh.on i:nth-child(2){opacity:0}.fbh.on i:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 .fbt{flex:1;min-width:0;display:flex;flex-direction:column;line-height:1.3}.fbt small{font-size:11px;color:#aeb6c6}.fbt b{font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.fbd{height:38px;padding:0 14px;border-radius:999px;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)!important;font-size:13.5px;white-space:nowrap}.fbd.on{background:#1f8a4c;border-color:#1f8a4c!important}
-.fbn{height:38px;padding:0 18px;border-radius:999px;background:#fff;color:#162036;font-weight:700;font-size:14px;white-space:nowrap}.fbn i{font-style:normal}
-.fbx{width:32px;height:32px;border-radius:50%;background:transparent;color:#aeb6c6;font-size:14px}
+.fbp,.fbn{height:40px;padding:0 16px;border-radius:999px;font-size:14px;font-weight:600;white-space:nowrap}.fbp{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.4)!important}.fbn{background:#fff;color:#162036;font-weight:700}
+.fbp i,.fbn i{font-style:normal}.fbp[disabled],.fbn[disabled]{opacity:.35;cursor:default}
+.fbx{width:32px;height:32px;border-radius:50%;background:transparent;color:#aeb6c6;font-size:14px;flex:none}
+.fbm{position:absolute;left:0;right:0;bottom:calc(100% + 10px);background:#fff;border-radius:20px;box-shadow:0 18px 44px rgba(16,24,40,.22);padding:10px;max-height:min(62vh,520px);overflow:auto;animation:fbmIn .2s ease}
+@keyframes fbmIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fbmh{display:flex;justify-content:space-between;align-items:center;padding:8px 12px 10px;border-bottom:1px solid var(--line);margin-bottom:6px}.fbmh b{font-size:14px}.fbmh button{background:none;color:var(--sub);font-size:12.5px;text-decoration:underline;padding:0}
+.fbmi{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:11px 12px;border-radius:12px;background:none;color:#162036;font-size:14.5px}.fbmi span{font:700 12px var(--en);color:var(--mute);width:22px}
+.fbmi:hover{background:#f3f5f8}.fbmi.on{background:#162036;color:#fff}.fbmi.on span{color:#aeb6c6}
 body.hasfbar{padding-bottom:84px}
-@media (max-width:700px){.fbar{bottom:10px}.fbi{gap:6px;padding:6px}.fbt small{display:none}.fbt b{font-size:13px}.fbk{padding:0;width:38px;justify-content:center}.fbkl{display:none}.fbd{padding:0 10px;font-size:12.5px}.fbn{padding:0 12px}.fbx{display:none}}
+@media (max-width:700px){.fbar{bottom:10px}.fbi{gap:6px;padding:6px}.fbt small{display:none}.fbt b{font-size:13px}.fbp{padding:0 10px;font-size:0}.fbp i{font-size:15px}.fbn{padding:0 12px}.fbx{display:none}}
 /* 처음 납품하시나요? */
 .hfst{margin-top:22px;height:42px;padding:0 18px;border:1px solid rgba(255,255,255,.55);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:10px}.hfst:hover{background:#fff;color:#162036}.hfst i{font-style:normal}
 .fst{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(24px,3vw,40px);margin:0 0 64px}
@@ -1324,26 +1331,31 @@ function firstHTML(home) {
 /* 체크리스트에서 들어온 경우: 아래에 '체크리스트로 돌아가기 · 확인 완료 · 다음' 바 */
 let FI = (() => { try { const v = sessionStorage.getItem('k2g-fi'); return v === null ? -1 : +v; } catch (e) { return -1; } })();
 function setFI(i) { FI = i; try { i < 0 ? sessionStorage.removeItem('k2g-fi') : sessionStorage.setItem('k2g-fi', i); } catch (e) {} }
+let FMENU = false;
 function renderFbar() {
   const bar = $('#fbar'); if (!bar) return;
   const on = FI >= 0 && FI < FIRST.length && S.view !== 'home' && byId[S.view] && byId[S.view].layout !== '처음';
-  bar.hidden = !on; document.body.classList.toggle('hasfbar', on); if (!on) return;
-  const f = FIRST[FI], k = f.go + f.t, done = FDONE.includes(k), nx = FIRST[FI + 1], n = FIRST.filter(z => FDONE.includes(z.go + z.t)).length;
-  bar.innerHTML = `<div class="fbi"><button type="button" class="fbk" data-fback="1" aria-label="체크리스트로 돌아가기">←<span class="fbkl">&nbsp;체크리스트</span></button>
-    <div class="fbt"><small>첫 납품 체크리스트 · ${n} / ${FIRST.length} 확인</small><b>${String(FI + 1).padStart(2, '0')} ${esc(f.t)}</b></div>
-    <button type="button" class="fbd${done ? ' on' : ''}" data-fdone="${esc(k)}">${done ? '✓ 확인함' : '확인 완료'}</button>
-    ${nx ? `<button type="button" class="fbn" data-fnext="1">다음 <i aria-hidden="true">→</i></button>` : `<button type="button" class="fbn" data-fback="1">마치기</button>`}
+  bar.hidden = !on; document.body.classList.toggle('hasfbar', on); if (!on) { FMENU = false; return; }
+  const f = FIRST[FI], pv = FIRST[FI - 1], nx = FIRST[FI + 1];
+  bar.innerHTML = `${FMENU ? `<div class="fbm" role="menu"><div class="fbmh"><b>첫 납품 체크리스트</b><button type="button" data-fhome="1">전체 화면에서 보기</button></div>${FIRST.map((z, k) => `<button type="button" role="menuitem" class="fbmi${k === FI ? ' on' : ''}" data-fjump="${k}"><span>${String(k + 1).padStart(2, '0')}</span>${esc(z.t)}</button>`).join('')}</div>` : ''}
+   <div class="fbi"><button type="button" class="fbh${FMENU ? ' on' : ''}" data-fmenu="1" aria-expanded="${FMENU}" aria-label="체크리스트 목록 열기"><i></i><i></i><i></i></button>
+    <div class="fbt"><small>첫 납품 체크리스트 · ${FI + 1} / ${FIRST.length}</small><b>${String(FI + 1).padStart(2, '0')} ${esc(f.t)}</b></div>
+    <button type="button" class="fbp" data-fstep="-1" ${pv ? '' : 'disabled'}><i aria-hidden="true">←</i> 이전</button>
+    <button type="button" class="fbn" data-fstep="1" ${nx ? '' : 'disabled'}>다음 <i aria-hidden="true">→</i></button>
     <button type="button" class="fbx" data-fclose="1" aria-label="체크리스트 바 닫기">✕</button></div>`;
 }
 document.addEventListener('click', e => {
   const fi = e.target.closest('[data-fi]'); if (fi) setFI(+fi.dataset.fi);   /* data-go 처리 전에 기록 */
 }, true);
 document.addEventListener('click', e => {
-  if (e.target.closest('[data-fback]')) { setFI(-1); go('home'); setTimeout(() => { const t = $('#fstHome'); if (t) window.scrollTo({top: t.getBoundingClientRect().top + scrollY - 90}); }, 60); return; }
-  if (e.target.closest('[data-fclose]')) { setFI(-1); renderFbar(); return; }
-  const d = e.target.closest('[data-fdone]'); if (d) { const k = d.dataset.fdone; FDONE = FDONE.includes(k) ? FDONE.filter(x => x !== k) : [...FDONE, k]; try { localStorage.setItem('k2g-first', JSON.stringify(FDONE)); } catch (er) {} renderFbar(); renderFirst(); return; }
-  if (e.target.closest('[data-fnext]')) { const f = FIRST[FI], k = f.go + f.t; if (!FDONE.includes(k)) { FDONE = [...FDONE, k]; try { localStorage.setItem('k2g-first', JSON.stringify(FDONE)); } catch (er) {} } setFI(FI + 1); go(FIRST[FI].go); }
+  if (e.target.closest('[data-fmenu]')) { FMENU = !FMENU; renderFbar(); return; }
+  if (e.target.closest('[data-fhome]')) { setFI(-1); FMENU = false; go('home'); setTimeout(() => { const t = $('#fstHome'); if (t) window.scrollTo({top: t.getBoundingClientRect().top + scrollY - 90}); }, 60); return; }
+  if (e.target.closest('[data-fclose]')) { setFI(-1); FMENU = false; renderFbar(); return; }
+  const st = e.target.closest('[data-fstep]'); if (st) { const n = FI + +st.dataset.fstep; if (FIRST[n]) { setFI(n); FMENU = false; go(FIRST[n].go); } return; }
+  const j = e.target.closest('[data-fjump]'); if (j) { const n = +j.dataset.fjump; setFI(n); FMENU = false; go(FIRST[n].go); return; }
+  if (FMENU && !e.target.closest('#fbar')) { FMENU = false; renderFbar(); }
 });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && FMENU) { FMENU = false; renderFbar(); } });
 function renderFirst() { const h = $('#fstHome'); if (h) h.innerHTML = firstHTML(true); if (S.view && byId[S.view] && byId[S.view].layout === '처음') $('#extra').innerHTML = `<section class="fst">${firstHTML(false)}</section>`; }
 document.addEventListener('click', e => {
   const c = e.target.closest('[data-fchk]'); if (c) { const k = c.dataset.fchk; FDONE = FDONE.includes(k) ? FDONE.filter(x => x !== k) : [...FDONE, k]; try { localStorage.setItem('k2g-first', JSON.stringify(FDONE)); } catch (er) {} renderFirst(); return; }
