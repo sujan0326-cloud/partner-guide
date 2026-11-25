@@ -444,13 +444,13 @@ body:not(.inb) #gnb{visibility:hidden}
 .pbtn.arb{margin-right:8px}
 /* ===== 첫 화면 메뉴 리디자인: 흰 탭 바 + 에디토리얼 목록 ===== */
 .hov{background:linear-gradient(90deg,rgba(18,22,32,.9) 0%,rgba(18,22,32,.66) 40%,rgba(18,22,32,.08) 78%)}
-.hbar{background:#fff;border:1px solid var(--line);border-top:0}
-.hb{color:var(--ink,#162036);border-left:1px solid var(--line)}
-.hb:hover{background:#f7f8fa}.hb.on{background:#fff}
-.hb .hn{color:#d0021b}.hb small{color:var(--mute)}
-.hb .hc{border-color:#162036}
+.hbar{background:#3b4763;border:0}
+.hb{color:#fff;border-left:1px solid rgba(255,255,255,.14)}
+.hb:hover{background:#45526f}.hb.on{background:#4c5a79}
+.hb .hn{color:#c9d0dd}.hb small{color:#c3cad7}
+.hb .hc{border-color:#fff}
 .hb.on::after{top:0;bottom:auto;height:3px;background:#d0021b}
-.hb.on b{color:#162036}
+.hb.on b{color:#fff}
 .hdrop{border-top:1px solid var(--line);margin-top:0;background:#fafbfc}
 .hdg{gap:0;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));border-top:1px solid var(--line)}
 .hdc{border:0;border-radius:0;border-bottom:1px solid var(--line);background:transparent;padding:18px 52px 18px 4px;gap:4px;min-height:96px;justify-content:center}
@@ -459,7 +459,7 @@ body:not(.inb) #gnb{visibility:hidden}
 .hdc i{right:14px;width:30px;height:30px;border:1px solid #c9ced8;border-radius:50%;display:grid;place-items:center;font-size:14px;color:#162036;transition:background .2s,color .2s,border-color .2s,transform .2s}
 .hdc:hover{background:#fff;border-color:var(--line)}.hdc:hover b{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1px}
 .hdc:hover i{background:#162036;border-color:#162036;color:#fff;transform:translateY(-50%) rotate(-45deg)}
-@media (max-width:900px){.hb:nth-child(n+3){border-top:1px solid var(--line)}.hdc+.hdc{box-shadow:none;padding-left:4px}}
+@media (max-width:900px){.hb:nth-child(n+3){border-top:1px solid rgba(255,255,255,.14)}.hdc+.hdc{box-shadow:none;padding-left:4px}}
 /* 일러스트 카드 */
 .icards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,1.6vw,26px)}
 .icard,.bcard{display:flex;flex-direction:column;text-align:left;padding:0;border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden;transition:transform .25s,box-shadow .25s}
