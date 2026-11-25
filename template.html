@@ -800,7 +800,7 @@ async function loadSheet() {
     const items = {};
     it.forEach(r => { const id = r['항목ID'], ref = r['같은 내용 가져오기']; if (!id || ref === id) return; /* 같은 항목ID = 다른 페이지에도 표시 */
       items[id] = ref ? {ref} :
-      {text: r['문장'], topic: r['주제'], hide: /^y/i.test(r['숨김'] || ''), tag: r['표시'], rid: r['규칙번호'], why: r['이유'], exc: r['예외·주의'], act: r['확인·대응'], source: r['근거'],
+      {text: r['문장'], topic: r['주제'], hide: /^y/i.test(r['숨김'] || ''), okpair: /^y/i.test(r['정상 2장 세트'] || ''), tag: r['표시'], rid: r['규칙번호'], why: r['이유'], exc: r['예외·주의'], act: r['확인·대응'], source: r['근거'],
        table: (r['표'] || '').split('\n').filter(Boolean).map(l => l.split('|').map(c => c.trim())), nophoto: /^y/i.test(r['사진 없이 글로 충분']), nodraw: /^y/i.test(r['설명 그림 안 씀'] || ''), todo: r['필요한 사진'], media: []}; });
     const pseen = new Set();
     ph.sort(by('순서')).forEach(r => { const x = items[r['항목ID']], k = r['항목ID'] + '|' + r['파일']; if (pseen.has(k)) return; pseen.add(k); if (x && x.media) x.media.push([r['종류'], r['파일'], r['설명']]); });
@@ -994,7 +994,7 @@ function rnoteHTML() {
 function docVisuals(x) {
   const ok = x.media.filter(q => q[3] === 'ok'), bad = x.media.filter(q => q[3] === 'bad'), etc = x.media.filter(q => q[3] !== 'ok' && q[3] !== 'bad');
   const list = [...ok, ...bad, ...etc];
-  let shown = ok.length && bad.length ? [ok[0], bad[0]] : (ok.length + bad.length) >= 2 ? [...ok, ...bad].slice(0, 2) : list.slice(0, 2);
+  let shown = x.okpair && ok.length >= 2 ? ok.slice(0, 2) : ok.length && bad.length ? [ok[0], bad[0]] :  /* okpair: 정상 2장이 한 세트(예: 양쪽 좁은 면) */ (ok.length + bad.length) >= 2 ? [...ok, ...bad].slice(0, 2) : list.slice(0, 2);
   const fig = q => { const i = list.indexOf(q); return `<figure class="dfig"><button type="button" class="dph" data-zid="${x.id}" data-zi="${i}" aria-label="${esc(q[2])} 크게 보기"><img src="${q[1]}" alt="${esc(q[2])}" loading="lazy">${MARK(q[3])}</button><figcaption><b class="${kcls(q)}">${q[3] === 'ok' ? '정상' : q[3] === 'bad' ? '불량' : (KIND[q[0]] || [0, '참고'])[1]}</b>${esc(q[2])}</figcaption></figure>`; };
   const model = kind => `<figure class="dfig"><div class="dmodel">${staticVisual(x, kind)}${MARK(kind)}</div><figcaption><b class="${kind === 'ok' ? 'g' : 'r'}">${kind === 'ok' ? '정상' : '불량'}</b>설명용 그림</figcaption></figure>`;
   const hasModel = !x.nodraw && (!!m3Of(x) || OK_MODEL[x.id]);  // nodraw: 사진 없는 쪽에 설명 그림을 채우지 않음

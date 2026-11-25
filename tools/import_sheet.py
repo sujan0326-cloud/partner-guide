@@ -67,6 +67,8 @@ def main(path):
                       'table': [[c.strip() for c in l.split('|')] for l in r.get('표', '').split('\n') if l.strip()],
                       'source': r.get('근거', ''), 'nophoto': r.get('사진 없이 글로 충분', '').lower().startswith('y'),
                       'todo': r.get('필요한 사진', ''), 'media': [], 'topic': r.get('주제', '')}
+        if r.get('정상 2장 세트', '').lower().startswith('y'):
+            items[iid]['okpair'] = True
         if r.get('숨김', '').lower().startswith('y'):
             items[iid]['hide'] = True
         if r.get('설명 그림 안 씀', '').lower().startswith('y'):
