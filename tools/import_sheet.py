@@ -87,7 +87,8 @@ def main(path):
             s['items'] = [x['항목ID'] for x in sorted((x for x in it if x.get('페이지ID') == pid and step_no(x.get('단계')) == s['n']),
                                                       key=lambda x: num(x.get('순서')))]
         pages.append({'cat': r.get('큰 메뉴', ''), 'id': pid, 'sub': r.get('작은 메뉴', ''), 'title': r.get('페이지 제목', ''),
-                      'desc': r.get('한 줄 설명', ''), 'en': r.get('영문 라벨', ''), 'layout': r.get('모양') or '기본', 'steps': steps})
+                      'desc': r.get('한 줄 설명', ''), 'en': r.get('영문 라벨', ''), 'layout': r.get('모양') or '기본', 'steps': steps,
+                      **({'topic': r['자동 모음 주제']} if r.get('자동 모음 주제') else {})})
 
     M = {'cats': [{'name': r['큰 메뉴'], 'en': r.get('영문 라벨', ''), 'desc': r.get('첫 화면 설명', ''), 'img': r.get('첫 화면 사진', '')}
                   for r in sorted(cm, key=lambda r: num(r.get('순서')))],

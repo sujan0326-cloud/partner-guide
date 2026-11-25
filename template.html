@@ -517,6 +517,7 @@ body.hasfbar{padding-bottom:64px}
 .fbt small{font-size:10px}.fbt b{font-size:13px}
 .fbp,.fbn{height:32px;padding:0 12px;font-size:12.5px}.fbx{width:28px;height:28px;font-size:18px;line-height:1;padding-bottom:4px!important}
 @media (max-width:700px){.fbar{bottom:10px}.fbi{gap:6px;padding:6px}.fbt small{display:none}.fbt b{font-size:13px}.fbp{padding:0 10px;font-size:0}.fbp i{font-size:15px}.fbn{padding:0 12px}}
+.sty{display:inline-flex;align-items:center;height:22px;padding:0 9px;border-radius:999px;background:#eef1f6;color:#33415e;font-size:11.5px;font-weight:600;margin-left:6px;white-space:nowrap}
 /* 처음 납품하시나요? */
 .hfst{margin-top:22px;height:42px;padding:0 18px;border:1px solid rgba(255,255,255,.55);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:10px}.hfst:hover{background:#fff;color:#162036}.hfst i{font-style:normal}
 .fst{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(24px,3vw,40px);margin:0 0 64px}
@@ -749,12 +750,22 @@ const BASE = __MODEL__;
 const IMGF = __IMGF__;
 const SHEET_ID = '__SHEET_ID__';
 const RED = ['입고 거부', '입고 불가', '반송'];
-let B = [], IT = {}, byId = {}, CATS = [], CENTERS = [], INDEX = [], TOPICS = [], SYN = [], FAQ = [];
+let TYPEOF = {}, B = [], IT = {}, byId = {}, CATS = [], CENTERS = [], INDEX = [], TOPICS = [], SYN = [], FAQ = [];
 const srcOf = f => IMGF[f] || (f ? 'img/' + f : '');
 const kindKey = k => /^정상/.test(k) ? 'ok' : /^불량/.test(k) ? 'bad' : /^설명 그림/.test(k) ? 'dia' : /^문제/.test(k) ? 'prob' : /^보완/.test(k) ? 'fix' : 'ref';  /* 문제→보완: 정상·불량 비교가 아닌 '이렇게 해결' 순서 예시 */
 const grpOf = k => /정상/.test(k) ? 'ok' : /불량/.test(k) ? 'bad' : 'ref';
 function build(M) {
   const res = id => { let x = M.items[id]; if (x && x.ref) x = M.items[x.ref]; return x && !x.ref ? x : null; };
+  const rid = id => (M.items[id] && M.items[id].ref) || id;
+  /* 패킹 주의사항: 주제(topic)가 정해진 페이지는 패킹 유형 페이지의 기준을 주제별로 자동으로 모음 */
+  const PACK = M.pages.filter(p => p.cat === '패킹 유형' && (p.layout || '기본') === '기본' && p.steps.length);
+  TYPEOF = {};
+  PACK.forEach(p => p.steps.filter(s => !s.hide).forEach(s => s.items.forEach(id => { const r = rid(id); (TYPEOF[r] = TYPEOF[r] || []).includes(p.sub || p.title) || TYPEOF[r].push(p.sub || p.title); })));
+  const RANK = t => /입고 거부|입고 불가|반송/.test(t || '') ? 0 : /시정요구/.test(t || '') ? 1 : /필수/.test(t || '') ? 2 : 3;
+  const auto = p => { const seen = new Set(), ids = [];
+    PACK.forEach(q => q.steps.filter(s => !s.hide).forEach(s => s.items.forEach(id => { const r = rid(id), x = res(r); if (!x || x.hide || seen.has(r) || x.topic !== p.topic) return; seen.add(r); ids.push(r); })));
+    ids.sort((a, b) => RANK(res(a).tag) - RANK(res(b).tag)); return ids.length ? [{n: '1', t: p.topic, items: ids}] : []; };
+  M = Object.assign({}, M, {pages: M.pages.map(p => p.topic && p.layout === '슬라이드' ? Object.assign({}, p, {steps: auto(p)}) : p)});
   B = M.pages.map(p => ({id: p.id, tab: p.sub || p.title, title: p.title, sub: p.desc, en: p.en, layout: p.layout, cat: p.cat,
     steps: p.steps.filter(s => !s.hide).map(s => ({n: String(s.n), t: s.t, art: s.art || '', items: s.items.filter(id => res(id) && !res(id).hide)})).filter(s => s.items.length).map((s, i) => Object.assign(s, {n: String(i + 1)}))})  /* hide: 숨긴 단계, 번호는 보이는 단계만 1부터 다시 매김 */).filter(b => b.steps.length || (b.layout && b.layout !== '기본'));
   IT = {};
@@ -798,7 +809,7 @@ async function loadSheet() {
       topics: tp.length ? tp.sort(by('순서')).map(r => r['주제']).filter(Boolean) : BASE.topics,
       cats: cm.sort(by('순서')).map(r => ({name: r['큰 메뉴'], en: r['영문 라벨'], desc: r['첫 화면 설명'], img: r['첫 화면 사진']})),
       pages: pg.sort(by('순서')).map(r => { const id = r['페이지ID'];
-        return {cat: r['큰 메뉴'], sub: r['작은 메뉴'], id, title: r['페이지 제목'], desc: r['한 줄 설명'], en: r['영문 라벨'], layout: r['모양'] || '기본',
+        return {cat: r['큰 메뉴'], sub: r['작은 메뉴'], id, title: r['페이지 제목'], desc: r['한 줄 설명'], en: r['영문 라벨'], layout: r['모양'] || '기본', topic: r['자동 모음 주제'] || '',
           steps: st.filter(x => x['페이지ID'] === id).map(x => ({n: String(x['단계']).replace(/\.0$/, ''), t: x['단계 제목'], hide: /^y/i.test(x['숨김'] || '')})).sort((a, b) => +a.n - +b.n)
             .map(s => ({n: s.n, t: s.t, art: art(id, s.n), items: it.filter(x => x['페이지ID'] === id && String(x['단계']).replace(/\.0$/, '') === s.n).sort(by('순서')).map(x => x['항목ID'])}))}; }),
       items, centers: ce.map((r, i) => { const d = (BASE.centers || []).find(x => x.id === r['센터ID']) || (BASE.centers || [])[i] || {}; return {id: r['센터ID'], name: r['센터 이름'] || d.name, addr: r['도로명 주소'] || d.addr || '', jibun: r['지번 주소'] || d.jibun || '', kinds: r['입고 가능 복종'] || d.kinds || '', map: r['지도 링크'] || d.map || ''}; })};
@@ -887,7 +898,8 @@ function slideIds(b) { return b.steps.flatMap(s => s.items); }
 function slideInner(id, k, big) {
   const x = IT[id], m = m3Of(x), pg = pageOfItem(id);
   const bad = m && m.scns ? SCN_NOTE[m.scns[1]] : (x.why ? '이유: ' + x.why : x.exc);
-  return `<header><span class="en">${String(k).padStart(2, '0')}</span>${tag(x.tag)}${x.rid ? `<small>${esc(x.rid)}</small>` : ''}${big ? '' : '<span class="zoomhint" aria-hidden="true">크게 보기</span>'}</header><h3>${esc(x.text)}</h3>
+  const TYS = {'솔리드': '솔리드', '아소트 팩·박스': '아소트', '신발': '신발', '모자·배낭·용품': '용품'}, ty = (TYPEOF[id] || []).map(t => TYS[t] || t), tyl = ty.length >= 3 ? ['공통'] : ty;
+  return `<header><span class="en">${String(k).padStart(2, '0')}</span>${tag(x.tag)}${tyl.map(t => `<span class="sty">${esc(t)}</span>`).join('')}${big ? '' : '<span class="zoomhint" aria-hidden="true">크게 보기</span>'}</header><h3>${esc(x.text)}</h3>
     ${(() => { const bads = x.media.filter(q => q[3] === 'bad'); return !x.media.some(q => q[3] === 'ok') && (bads.length >= 2 || (x.nodraw && bads.length)); })() ? `<div class="pair2">${x.media.filter(q => q[3] === 'bad').slice(0, 2).map(q => `<figure><figcaption class="r">불량</figcaption><div class="mkw"><div class="sph"><img src="${q[1]}" alt="${esc(q[2])}"></div>${MARK('bad')}</div><figcaption class="sc">${esc(q[2])}</figcaption></figure>`).join('')}</div>` : `<div class="pair2"><figure><figcaption class="g">정상</figcaption><div class="mkw">${staticVisual(x, 'ok')}${MARK('ok')}</div></figure><figure><figcaption class="r">불량</figcaption><div class="mkw">${staticVisual(x, 'bad')}${MARK('bad')}</div></figure></div>`}
     ${bad ? `<p>${esc(bad)}</p>` : ''}${pg ? `<button type="button" class="clink" data-go="${pg}" data-sel="${id}">기준 자세히 보기 →</button>` : ''}`;
 }
@@ -1318,7 +1330,7 @@ const FIRST = [
   {go: 'ptypes', t: '내 상품의 포장 유형 고르기', d: '솔리드, 아소트 팩, 아소트 박스 중 어떤 유형인지 먼저 정합니다.'},
   {go: 'solid', t: '포장 유형별 기준 확인', d: '고른 유형의 폴리백·박스 포장 기준을 사진으로 확인합니다.', more: [['solid', '솔리드'], ['assort', '아소트 팩·박스'], ['shoes', '신발'], ['acc', '모자·배낭·용품']]},
   {go: 'boxes', t: '박스 규격과 스티커 위치 확인', d: '입고박스 규격과 박스 스티커를 붙이는 위치를 확인합니다.'},
-  {go: 'cpoly', t: '자주 틀리는 기준 다시 보기', d: '입고 거부·반송으로 이어지는 폴리백·박스 기준만 모았습니다.', more: [['cpoly', '폴리백'], ['cbox', '박스']]},
+  {go: 'cpoly', t: '자주 틀리는 기준 다시 보기', d: '반송·입고 거부로 이어지는 기준을 주제별로 모았습니다.', more: [['cpoly', '폴리백'], ['ctag', '가격택·바코드'], ['cbox', '박스'], ['clabel', '스티커·라벨']]},
   {go: 'reserve', t: '입고예약 주의사항 확인', d: '실물과 전산 유형에 맞게 예약하고, 마감 시간과 수정 방법을 확인합니다.', more: [['reserve', '예약 안내'], ['rclose', '마감·시간 준수'], ['rfix', '예약 수정']]},
   {go: 'forms', t: '무측정 동의서 필요 여부 확인', d: '중량 검증 없이 입고하는 바코드 상품이면 납품 당일 패킹리스트와 함께 제출합니다.'},
   {go: 'onsite', t: '납품 당일 센터 주의사항', d: '하역 인원, 게이트 배정, 현장 박스 개봉 등 센터 안에서 지킬 기준입니다.'}
