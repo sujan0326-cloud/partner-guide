@@ -507,6 +507,7 @@ body:not(.inb) #gnb{visibility:hidden}
 .fbx{width:32px;height:32px;border-radius:50%;background:transparent;color:#aeb6c6;font-size:14px;flex:none}
 .fbm{position:absolute;left:0;right:0;bottom:calc(100% + 10px);background:#fff;border-radius:20px;box-shadow:0 18px 44px rgba(16,24,40,.22);padding:10px;max-height:min(62vh,520px);overflow:auto;animation:fbmIn .2s ease}
 @keyframes fbmIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.fbmh span{display:flex;gap:12px}.fbar.min{left:auto;right:18px;transform:none;width:auto}.fbmin{display:flex;align-items:center;gap:8px;height:40px;padding:0 14px 0 10px;border:0;border-radius:999px;background:#162036;color:#fff;box-shadow:0 8px 22px rgba(16,24,40,.25);cursor:pointer;opacity:.92}.fbmin:hover{opacity:1}.fbmin b{font:700 12.5px var(--en)}.fbmn{display:flex;flex-direction:column;gap:3px}.fbmn i{display:block;width:13px;height:1.6px;background:#fff;border-radius:2px}
 .fbmh{display:flex;justify-content:space-between;align-items:center;padding:8px 12px 10px;border-bottom:1px solid var(--line);margin-bottom:6px}.fbmh b{font-size:14px}.fbmh button{background:none;color:var(--sub);font-size:12.5px;text-decoration:underline;padding:0}
 .fbmi{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:11px 12px;border-radius:12px;background:none;color:#162036;font-size:14.5px}.fbmi span{font:700 12px var(--en);color:var(--mute);width:22px}
 .fbmi:hover{background:#f3f5f8}.fbmi.on{background:rgba(22,32,54,.7);color:#fff}.fbmi.on span{color:#d5dae4}
@@ -514,8 +515,8 @@ body.hasfbar{padding-bottom:64px}
 .fbar{width:min(560px,calc(100vw - 24px));bottom:14px}.fbi{gap:8px;padding:5px}
 .fbh{width:32px;height:32px;gap:3px}.fbh i{width:13px;height:1.6px}.fbh.on i:nth-child(1){transform:translateY(4.6px) rotate(45deg)}.fbh.on i:nth-child(3){transform:translateY(-4.6px) rotate(-45deg)}
 .fbt small{font-size:10px}.fbt b{font-size:13px}
-.fbp,.fbn{height:32px;padding:0 12px;font-size:12.5px}.fbx{width:26px;height:26px;font-size:12px}
-@media (max-width:700px){.fbar{bottom:10px}.fbi{gap:6px;padding:6px}.fbt small{display:none}.fbt b{font-size:13px}.fbp{padding:0 10px;font-size:0}.fbp i{font-size:15px}.fbn{padding:0 12px}.fbx{display:none}}
+.fbp,.fbn{height:32px;padding:0 12px;font-size:12.5px}.fbx{width:28px;height:28px;font-size:18px;line-height:1;padding-bottom:4px!important}
+@media (max-width:700px){.fbar{bottom:10px}.fbi{gap:6px;padding:6px}.fbt small{display:none}.fbt b{font-size:13px}.fbp{padding:0 10px;font-size:0}.fbp i{font-size:15px}.fbn{padding:0 12px}}
 /* 처음 납품하시나요? */
 .hfst{margin-top:22px;height:42px;padding:0 18px;border:1px solid rgba(255,255,255,.55);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:10px}.hfst:hover{background:#fff;color:#162036}.hfst i{font-style:normal}
 .fst{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(24px,3vw,40px);margin:0 0 64px}
@@ -1335,24 +1336,28 @@ function firstHTML(home) {
 /* 체크리스트에서 들어온 경우: 아래에 '체크리스트로 돌아가기 · 확인 완료 · 다음' 바 */
 let FI = (() => { try { const v = sessionStorage.getItem('k2g-fi'); return v === null ? -1 : +v; } catch (e) { return -1; } })();
 function setFI(i) { FI = i; try { i < 0 ? sessionStorage.removeItem('k2g-fi') : sessionStorage.setItem('k2g-fi', i); } catch (e) {} }
-let FMENU = false;
+let FMENU = false, FMIN = (() => { try { return sessionStorage.getItem('k2g-fmin') === '1'; } catch (e) { return false; } })();
+function setFMIN(v) { FMIN = v; try { sessionStorage.setItem('k2g-fmin', v ? '1' : '0'); } catch (e) {} }
 function renderFbar() {
   const bar = $('#fbar'); if (!bar) return;
   const on = FI >= 0 && FI < FIRST.length && S.view !== 'home' && byId[S.view] && byId[S.view].layout !== '처음';
-  bar.hidden = !on; document.body.classList.toggle('hasfbar', on); if (!on) { FMENU = false; return; }
+  bar.hidden = !on; document.body.classList.toggle('hasfbar', on && !FMIN); bar.classList.toggle('min', on && FMIN); if (!on) { FMENU = false; return; }
   const f = FIRST[FI], pv = FIRST[FI - 1], nx = FIRST[FI + 1];
-  bar.innerHTML = `${FMENU ? `<div class="fbm" role="menu"><div class="fbmh"><b>첫 납품 체크리스트</b><button type="button" data-fhome="1">전체 화면에서 보기</button></div>${FIRST.map((z, k) => `<button type="button" role="menuitem" class="fbmi${k === FI ? ' on' : ''}" data-fjump="${k}"><span>${String(k + 1).padStart(2, '0')}</span>${esc(z.t)}</button>`).join('')}</div>` : ''}
+  if (FMIN) { bar.innerHTML = `<button type="button" class="fbmin" data-fmax="1" aria-label="첫 납품 체크리스트 펼치기" title="첫 납품 체크리스트"><span class="fbmn"><i></i><i></i><i></i></span><b>${FI + 1}/${FIRST.length}</b></button>`; return; }
+  bar.innerHTML = `${FMENU ? `<div class="fbm" role="menu"><div class="fbmh"><b>첫 납품 체크리스트</b><span><button type="button" data-fhome="1">전체 화면에서 보기</button><button type="button" data-fclose="1">체크리스트 끝내기</button></span></div>${FIRST.map((z, k) => `<button type="button" role="menuitem" class="fbmi${k === FI ? ' on' : ''}" data-fjump="${k}"><span>${String(k + 1).padStart(2, '0')}</span>${esc(z.t)}</button>`).join('')}</div>` : ''}
    <div class="fbi"><button type="button" class="fbh${FMENU ? ' on' : ''}" data-fmenu="1" aria-expanded="${FMENU}" aria-label="체크리스트 목록 열기"><i></i><i></i><i></i></button>
     <div class="fbt"><small>첫 납품 체크리스트 · ${FI + 1} / ${FIRST.length}</small><b>${String(FI + 1).padStart(2, '0')} ${esc(f.t)}</b></div>
     <button type="button" class="fbp" data-fstep="-1" ${pv ? '' : 'disabled'}><i aria-hidden="true">←</i> 이전</button>
     <button type="button" class="fbn" data-fstep="1" ${nx ? '' : 'disabled'}>다음 <i aria-hidden="true">→</i></button>
-    <button type="button" class="fbx" data-fclose="1" aria-label="체크리스트 바 닫기">✕</button></div>`;
+    <button type="button" class="fbx" data-fmin="1" aria-label="작게 접기" title="작게 접기">⌄</button></div>`;
 }
 document.addEventListener('click', e => {
   const fi = e.target.closest('[data-fi]'); if (fi) setFI(+fi.dataset.fi);   /* data-go 처리 전에 기록 */
 }, true);
 document.addEventListener('click', e => {
   if (e.target.closest('[data-fmenu]')) { FMENU = !FMENU; renderFbar(); return; }
+  if (e.target.closest('[data-fmin]')) { setFMIN(true); FMENU = false; renderFbar(); return; }
+  if (e.target.closest('[data-fmax]')) { setFMIN(false); renderFbar(); return; }
   if (e.target.closest('[data-fhome]')) { setFI(-1); FMENU = false; go('home'); setTimeout(() => { const t = $('#fstHome'); if (t) window.scrollTo({top: t.getBoundingClientRect().top + scrollY - 90}); }, 60); return; }
   if (e.target.closest('[data-fclose]')) { setFI(-1); FMENU = false; renderFbar(); return; }
   const st = e.target.closest('[data-fstep]'); if (st) { const n = FI + +st.dataset.fstep; if (FIRST[n]) { setFI(n); FMENU = false; go(FIRST[n].go); } return; }
