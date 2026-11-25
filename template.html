@@ -994,7 +994,8 @@ function rnoteHTML() {
 function docVisuals(x) {
   const ok = x.media.filter(q => q[3] === 'ok'), bad = x.media.filter(q => q[3] === 'bad'), etc = x.media.filter(q => q[3] !== 'ok' && q[3] !== 'bad');
   const list = [...ok, ...bad, ...etc];
-  let shown = x.okpair && ok.length >= 2 ? ok.slice(0, 2) : ok.length && bad.length ? [ok[0], bad[0]] :  /* okpair: 정상 2장이 한 세트(예: 양쪽 좁은 면) */ (ok.length + bad.length) >= 2 ? [...ok, ...bad].slice(0, 2) : list.slice(0, 2);
+  const pr = x.media.find(q => q[0] === 'prob'), fx = x.media.find(q => q[0] === 'fix');  /* 문제→보완 한 쌍이 있으면 그 둘을 화살표로 먼저 보여줌 */
+  let shown = pr && fx ? [pr, fx] : x.okpair && ok.length >= 2 ? ok.slice(0, 2) : ok.length && bad.length ? [ok[0], bad[0]] :  /* okpair: 정상 2장이 한 세트(예: 양쪽 좁은 면) */ (ok.length + bad.length) >= 2 ? [...ok, ...bad].slice(0, 2) : list.slice(0, 2);
   const fig = q => { const i = list.indexOf(q); return `<figure class="dfig"><button type="button" class="dph" data-zid="${x.id}" data-zi="${i}" aria-label="${esc(q[2])} 크게 보기"><img src="${q[1]}" alt="${esc(q[2])}" loading="lazy">${MARK(q[3])}</button><figcaption><b class="${kcls(q)}">${q[3] === 'ok' ? '정상' : q[3] === 'bad' ? '불량' : (KIND[q[0]] || [0, '참고'])[1]}</b>${esc(q[2])}</figcaption></figure>`; };
   const model = kind => `<figure class="dfig"><div class="dmodel">${staticVisual(x, kind)}${MARK(kind)}</div><figcaption><b class="${kind === 'ok' ? 'g' : 'r'}">${kind === 'ok' ? '정상' : '불량'}</b>설명용 그림</figcaption></figure>`;
   const hasModel = !x.nodraw && (!!m3Of(x) || OK_MODEL[x.id]);  // nodraw: 사진 없는 쪽에 설명 그림을 채우지 않음
