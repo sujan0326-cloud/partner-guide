@@ -474,16 +474,16 @@ body:not(.inb) #gnb{visibility:hidden}
 .fstp{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--sub)}.fstp b{font:700 22px var(--en);color:#162036}
 .fstbar{width:140px;height:6px;border-radius:9px;background:#e8ebf0;overflow:hidden}.fstbar i{display:block;height:100%;background:#162036;transition:width .3s}
 .fstr{border:0;background:none;color:var(--mute);font-size:12px;text-decoration:underline;padding:0}
-.fstl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;counter-reset:f}
+.fstl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;gap:12px;counter-reset:f}
 .fstl li{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;background:#fafbfc;transition:border-color .2s,background .2s}
 .fstl li:hover{border-color:#162036;background:#fff}.fstl li.done{background:#f3f8f5;border-color:#cfe5d7}
 .fchk{position:absolute;left:18px;top:18px;width:34px;height:34px;border-radius:50%;border:1px solid #c9ced8;background:#fff;font:700 12px var(--en);color:#162036;z-index:1}
 .fchk:hover{border-color:#162036}.done .fchk{background:#1f8a4c;border-color:#1f8a4c;color:#fff;font-size:15px}
-.fgo{display:flex;flex-direction:column;gap:6px;text-align:left;border:0;background:none;padding:18px 18px 16px 66px;flex:1}
+.fgo{display:flex;flex-direction:column;gap:5px;text-align:left;border:0;background:none;padding:18px 18px 14px 66px;flex:1}.fcat{margin-top:auto!important;padding-top:4px}
 .fgo b{font-size:15.5px;letter-spacing:-.2px}.fgo small{font-size:13px;color:var(--sub);line-height:1.6}.fcat{font-size:11.5px;color:var(--mute);margin-top:2px}
 .fgo:hover b{text-decoration:underline;text-underline-offset:3px}
-.fmore{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 16px 66px}.fmore button{height:28px;padding:0 11px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:12px;color:#162036}.fmore button:hover{border-color:#162036}
-@media (max-width:1100px){.fstl{grid-template-columns:1fr 1fr}}@media (max-width:700px){.fstl{grid-template-columns:1fr}.fst{margin-bottom:40px}}
+.fmore{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 14px 66px;margin-top:-4px}.fmore button{height:28px;padding:0 11px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:12px;color:#162036}.fmore button:hover{border-color:#162036}
+@media (max-width:1100px){.fstl{grid-template-columns:1fr 1fr}}@media (max-width:700px){.fstl{grid-template-columns:1fr;grid-auto-rows:auto}.fst{margin-bottom:40px}}
 /* 일러스트 카드 */
 .icards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,1.6vw,26px)}
 .icard,.bcard{display:flex;flex-direction:column;text-align:left;padding:0;border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden;transition:transform .25s,box-shadow .25s}
@@ -1275,7 +1275,7 @@ function firstHTML(home) {
     <div class="fstp"><b>${n}</b> / ${FIRST.length} 확인<span class="fstbar"><i style="width:${n / FIRST.length * 100}%"></i></span>${n ? '<button type="button" class="fstr" data-freset="1">처음부터</button>' : ''}</div></div>
    <ol class="fstl">${FIRST.map((f, i) => { const k = f.go + f.t, done = FDONE.includes(k), pg = byId[f.go]; if (!pg) return '';
      return `<li class="${done ? 'done' : ''}"><button type="button" class="fchk" data-fchk="${esc(k)}" aria-pressed="${done}" aria-label="${esc(f.t)} 확인 표시">${done ? '✓' : String(i + 1).padStart(2, '0')}</button>
-      <button type="button" class="fgo" data-go="${f.go}"><b>${esc(f.t)}</b><small>${esc(f.d)}</small><span class="fcat">${esc(pg.cat)} › ${esc(pg.tab)}</span></button>
+      <button type="button" class="fgo" data-go="${f.go}"><b>${esc(f.t)}</b><small>${esc(f.d)}</small>${f.more ? '' : `<span class="fcat">${esc(pg.cat)} › ${esc(pg.tab)}</span>`}</button>
       ${f.more ? `<div class="fmore">${f.more.map(([g, l]) => byId[g] ? `<button type="button" data-go="${g}">${esc(l)}</button>` : '').join('')}</div>` : ''}</li>`; }).join('')}</ol>`;
 }
 function renderFirst() { const h = $('#fstHome'); if (h) h.innerHTML = firstHTML(true); if (S.view && byId[S.view] && byId[S.view].layout === '처음') $('#extra').innerHTML = `<section class="fst">${firstHTML(false)}</section>`; }
