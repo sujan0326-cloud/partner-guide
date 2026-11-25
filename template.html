@@ -465,6 +465,25 @@ body:not(.inb) #gnb{visibility:hidden}
 .hbar{transition:border-radius .2s}.hbar.dd{border-radius:0 !important}.hdrop{border-radius:0 0 22px 22px !important}.hdrop:not(.is-open){border-radius:0 !important}
 .hdg{grid-template-columns:repeat(auto-fill,minmax(190px,240px)) !important;justify-content:start;border-top:0 !important}.hdg{padding:0 1px 1px 0}.hdc,.hdc+.hdc{border:1px solid #dfe3ea !important;margin:0 -1px -1px 0;padding-left:18px !important;box-shadow:none !important}
 @media (max-width:900px){.hdg{grid-template-columns:1fr !important}}
+/* 처음 납품하시나요? */
+.hfst{margin-top:22px;height:42px;padding:0 18px;border:1px solid rgba(255,255,255,.55);border-radius:999px;background:rgba(255,255,255,.08);color:#fff;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:10px}.hfst:hover{background:#fff;color:#162036}.hfst i{font-style:normal}
+.fst{background:#fff;border:1px solid var(--line);border-radius:22px;padding:clamp(24px,3vw,40px);margin:0 0 64px}
+.fst:empty{display:none}.hdwrap{margin-bottom:28px}
+.fsth{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:22px}
+.fsth .en{color:#d0021b}.fsth h2{margin:6px 0 8px;font-size:24px;letter-spacing:-.5px}.fsth p{margin:0;color:var(--sub);font-size:14.5px}
+.fstp{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--sub)}.fstp b{font:700 22px var(--en);color:#162036}
+.fstbar{width:140px;height:6px;border-radius:9px;background:#e8ebf0;overflow:hidden}.fstbar i{display:block;height:100%;background:#162036;transition:width .3s}
+.fstr{border:0;background:none;color:var(--mute);font-size:12px;text-decoration:underline;padding:0}
+.fstl{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;counter-reset:f}
+.fstl li{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:16px;background:#fafbfc;transition:border-color .2s,background .2s}
+.fstl li:hover{border-color:#162036;background:#fff}.fstl li.done{background:#f3f8f5;border-color:#cfe5d7}
+.fchk{position:absolute;left:18px;top:18px;width:34px;height:34px;border-radius:50%;border:1px solid #c9ced8;background:#fff;font:700 12px var(--en);color:#162036;z-index:1}
+.fchk:hover{border-color:#162036}.done .fchk{background:#1f8a4c;border-color:#1f8a4c;color:#fff;font-size:15px}
+.fgo{display:flex;flex-direction:column;gap:6px;text-align:left;border:0;background:none;padding:18px 18px 16px 66px;flex:1}
+.fgo b{font-size:15.5px;letter-spacing:-.2px}.fgo small{font-size:13px;color:var(--sub);line-height:1.6}.fcat{font-size:11.5px;color:var(--mute);margin-top:2px}
+.fgo:hover b{text-decoration:underline;text-underline-offset:3px}
+.fmore{display:flex;flex-wrap:wrap;gap:6px;padding:0 18px 16px 66px}.fmore button{height:28px;padding:0 11px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:12px;color:#162036}.fmore button:hover{border-color:#162036}
+@media (max-width:1100px){.fstl{grid-template-columns:1fr 1fr}}@media (max-width:700px){.fstl{grid-template-columns:1fr}.fst{margin-bottom:40px}}
 /* 일러스트 카드 */
 .icards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,1.6vw,26px)}
 .icard,.bcard{display:flex;flex-direction:column;text-align:left;padding:0;border:1px solid var(--line);border-radius:18px;background:#fff;overflow:hidden;transition:transform .25s,box-shadow .25s}
@@ -645,9 +664,10 @@ body:not(.inb) #gnb{visibility:hidden}
 <main id="home">
  <div class="wrap">
   <section class="hero"><img id="heroImg" src="" alt="K2 여주 물류센터 외관"><div class="hov"></div>
-   <div class="htx"><span class="hk">K2 KOREA · PARTNER GUIDE</span><h1>협력사<br>납품가이드</h1><p>사진으로 확인하고, 기준에 맞게 준비합니다.</p></div></section>
+   <div class="htx"><span class="hk">K2 KOREA · PARTNER GUIDE</span><h1>협력사<br>납품가이드</h1><p>사진으로 확인하고, 기준에 맞게 준비합니다.</p><button type="button" class="hfst" data-jump="fstHome">처음 납품하시나요? <i aria-hidden="true">→</i></button></div></section>
   <nav class="hbar" id="hbar" aria-label="메뉴"></nav>
   <div class="hdwrap" id="hdwrap"><div class="hdrop" id="hdrop"><div class="hdin" id="hdin"></div></div></div>
+  <section class="fst" id="fstHome"></section>
  </div>
 </main>
 
@@ -781,7 +801,7 @@ function route(keepSel) {
   S.view = v; S.mi = 0; S.more = false; S.pi = {ok: 0, bad: 0};
   document.body.classList.toggle('inb', v !== 'home');
   document.querySelectorAll('[data-cat]').forEach(a => { const on = a.dataset.cat === catOf(v); a.classList.toggle('on', on); on ? a.setAttribute('aria-current', 'page') : a.removeAttribute('aria-current'); });
-  $('#home').hidden = v !== 'home'; $('#boardView').hidden = v === 'home'; if (v === 'home') requestAnimationFrame(reserveHdrop);
+  $('#home').hidden = v !== 'home'; $('#boardView').hidden = v === 'home'; if (v === 'home') { requestAnimationFrame(reserveHdrop); renderFirst(); }
   closeSheet();
   if (v !== 'home') {
     const b = byId[v];
@@ -1114,7 +1134,7 @@ function renderBoard() {
    ${cp.length > 1 ? `<nav class="btabs" role="tablist" aria-label="${esc(b.cat)}">${cp.map(x => `<button class="${x.id === b.id ? 'on' : ''}" type="button" role="tab" aria-selected="${x.id === b.id}" data-go="${x.id}">${esc(x.tab)}</button>`).join('')}</nav>` : ''}`.replace(/class="" type="button" role="tab" aria-selected="false" data-go="([a-z0-9]+)"/g, (m, id) => grpOfPage(byId[id] || {}) && grpOfPage(byId[id]) === grpOfPage(b) ? `class="on" type="button" role="tab" aria-selected="true" data-go="${id}"` : m);
   $('#bnr').classList.toggle('has-tabs', cp.length > 1);
   $('#bhead').innerHTML = `<div><nav class="crumb" aria-label="현재 위치"><button type="button" id="goHome2">홈</button><span aria-hidden="true">/</span><span>${esc(b.cat)}</span>${grpOfPage(b) ? `<span aria-hidden="true">/</span><span>${esc(grpOfPage(b))}</span>` : ''}${b.tab !== b.cat ? `<span aria-hidden="true">/</span><span>${esc(GTAB[b.id] || b.tab)}</span>` : ''}</nav><h1>${esc(b.title)}</h1><p>${esc(b.sub)}</p></div>`;
-  $('#extra').innerHTML = b.layout === '슬라이드' ? slidesHTML(b) : b.layout === '유형' ? typesHTML() : b.layout === '센터' ? centerHTML() : b.layout === '양식' ? formsHTML() : b.layout === '비용' ? costHTML() : b.layout === '예약마감' ? rcloseHTML() : b.layout === '박스' ? boxesHTML() : b.layout === '전체규칙' ? allRulesHTML() : b.layout === '입고순서' ? inflowHTML() : b.layout === '예약수정' ? rfixHTML() : b.layout === '재입고' ? rnoteHTML() : b.layout === '준비 중' ? `<div class="prep"><b>내용 준비 중입니다</b><p>${esc(b.sub)}. 확인되는 대로 이 자리에 올라옵니다.</p></div>` : '';
+  $('#extra').innerHTML = b.layout === '슬라이드' ? slidesHTML(b) : b.layout === '유형' ? typesHTML() : b.layout === '센터' ? centerHTML() : b.layout === '처음' ? `<section class="fst">${firstHTML(false)}</section>` : b.layout === '양식' ? formsHTML() : b.layout === '비용' ? costHTML() : b.layout === '예약마감' ? rcloseHTML() : b.layout === '박스' ? boxesHTML() : b.layout === '전체규칙' ? allRulesHTML() : b.layout === '입고순서' ? inflowHTML() : b.layout === '예약수정' ? rfixHTML() : b.layout === '재입고' ? rnoteHTML() : b.layout === '준비 중' ? `<div class="prep"><b>내용 준비 중입니다</b><p>${esc(b.sub)}. 확인되는 대로 이 자리에 올라옵니다.</p></div>` : '';
   $('#extra').insertAdjacentHTML('afterbegin', gtabsHTML(b)); if (b.layout === '박스') bindBox();
   const noBoard = !b.steps.length || b.layout === '슬라이드'; document.querySelector('.lay').hidden = noBoard;
   if (noBoard) { $('#flow').innerHTML = ''; $('#cards').innerHTML = ''; $('#pnl').innerHTML = ''; return; }
@@ -1236,6 +1256,33 @@ function formsHTML() {
 }
 
 document.addEventListener('click', e => { if (e.target.closest('#fToggle')) { FOPEN = !FOPEN; $('#extra').innerHTML = formsHTML(); } });
+/* 처음 납품하시나요? — 순서대로 확인하는 체크리스트 (홈 + 센터 안내 › 처음 납품 안내) */
+const FIRST = [
+  {go: 'location', t: '센터 위치와 입고 가능 복종 확인', d: '1센터·2센터 중 어디로 가는지, 납품 시간(09~16시)과 복장 기준을 확인합니다.'},
+  {go: 'inflow', t: '입고 순서 한눈에 보기', d: '예약부터 입고 확정까지 어떤 순서로 진행되는지 봅니다.'},
+  {go: 'ptypes', t: '내 상품의 포장 유형 고르기', d: '솔리드, 아소트 팩, 아소트 박스 중 어떤 유형인지 먼저 정합니다.'},
+  {go: 'solid', t: '포장 유형별 기준 확인', d: '고른 유형의 폴리백·박스 포장 기준을 사진으로 확인합니다.', more: [['solid', '솔리드'], ['assort', '아소트 팩·박스'], ['shoes', '신발'], ['acc', '모자·배낭·용품']]},
+  {go: 'boxes', t: '박스 규격과 스티커 위치 확인', d: '입고박스 규격과 박스 스티커를 붙이는 위치를 확인합니다.'},
+  {go: 'cpoly', t: '자주 틀리는 기준 다시 보기', d: '입고 거부·반송으로 이어지는 폴리백·박스 기준만 모았습니다.', more: [['cpoly', '폴리백'], ['cbox', '박스']]},
+  {go: 'reserve', t: '입고예약 주의사항 확인', d: '실물과 전산 유형에 맞게 예약하고, 마감 시간과 수정 방법을 확인합니다.', more: [['reserve', '예약 안내'], ['rclose', '마감·시간 준수'], ['rfix', '예약 수정']]},
+  {go: 'forms', t: '무측정 동의서 필요 여부 확인', d: '중량 검증 없이 입고하는 바코드 상품이면 납품 당일 패킹리스트와 함께 제출합니다.'},
+  {go: 'onsite', t: '납품 당일 센터 주의사항', d: '하역 인원, 게이트 배정, 현장 박스 개봉 등 센터 안에서 지킬 기준입니다.'}
+];
+let FDONE = (() => { try { return JSON.parse(localStorage.getItem('k2g-first') || '[]'); } catch (e) { return []; } })();
+function firstHTML(home) {
+  const n = FIRST.filter(f => FDONE.includes(f.go + f.t)).length;
+  return `<div class="fsth"><div><span class="en">FIRST DELIVERY</span><h2>처음 납품하시나요?</h2><p>아래 순서대로 확인하면 첫 납품을 준비할 수 있습니다. 항목을 누르면 해당 안내로 이동합니다.</p></div>
+    <div class="fstp"><b>${n}</b> / ${FIRST.length} 확인<span class="fstbar"><i style="width:${n / FIRST.length * 100}%"></i></span>${n ? '<button type="button" class="fstr" data-freset="1">처음부터</button>' : ''}</div></div>
+   <ol class="fstl">${FIRST.map((f, i) => { const k = f.go + f.t, done = FDONE.includes(k), pg = byId[f.go]; if (!pg) return '';
+     return `<li class="${done ? 'done' : ''}"><button type="button" class="fchk" data-fchk="${esc(k)}" aria-pressed="${done}" aria-label="${esc(f.t)} 확인 표시">${done ? '✓' : String(i + 1).padStart(2, '0')}</button>
+      <button type="button" class="fgo" data-go="${f.go}"><b>${esc(f.t)}</b><small>${esc(f.d)}</small><span class="fcat">${esc(pg.cat)} › ${esc(pg.tab)}</span></button>
+      ${f.more ? `<div class="fmore">${f.more.map(([g, l]) => byId[g] ? `<button type="button" data-go="${g}">${esc(l)}</button>` : '').join('')}</div>` : ''}</li>`; }).join('')}</ol>`;
+}
+function renderFirst() { const h = $('#fstHome'); if (h) h.innerHTML = firstHTML(true); if (S.view && byId[S.view] && byId[S.view].layout === '처음') $('#extra').innerHTML = `<section class="fst">${firstHTML(false)}</section>`; }
+document.addEventListener('click', e => {
+  const c = e.target.closest('[data-fchk]'); if (c) { const k = c.dataset.fchk; FDONE = FDONE.includes(k) ? FDONE.filter(x => x !== k) : [...FDONE, k]; try { localStorage.setItem('k2g-first', JSON.stringify(FDONE)); } catch (er) {} renderFirst(); return; }
+  if (e.target.closest('[data-freset]')) { FDONE = []; try { localStorage.removeItem('k2g-first'); } catch (er) {} renderFirst(); }
+});
 /* 돌려보는 박스 (기존 사이트의 입체 부착 안내를 옮김). 규칙번호로 연결 */
 const MODEL3D = {
   s1c: {type: 'bag', scns: ['sizeok', 'sizeover']}, s1d: {type: 'bag', scns: ['rfidok', 'rfidbad']}, s2c: {type: 'bag', scns: ['flatok', 'sealgap']},
