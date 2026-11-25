@@ -299,7 +299,7 @@
     },
     {
      "n": "3",
-     "t": "배낭",
+     "t": "배낭 가격택",
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><rect x=\"80\" y=\"40\" width=\"80\" height=\"110\" rx=\"22\" fill=\"#6f7b74\" stroke=\"#4e5852\" stroke-width=\"2\"></rect><rect x=\"94\" y=\"96\" width=\"52\" height=\"40\" rx=\"8\" fill=\"#5b665f\"></rect><path d=\"M104 40 C104 20 136 20 136 40\" fill=\"none\" stroke=\"#4e5852\" stroke-width=\"5\"></path><rect x=\"168\" y=\"70\" width=\"26\" height=\"40\" rx=\"2\" fill=\"#fff\" stroke=\"#8d989c\"></rect><path d=\"M172 96h18\" stroke=\"#222\" stroke-width=\"6\" stroke-dasharray=\"1.2 1.2\"></path><text x=\"120\" y=\"166\" font-size=\"12\"  text-anchor=\"middle\" fill=\"#5f6a62\">방향·바코드 위치 확인</text></svg>",
      "items": [
       "c3a",
@@ -309,7 +309,7 @@
     },
     {
      "n": "4",
-     "t": "기타 용품",
+     "t": "기타",
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><rect x=\"60\" y=\"30\" width=\"120\" height=\"120\" rx=\"8\" fill=\"#e3eaed\" stroke=\"#9fb0b8\" stroke-width=\"2.5\"></rect><path d=\"M86 60 h68 v70 h-68z\" fill=\"#3b4246\"></path><rect x=\"98\" y=\"100\" width=\"44\" height=\"22\" fill=\"#fff\" stroke=\"#8d989c\"></rect><path d=\"M103 112h34\" stroke=\"#222\" stroke-width=\"7\" stroke-dasharray=\"1.2 1.2\"></path><text x=\"196\" y=\"60\" font-size=\"13\"  text-anchor=\"start\" fill=\"#5f6a62\">전면</text><text x=\"196\" y=\"76\" font-size=\"13\"  text-anchor=\"start\" fill=\"#5f6a62\">88 바코드</text></svg>",
      "items": [
       "c4a",
