@@ -227,12 +227,24 @@
    "id": "shoes",
    "sub": "신발",
    "title": "신발 포장",
-   "desc": "SOLID·ASSORT 구분과 OUT BOX 규격을 함께 보는 유형",
+   "desc": "상품택·RFID 칩 부착 위치, SOLID·ASSORT 구분과 OUT BOX 규격을 함께 보는 유형",
    "en": "PACKING",
    "layout": "기본",
    "steps": [
     {
      "n": "1",
+     "t": "상품택·RFID 칩 부착",
+     "items": [
+      "h0a",
+      "h0b",
+      "h0c",
+      "h0d",
+      "h0e",
+      "h0f"
+     ]
+    },
+    {
+     "n": "2",
      "t": "포장 구분 확인",
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><rect x=\"20\" y=\"40\" width=\"90\" height=\"100\" rx=\"8\" fill=\"#eef2ea\" stroke=\"#cfdac6\"></rect><rect x=\"130\" y=\"40\" width=\"90\" height=\"100\" rx=\"8\" fill=\"#f3efe4\" stroke=\"#e0d4b8\"></rect><text x=\"65\" y=\"96\" font-size=\"18\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#345443\">SOLID</text><text x=\"175\" y=\"96\" font-size=\"18\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#6b5636\">ASSORT</text><text x=\"120\" y=\"160\" font-size=\"12\"  text-anchor=\"middle\" fill=\"#5f6a62\">포장 구분부터 확인</text></svg>",
      "items": [
@@ -241,7 +253,7 @@
      ]
     },
     {
-     "n": "2",
+     "n": "3",
      "t": "OUT BOX 규격",
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><polygon points=\"40,70 160,70 160,150 40,150\" fill=\"#d0b995\" stroke=\"#aa916b\" stroke-width=\"2\"></polygon><polygon points=\"160,70 205,50 205,130 160,150\" fill=\"#bda580\" stroke=\"#aa916b\" stroke-width=\"2\"></polygon><polygon points=\"40,70 85,50 205,50 160,70\" fill=\"#e0ccaa\" stroke=\"#aa916b\" stroke-width=\"2\"></polygon><text x=\"100\" y=\"116\" font-size=\"15\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#6b5636\">OUT BOX</text><text x=\"120\" y=\"30\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#345443\">565 × 505 × 345mm · 8입</text></svg>",
      "items": [
@@ -250,7 +262,7 @@
      ]
     },
     {
-     "n": "3",
+     "n": "4",
      "t": "큰 IN BOX 협의",
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><rect x=\"40\" y=\"40\" width=\"70\" height=\"110\" fill=\"#e9e6df\" stroke=\"#9c958a\" stroke-width=\"2\"></rect><path d=\"M60 60v60h30v-16h-16v-44z\" fill=\"#3b4246\"></path><rect x=\"130\" y=\"80\" width=\"80\" height=\"70\" fill=\"#e9e6df\" stroke=\"#9c958a\" stroke-width=\"2\"></rect><path d=\"M140 130h50l8-14h-24l-6-12h-20z\" fill=\"#3b4246\"></path><text x=\"75\" y=\"30\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#345443\">부츠</text><text x=\"170\" y=\"72\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#345443\">중등산화</text><text x=\"120\" y=\"166\" font-size=\"12\"  text-anchor=\"middle\" fill=\"#5f6a62\">IN BOX 실측 후 협의</text></svg>",
      "items": [
@@ -259,7 +271,7 @@
      ]
     },
     {
-     "n": "4",
+     "n": "5",
      "t": "공통 기준",
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\">\n<polygon points=\"34,62 146,62 146,150 34,150\" fill=\"#d0b995\" stroke=\"#aa916b\" stroke-width=\"2\"></polygon>\n<polygon points=\"146,62 198,40 198,128 146,150\" fill=\"#bda580\" stroke=\"#aa916b\" stroke-width=\"2\"></polygon>\n<polygon points=\"34,62 86,40 198,40 146,62\" fill=\"#e0ccaa\" stroke=\"#aa916b\" stroke-width=\"2\"></polygon>\n<path d=\"M60 51h112\" stroke=\"#c9b273\" stroke-width=\"6\" opacity=\".6\"></path>\n<polygon points=\"160,70 186,59 186,79 160,90\" fill=\"#fff\" stroke=\"#8d989c\" stroke-width=\"1.5\"></polygon>\n<path d=\"M165 78l16-7M165 83l16-7\" stroke=\"#222\" stroke-width=\"1.5\"></path>\n<ellipse cx=\"173\" cy=\"74\" rx=\"22\" ry=\"20\" fill=\"none\" stroke=\"#345443\" stroke-width=\"3\"></ellipse>\n<path d=\"M200 96 Q222 104 226 124\" stroke=\"#5f6a62\" stroke-width=\"1.5\" fill=\"none\" stroke-dasharray=\"4 3\"></path>\n<text x=\"150\" y=\"166\" font-size=\"12\" fill=\"#5f6a62\">좁은 면 상단 정중앙</text>\n<text x=\"40\" y=\"22\" font-size=\"12\" fill=\"#5f6a62\">반대편 좁은 면에도 1장</text></svg>",
      "items": [
@@ -2836,6 +2848,250 @@
    ],
    "topic": "폴리백·블리스터 백",
    "grid": 4
+  },
+  "h0a": {
+   "text": "슬리퍼: 발등 부분을 감싸도록 택 고리 체결",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "",
+   "act": "",
+   "table": [
+    [
+     "구분",
+     "부착 방법"
+    ],
+    [
+     "상품택",
+     "상품택은 발등을 덮는 부분을 감싸도록 택 고리를 길게 체결합니다."
+    ],
+    [
+     "RFID 칩",
+     "RFID 칩은 상품택과 같은 택 고리에 함께 체결합니다."
+    ]
+   ],
+   "source": "Ember 제공 신발 상품택·RFID 칩 부착 안내 (2026-11-27)",
+   "nophoto": false,
+   "todo": "",
+   "nodraw": true,
+   "media": [
+    [
+     "참고",
+     "shoe_tag_slipper_1.jpg",
+     "상품택과 RFID 칩을 함께 연결"
+    ],
+    [
+     "참고",
+     "shoe_tag_slipper_2.jpg",
+     "발등 부분을 감싸도록 길게 체결"
+    ]
+   ],
+   "topic": "가격택·바코드"
+  },
+  "h0b": {
+   "text": "구멍이 있는 뮬: 제품 구멍에 택 고리 체결",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "",
+   "act": "",
+   "table": [
+    [
+     "구분",
+     "부착 방법"
+    ],
+    [
+     "상품택",
+     "상품택은 제품에 있는 구멍에 택 고리를 걸어 체결합니다."
+    ],
+    [
+     "RFID 칩",
+     "RFID 칩은 상품택과 같은 택 고리에 함께 체결합니다."
+    ]
+   ],
+   "source": "Ember 제공 신발 상품택·RFID 칩 부착 안내 (2026-11-27)",
+   "nophoto": false,
+   "todo": "",
+   "nodraw": true,
+   "media": [
+    [
+     "참고",
+     "shoe_tag_mule_1.jpg",
+     "상품택과 RFID 칩을 함께 연결"
+    ],
+    [
+     "참고",
+     "shoe_tag_mule_2.jpg",
+     "제품 측면 구멍에 택 고리 체결"
+    ],
+    [
+     "참고",
+     "shoe_tag_mule_3.jpg",
+     "동일한 기준으로 상품택과 RFID 칩 연결"
+    ],
+    [
+     "참고",
+     "shoe_tag_mule_4.jpg",
+     "체결 부위 상세"
+    ]
+   ],
+   "topic": "가격택·바코드"
+  },
+  "h0c": {
+   "text": "샌들: 뒤꿈치 고리에 상품택, RFID 칩은 깔창 아래",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "",
+   "act": "",
+   "table": [
+    [
+     "구분",
+     "부착 방법"
+    ],
+    [
+     "상품택",
+     "상품택은 뒤꿈치 고리(힐 루프)에 체결합니다."
+    ],
+    [
+     "RFID 칩",
+     "깔창이 있는 제품은 상품택만 고리에 달고, RFID 칩은 깔창 아래에 부착합니다."
+    ]
+   ],
+   "source": "Ember 제공 신발 상품택·RFID 칩 부착 안내 (2026-11-27)",
+   "nophoto": false,
+   "todo": "",
+   "nodraw": true,
+   "media": [
+    [
+     "참고",
+     "shoe_tag_sandal_1.jpg",
+     "뒤꿈치 고리(힐 루프)에 상품택 체결"
+    ],
+    [
+     "참고",
+     "shoe_tag_sandal_2.jpg",
+     "깔창 아래에 RFID 칩 부착"
+    ]
+   ],
+   "topic": "가격택·바코드"
+  },
+  "h0d": {
+   "text": "겨울용 뮬형 슬리퍼: 고리에 상품택, RFID 칩은 깔창 아래",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "",
+   "act": "",
+   "table": [
+    [
+     "구분",
+     "부착 방법"
+    ],
+    [
+     "상품택",
+     "상품택은 고리 등 체결 가능한 부위가 있으면 체결합니다."
+    ],
+    [
+     "RFID 칩",
+     "RFID 칩은 깔창 아래에 부착합니다."
+    ]
+   ],
+   "source": "Ember 제공 신발 상품택·RFID 칩 부착 안내 (2026-11-27)",
+   "nophoto": false,
+   "todo": "",
+   "nodraw": true,
+   "media": [
+    [
+     "참고",
+     "shoe_tag_wmule_1.jpg",
+     "제품의 체결 가능한 고리 이용"
+    ],
+    [
+     "참고",
+     "shoe_tag_wmule_2.jpg",
+     "깔창 아래에 RFID 칩 부착"
+    ]
+   ],
+   "topic": "가격택·바코드"
+  },
+  "h0e": {
+   "text": "체결 부위가 없는 부츠: 상품택은 신발 안쪽 깊숙이",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "깔창과 체결 부위가 모두 없는 경우, 상품택은 신발 안쪽에 깊숙이 넣고 RFID 칩 처리 방법은 사전 협의 후 진행합니다.",
+   "act": "",
+   "table": [
+    [
+     "구분",
+     "부착 방법"
+    ],
+    [
+     "상품택",
+     "상품택은 신발 안쪽에 깊숙이 넣습니다."
+    ],
+    [
+     "RFID 칩",
+     "RFID 칩은 깔창 아래에 부착합니다. 깔창이 없으면 사전 협의 후 진행합니다."
+    ]
+   ],
+   "source": "Ember 제공 신발 상품택·RFID 칩 부착 안내 (2026-11-27)",
+   "nophoto": false,
+   "todo": "",
+   "nodraw": true,
+   "media": [
+    [
+     "참고",
+     "shoe_tag_boot0_1.jpg",
+     "상품택을 신발 안쪽에 깊숙이 넣기"
+    ],
+    [
+     "참고",
+     "shoe_tag_boot0_2.jpg",
+     "깔창 아래에 RFID 칩 부착"
+    ]
+   ],
+   "topic": "가격택·바코드"
+  },
+  "h0f": {
+   "text": "체결 부위가 있는 부츠: 뒤꿈치 고리에 상품택",
+   "rid": "",
+   "tag": "",
+   "why": "",
+   "exc": "",
+   "act": "",
+   "table": [
+    [
+     "구분",
+     "부착 방법"
+    ],
+    [
+     "상품택",
+     "상품택은 뒤꿈치 고리 등 체결 가능한 부위에 체결합니다."
+    ],
+    [
+     "RFID 칩",
+     "깔창이 있는 부츠는 RFID 칩을 깔창 아래에 부착합니다. 깔창이 없으면 사전 협의 후 진행합니다."
+    ]
+   ],
+   "source": "Ember 제공 신발 상품택·RFID 칩 부착 안내 (2026-11-27)",
+   "nophoto": false,
+   "todo": "",
+   "nodraw": true,
+   "media": [
+    [
+     "참고",
+     "shoe_tag_boot1_1.jpg",
+     "뒤꿈치 고리에 상품택 체결"
+    ],
+    [
+     "참고",
+     "shoe_tag_boot1_2.jpg",
+     "깔창 아래에 RFID 칩 부착"
+    ]
+   ],
+   "topic": "가격택·바코드"
   }
  },
  "centers": [
