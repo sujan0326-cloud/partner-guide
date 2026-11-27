@@ -724,10 +724,10 @@ body.hasfbar{padding-bottom:64px}
 <main id="home">
  <div class="wrap">
   <section class="hero"><img id="heroImg" src="" alt="K2 여주 물류센터 외관"><div class="hov"></div>
-   <div class="htx"><span class="hk">K2 KOREA · PARTNER GUIDE</span><h1>협력사<br>납품가이드</h1><p>사진으로 확인하고, 기준에 맞게 준비합니다.</p><button type="button" class="hfst" data-jump="fstHome">처음 납품하시나요? <i aria-hidden="true">→</i></button></div></section>
+   <div class="htx"><span class="hk">K2 KOREA · PARTNER GUIDE</span><h1>협력사<br>납품가이드</h1><p>사진으로 확인하고, 기준에 맞게 준비합니다.</p><button type="button" class="hfst" data-go="first">처음 납품하시나요? <i aria-hidden="true">→</i></button></div></section>
   <nav class="hbar" id="hbar" aria-label="메뉴"></nav>
   <div class="hdwrap" id="hdwrap"><div class="hdrop" id="hdrop"><div class="hdin" id="hdin"></div></div></div>
-  <section class="fst" id="fstHome"></section>
+  <section class="fst" id="fstHome" hidden></section>  <!-- 메인 하단 체크리스트는 숨김: 처음 납품하시나요? 버튼은 납품 가이드 페이지로 이동 -->
  </div>
 </main>
 
@@ -1408,7 +1408,7 @@ document.addEventListener('click', e => {
   if (e.target.closest('[data-fmenu]')) { FMENU = !FMENU; renderFbar(); return; }
   if (e.target.closest('[data-fmin]')) { setFMIN(true); FMENU = false; renderFbar(); return; }
   if (e.target.closest('[data-fmax]')) { setFMIN(false); renderFbar(); return; }
-  if (e.target.closest('[data-fhome]')) { setFI(-1); FMENU = false; go('home'); setTimeout(() => { const t = $('#fstHome'); if (t) window.scrollTo({top: t.getBoundingClientRect().top + scrollY - 90}); }, 60); return; }
+  if (e.target.closest('[data-fhome]')) { setFI(-1); FMENU = false; go('first'); return; }
   if (e.target.closest('[data-fclose]')) { setFI(-1); FMENU = false; renderFbar(); return; }
   const st = e.target.closest('[data-fstep]'); if (st) { const n = FI + +st.dataset.fstep; if (FIRST[n]) { setFI(n); FMENU = false; go(FIRST[n].go); } return; }
   const j = e.target.closest('[data-fjump]'); if (j) { const n = +j.dataset.fjump; setFI(n); FMENU = false; go(FIRST[n].go); return; }
