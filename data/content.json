@@ -1173,6 +1173,16 @@
    "media": [
     [
      "정상",
+     "assort_sticker_center_ok.jpg",
+     "아소트 팩 스티커를 정가운데 부착"
+    ],
+    [
+     "불량",
+     "assort_sticker_offtop_bad.jpg",
+     "아소트 스티커가 정가운데에서 벗어나 치우침"
+    ],
+    [
+     "정상",
      "AST-05_정상_중앙부착.png",
      "설명 그림 · 중앙 부착"
     ],
