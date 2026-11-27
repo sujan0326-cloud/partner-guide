@@ -109,6 +109,7 @@ body:not(.inb) #gnb{visibility:hidden}
 .board{background:var(--paper);padding:30px 0 72px;min-height:70vh}
 .bhead{display:flex;align-items:flex-end;justify-content:flex-start;gap:16px 32px;flex-wrap:wrap;margin-bottom:22px}
 .rtx{color:#c8102e;font-weight:700}#print .rtx{color:#c8102e}
+.rwarn{display:flex;gap:14px;align-items:flex-start;margin:4px 0 22px;padding:16px 20px;border:1px solid #f1c4cb;border-left:4px solid #c8102e;border-radius:12px;background:#fff7f8}.rwarn>b{flex:none;color:#c8102e;font-size:14px;padding-top:1px}.rwarn p{margin:0;font-size:14.5px;line-height:1.7;color:var(--ink)}
 .bprint{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border:1px solid var(--navy);border-radius:999px;background:#fff;color:var(--navy);font:600 14px var(--kr,inherit);cursor:pointer;transition:background .2s,color .2s}.bprint:hover{background:var(--navy);color:#fff}@media print{.bprint{display:none}}
 .crumb{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px;color:var(--mute)}.crumb button{border:0;background:none;padding:0;color:var(--mute);font-size:13px}.crumb button:hover{color:var(--navy)}.crumb span:last-child{color:var(--sub)}
 .bhead h1{margin:0 0 4px;font-size:22px;line-height:1.3;font-weight:700;letter-spacing:-.4px}
@@ -987,6 +988,8 @@ function rfixHTML() {
 function rnoteHTML() {
   return `<section class="rbox"><span class="en">RE-ENTRY</span><h2>비고란에 "매입반품 재입고"를 적어 주세요</h2>
     <p class="rlead">매입반품 후 다시 입고할 때는 <b>입고예약등록NEW</b> 화면(협력사 › 입고관리)에서 예약을 등록하면서 <b>입고예약정보 영역의 비고란</b>에 재입고라는 것을 남겨야 합니다.</p>
+    <p class="rlead">매입반품 후 해당 상품을 재입고할 때 발생되는 비용은 <b>생산처에 청구</b>하고 있습니다. 비용 청구를 위해 아래 비고란 기재 방법을 꼭 참고해 주세요.</p>
+    <div class="rwarn"><b>주의</b><p>매입반품을 진행하면 <span class="rtx">기존 박스 스티커는 사용할 수 없으며</span>, 기존에 패킹했던 정보도 모두 사라집니다.<br>새 박스 스티커를 부착한 뒤 <b>패킹 등록과 출고 등록을 완료해야 입고가 가능</b>합니다.</p></div>
     <figure class="rshot"><img src="${srcOf('rn_screen.jpg')}" alt="입고예약등록NEW 화면, 입고예약정보 영역의 비고란에 매입반품 후 재입고가 적혀 있음"><figcaption>빨간 테두리가 비고란입니다. 화면을 누르면 크게 볼 수 있습니다.</figcaption></figure>
     <ol class="rpts">
      <li><i>01</i><div><b>비고란에 문구를 꼭 적습니다</b><p>매입반품 후 재입고를 진행할 때는 비고란에 아래 문구를 그대로 적습니다.</p><span class="q">매입반품 재입고</span></div></li>
