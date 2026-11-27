@@ -1264,21 +1264,23 @@ const COSTS = [
    rules: ['K2KOREA 물류재고는 도급계약에 따라 도급사에서 관리하며, 재고 부족 등의 문제 발생 시 책임이 있습니다.', '센터 내부 작업 시 제품이 섞이거나 수량 부족 등의 사유로 작업 후 내품 이상 여부 확인이 필요합니다 (RFID GATE 검수).',
      '적치된 상품의 수정 작업을 위하여 이동 및 수정 작업 후 지정 위치에 재적치하는 작업이 발생합니다.'],
    work: [['상품 준비', '작업 대상에 대한 상품 로케이션 적치 상품 준비, 준비 상품 작업 공간 이동 작업', '출고 피킹'], ['작업 완료분 검수', '작업 완료분 박스별 GATE 검수, 내품 내역 이상 여부 확인 및 수불 검수', '입고'], ['작업 완료분 재적치', '검수 완료분 PLT 이동 및 로케이션 또는 선반랙 적치', '']],
-   tables: [{key: 'fix', name: '청구 비용 (부가세 별도)', sub: '', head: ['박스 수', '현장 인원', '비용(원)'], rows: [[20, 100, '1', 159000], [101, 300, '2', 318000], [301, null, '4', 636000]]}],
-   notes: ['1,000박스 이상일 경우 비용 협의가 필요합니다.', '청구 비용은 인건비를 기준으로 하며 도급사에서 지출하는 1인 일당 기준으로 책정합니다.', '20박스 미만의 소량 작업 시 비용이 발생하지 않습니다.']}];
+   tables: [{key: 'fix', name: '청구 비용 (부가세 별도)', sub: '', head: ['박스 수', '현장 인원', '비용(원)'], rows: [[20, 100, '1', 159000], [101, 300, '2', 318000], [301, 1000, '4', 636000], [1001, 1500, '6', 954000], [1501, 2000, '8', 1272000]], step: {from: 1000, base: 636000, ppl: 4, per: 500, add: 318000, addPpl: 2}}],  /* step: 1,000박스 초과분은 500박스마다 2인 318,000원 가산 */
+   notes: ['1,000박스 이상부터는 301~1,000박스 기준인 636,000원을 기준으로, 500박스 구간마다 2인 작업 비용 318,000원을 가산합니다. (예: 2,001~2,500박스는 8인 1,272,000원 + 318,000원 = 10인 1,590,000원)', '청구 비용은 인건비를 기준으로 하며 도급사에서 지출하는 1인 일당 기준으로 책정합니다.', '20박스 미만의 소량 작업 시 비용이 발생하지 않습니다.']}];
 let cTab = 0, calc = {t: 0, n: ''};
 const won = n => n.toLocaleString('ko-KR');
 function costCalc() {
   const C = COSTS[cTab], T = C.tables[Math.min(calc.t, C.tables.length - 1)], n = parseInt(String(calc.n).replace(/[^0-9]/g, ''), 10);
   if (!n) return '<span class="cr0">박스 수를 넣으면 비용이 나옵니다.</span>';
-  if (n >= 1000) return `<b>비용 협의</b><span>1,000박스 이상은 비용 협의가 필요합니다.</span>`;
+  if (T.step && n > T.step.from) { const k = Math.ceil((n - T.step.from) / T.step.per), lo = T.step.from + (k - 1) * T.step.per + 1, hi = T.step.from + k * T.step.per;
+    return `<b>${won(T.step.base + T.step.add * k)}원</b><span>${won(lo)} ~ ${won(hi)}박스 구간 · 인원 ${T.step.ppl + T.step.addPpl * k}명 · 부가세 별도</span>`; }
+  if (n >= 1000 && !T.step) return `<b>비용 협의</b><span>1,000박스 이상은 비용 협의가 필요합니다.</span>`;
   const r = T.rows.find(r => n >= r[0] && (r[1] === null || n <= r[1]));
   if (!r) return `<b>비용 없음</b><span>${C.key === 'fix' ? '20박스 미만의 소량 작업은 비용이 발생하지 않습니다.' : '해당 구간이 없습니다.'}</span>`;
-  return `<b>${won(r[r.length - 1])}원</b><span>${r[1] === null ? r[0] + '박스 이상' : r[0] + ' ~ ' + r[1] + '박스'} 구간 · 인원 ${esc(r[r.length - 2])}명${C.key === 'fix' ? ' · 부가세 별도' : ' · 착불 택배비 별도'}</span>`;
+  return `<b>${won(r[r.length - 1])}원</b><span>${r[1] === null ? won(r[0]) + '박스 이상' : won(r[0]) + ' ~ ' + won(r[1]) + '박스'} 구간 · 인원 ${esc(r[r.length - 2])}명${C.key === 'fix' ? ' · 부가세 별도' : ' · 착불 택배비 별도'}</span>`;
 }
 function costHTML() {
   const C = COSTS[cTab];
-  const tb = T => `<div class="ctbl"><h4>${esc(T.name)}${T.sub ? `<small>${esc(T.sub)}</small>` : ''}</h4><table><tr>${T.head.map((h, i) => `<th${i === T.head.length - 1 ? ' class="num"' : ''}>${h}</th>`).join('')}</tr>${T.rows.map(r => `<tr><td>${r[1] === null ? r[0] + ' 이상' : r[0] + ' ~ ' + r[1]}</td>${r.slice(2, -1).map(v => `<td>${v}</td>`).join('')}<td class="num">${won(r[r.length - 1])}</td></tr>`).join('')}</table></div>`;
+  const tb = T => `<div class="ctbl"><h4>${esc(T.name)}${T.sub ? `<small>${esc(T.sub)}</small>` : ''}</h4><table><tr>${T.head.map((h, i) => `<th${i === T.head.length - 1 ? ' class="num"' : ''}>${h}</th>`).join('')}</tr>${T.rows.map(r => `<tr><td>${r[1] === null ? won(r[0]) + ' 이상' : won(r[0]) + ' ~ ' + won(r[1])}</td>${r.slice(2, -1).map(v => `<td>${v}</td>`).join('')}<td class="num">${won(r[r.length - 1])}</td></tr>`).join('')}</table></div>`;
   return `<div class="ctabs" role="tablist" aria-label="비용 기준 선택">${COSTS.map((x, i) => `<button type="button" role="tab" data-ctab="${i}" class="${i === cTab ? 'on' : ''}" aria-selected="${i === cTab}">${x.name}</button>`).join('')}</div>
    <div class="cost"><div class="cmain"><span class="en">COST STANDARD</span><h2>${esc(C.title)}</h2><p class="clead">${esc(C.lead)}</p>
     <ol class="crules">${C.rules.map(r => `<li>${esc(r)}</li>`).join('')}</ol>
