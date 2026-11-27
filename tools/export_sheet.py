@@ -108,7 +108,7 @@ def main():
                 seen.add(iid)
                 rows.append(base + [x.get('topic'), x.get('text'), x.get('tag'), x.get('rid'), x.get('why'), x.get('exc'), x.get('act'),
                                     x.get('source'), '\n'.join(' | '.join(map(s, r)) for r in x.get('table') or []),
-                                    'Y' if x.get('nophoto') else '', x.get('todo'), '', 'Y' if x.get('nodraw') else '', 'Y' if x.get('hide') else '', 'Y' if x.get('okpair') else '', 'Y' if x.get('grid') else ''])
+                                    'Y' if x.get('nophoto') else '', x.get('todo'), '', 'Y' if x.get('nodraw') else '', 'Y' if x.get('hide') else '', 'Y' if x.get('okpair') else '', ('Y' if x.get('grid') is True else str(x['grid'])) if x.get('grid') else ''])
                 for j, m in enumerate(x.get('media') or []):
                     photos.append([iid, j + 1, m[0], m[1], m[2] if len(m) > 2 else ''])
     head = ['페이지ID', '단계', '순서', '항목ID', '주제', '문장', '표시', '규칙번호', '이유', '예외·주의', '확인·대응', '근거', '표',
