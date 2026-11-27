@@ -1731,7 +1731,7 @@ document.addEventListener('click', e => {
     case 'showSample': $('#paper').innerHTML = consentDoc(true); toast('작성 예시를 보여드립니다. 입력하면 다시 내 내용으로 바뀝니다.'); break;
     case 'printForm': $('#print').className = 'form'; $('#print').innerHTML = consentDoc(false); try { window.print(); } catch (err) { toast('이 화면에서는 인쇄가 막혀 있습니다. 사이트 파일을 브라우저로 열면 인쇄됩니다.'); } break;
     case 'copyAddr': (async () => { try { await navigator.clipboard.writeText(CENTERS[cIdx].addr || ''); toast('도로명 주소를 복사했습니다.'); } catch (err) { toast('복사가 막혀 있습니다. 브라우저에서 사이트 파일을 열면 복사됩니다.'); } })(); break;
-    case 'toRules': { const c = document.getElementById('st-1'); c && c.scrollIntoView({behavior: 'smooth', block: 'start'}); } break;
+    case 'toRules': go('onsite'); break;  // 방문 전 규칙은 납품 시 주의사항 페이지에 있음
     case 'askBtn': toast('질문하기는 기존 사이트의 납품 길잡이(챗봇)를 연결할 자리입니다.'); break;
     case 'printBtn': PSEL = null; printOpen(); break;
     case 'printThis': { const P = $('#print'); P.className = 'doc'; P.innerHTML = printDocSheet(byId[S.view]); setTimeout(() => { try { window.print(); } catch (err) { toast('이 화면에서는 인쇄가 막혀 있습니다.'); } }, 120); break; }

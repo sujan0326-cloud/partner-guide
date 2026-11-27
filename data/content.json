@@ -28,18 +28,7 @@
    "desc": "여주 물류센터 위치와 입차·하역 안내",
    "en": "CENTER",
    "layout": "센터",
-   "steps": [
-    {
-     "n": "1",
-     "t": "출발·도착",
-     "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><rect x=\"24\" y=\"60\" width=\"120\" height=\"66\" rx=\"4\" fill=\"#d6dfe3\" stroke=\"#8f9aa0\" stroke-width=\"2\"></rect><path d=\"M144 76h38l22 24v26h-60z\" fill=\"#c9ced2\" stroke=\"#8f9aa0\" stroke-width=\"2\"></path><rect x=\"156\" y=\"82\" width=\"22\" height=\"16\" fill=\"#eef3f6\"></rect><circle cx=\"56\" cy=\"130\" r=\"12\" fill=\"#3b4246\"></circle><circle cx=\"176\" cy=\"130\" r=\"12\" fill=\"#3b4246\"></circle><text x=\"120\" y=\"40\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#345443\">입차·대기·하역 따로 확인</text></svg>",
-     "items": [
-      "v3a",
-      "v3b",
-      "v3c"
-     ]
-    }
-   ]
+   "steps": []
   },
   {
    "cat": "센터 안내",
@@ -72,6 +61,16 @@
    "steps": [
     {
      "n": "1",
+     "t": "출발·도착",
+     "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><rect x=\"24\" y=\"60\" width=\"120\" height=\"66\" rx=\"4\" fill=\"#d6dfe3\" stroke=\"#8f9aa0\" stroke-width=\"2\"></rect><path d=\"M144 76h38l22 24v26h-60z\" fill=\"#c9ced2\" stroke=\"#8f9aa0\" stroke-width=\"2\"></path><rect x=\"156\" y=\"82\" width=\"22\" height=\"16\" fill=\"#eef3f6\"></rect><circle cx=\"56\" cy=\"130\" r=\"12\" fill=\"#3b4246\"></circle><circle cx=\"176\" cy=\"130\" r=\"12\" fill=\"#3b4246\"></circle><text x=\"120\" y=\"40\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#345443\">입차·대기·하역 따로 확인</text></svg>",
+     "items": [
+      "v3a",
+      "v3b",
+      "v3c"
+     ]
+    },
+    {
+     "n": "2",
      "t": "센터 안에서",
      "art": "<svg viewBox=\"0 0 240 170\" width=\"100%\" height=\"100%\" aria-hidden=\"true\"><rect x=\"20\" y=\"40\" width=\"200\" height=\"90\" fill=\"#e3e6e1\" stroke=\"#9c958a\" stroke-width=\"2\"></rect><rect x=\"34\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M34 70h48\" stroke=\"#b2b9be\"></path><rect x=\"34\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M34 80h48\" stroke=\"#b2b9be\"></path><rect x=\"34\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M34 90h48\" stroke=\"#b2b9be\"></path><rect x=\"34\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M34 100h48\" stroke=\"#b2b9be\"></path><rect x=\"34\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M34 110h48\" stroke=\"#b2b9be\"></path><rect x=\"96\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M96 70h48\" stroke=\"#b2b9be\"></path><rect x=\"96\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M96 80h48\" stroke=\"#b2b9be\"></path><rect x=\"96\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M96 90h48\" stroke=\"#b2b9be\"></path><rect x=\"96\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M96 100h48\" stroke=\"#b2b9be\"></path><rect x=\"96\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M96 110h48\" stroke=\"#b2b9be\"></path><rect x=\"158\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M158 70h48\" stroke=\"#b2b9be\"></path><rect x=\"158\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M158 80h48\" stroke=\"#b2b9be\"></path><rect x=\"158\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M158 90h48\" stroke=\"#b2b9be\"></path><rect x=\"158\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M158 100h48\" stroke=\"#b2b9be\"></path><rect x=\"158\" y=\"60\" width=\"48\" height=\"70\" fill=\"#c9ced2\" stroke=\"#8f9aa0\"></rect><path d=\"M158 110h48\" stroke=\"#b2b9be\"></path><text x=\"120\" y=\"30\" font-size=\"13\" font-weight=\"700\" text-anchor=\"middle\" fill=\"#345443\">현장 안내에 따라</text><text x=\"120\" y=\"154\" font-size=\"12\"  text-anchor=\"middle\" fill=\"#5f6a62\">RFID·수정은 승인 후</text></svg>",
      "items": [
