@@ -1438,7 +1438,8 @@
    "nophoto": false,
    "todo": "구성표가 붙은 박스 겉면",
    "media": [],
-   "topic": "스티커·라벨"
+   "topic": "스티커·라벨",
+   "hide": true
   },
   "a3b06": {
    "ref": "s3b06"
