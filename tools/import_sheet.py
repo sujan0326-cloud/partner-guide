@@ -101,7 +101,8 @@ def main(path):
                   for r in sorted(cm, key=lambda r: num(r.get('순서')))],
          'pages': pages, 'items': items,
          'centers': [{'id': r.get('센터ID', ''), 'name': r.get('센터 이름', ''), 'addr': r.get('도로명 주소', ''), 'jibun': r.get('지번 주소', ''),
-                      'map': r.get('지도 링크', ''), 'kinds': r.get('입고 가능 복종', '')} for r in ce],
+                      'map': r.get('지도 링크', ''), 'kinds': r.get('입고 가능 복종', ''),
+                      'photos': next((c.get('photos', []) for c in old.get('centers', []) if c.get('id') == r.get('센터ID', '')), [])} for r in ce],  # 현장 사진은 시트에 없으니 기존 값 유지
          'synonyms': [r['같은 뜻 낱말'] for r in sy if r.get('같은 뜻 낱말')] or old.get('synonyms', []),
          'faq': [{'q': r['질문'], 'to': r['연결']} for r in sorted(fq, key=lambda r: num(r.get('순서'))) if r.get('질문') and r.get('연결')] or old.get('faq', []),
          'topics': [r['주제'] for r in sorted(tp, key=lambda r: num(r.get('순서'))) if r.get('주제')] or old.get('topics', [])}
