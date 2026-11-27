@@ -328,7 +328,7 @@ body:not(.inb) #gnb{visibility:hidden}
 .ctabs button:hover{color:var(--ink)}.ctabs button.on{color:var(--navy);font-weight:700;border-bottom-color:var(--navy)}
 .visit{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:clamp(24px,2.6vw,48px);margin-bottom:40px}
 .ccard{background:#fff;border:1px solid var(--line);padding:36px 36px 32px}
-.cgal{margin:28px 0 36px}.cgal h3{margin:0 0 14px;font-size:18px;font-weight:700;letter-spacing:-.4px}.cgg{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.cgg figure{margin:0}.cgg button{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#f3f4f6;cursor:zoom-in;aspect-ratio:16/8.5}.cgg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}.cgg button:hover img{transform:scale(1.03)}.cgg figcaption{margin-top:8px;font-size:14px;color:var(--sub)}@media (max-width:900px){.cgg{grid-template-columns:minmax(0,1fr)}}
+.cgal{margin:28px 0 36px}.cgal h3{margin:0 0 14px;font-size:18px;font-weight:700;letter-spacing:-.4px}.cgg{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,300px));gap:14px}.cgg figure{margin:0}.cgg button{display:block;width:100%;padding:0;border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#f3f4f6;cursor:zoom-in;aspect-ratio:16/10}.cgg img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s ease}.cgg button:hover img{transform:scale(1.03)}.cgg figcaption{margin-top:6px;font-size:13px;color:var(--sub)}@media (max-width:900px){.cgg{grid-template-columns:minmax(0,1fr)}}
 .ccard .en{color:var(--navy2)}
 .ccard h2{display:flex;align-items:center;gap:10px;margin:10px 0 18px;font-size:30px;font-weight:700;letter-spacing:-.8px}
 .ccard h2 small{display:inline-flex;align-items:center;height:24px;padding:0 9px;border:1px solid #d5d8de;font-family:var(--en);font-size:12px;font-weight:600;color:var(--sub);letter-spacing:.5px}
@@ -665,6 +665,7 @@ body.hasfbar{padding-bottom:64px}
 .ifl{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;border-top:2px solid var(--navy)}
 .ifl li{position:relative;padding:18px 16px 22px;border-right:1px solid var(--line2);border-bottom:1px solid var(--line2);display:flex;flex-direction:column;gap:6px}
 .ifl li:nth-child(6n){border-right:0}.ifl .ig{font:600 11px var(--en);letter-spacing:1px;color:var(--mute)}.ifl i{font:700 18px var(--en);color:var(--navy2);font-style:normal}
+.iph{margin:34px 0 14px;font-size:18px;font-weight:700;letter-spacing:-.4px}.ipg{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.ipg li{display:flex;flex-direction:column;gap:4px}.ipg button{padding:0;border:1px solid var(--line);border-radius:14px;overflow:hidden;aspect-ratio:16/10;background:#f3f4f6;cursor:zoom-in;margin-bottom:6px}.ipg img{width:100%;height:100%;object-fit:cover;display:block}.ipg i{font:700 14px var(--en);color:var(--navy2);font-style:normal}.ipg b{font-size:15px}.ipg p{margin:0;font-size:13px;color:var(--sub)}@media (max-width:900px){.ipg{grid-template-columns:1fr 1fr}}
 .ifl b{font-size:15px}.ifl p{margin:0;font-size:13px;color:var(--sub);line-height:1.55}
 .ifl li:not(:nth-child(6n))::after{content:'';position:absolute;right:-6px;top:24px;width:10px;height:10px;border-top:1.5px solid #b7bdc8;border-right:1.5px solid #b7bdc8;background:#fff;transform:rotate(45deg);z-index:1}
 @media (max-width:1100px){.ifl{grid-template-columns:repeat(3,minmax(0,1fr))}.ifl li:nth-child(6n){border-right:1px solid var(--line2)}.ifl li:nth-child(3n){border-right:0}.ifl li::after{display:none}}
@@ -1083,9 +1084,11 @@ const INFLOW = [
   ['하역', '박스 하역', '배정받은 게이트로 박스를 내립니다'], ['하역', 'SKU별 파렛트 적재', '뒷단에서 SKU별 파렛트에 박스를 쌓습니다'],
   ['검수', '상품 샘플 검수', '입고 현장 담당자가 샘플을 검수합니다'], ['검수', '입고 확정', '문제가 있으면 K2 담당자와 처리 방안을 확인하고, 없으면 입고를 확정합니다'],
   ['종료', '납품일지 작성', '협력사(대행사) 담당자가 납품일지를 작성합니다'], ['종료', '입고 확인서 수령', '입고 확인서를 받으면 입고가 끝납니다']];
+const INFLOW_PH = [['inflow_1_unload.jpg', '하역', ''], ['inflow_2_gate.jpg', 'GATE 검수', ''], ['inflow_3_pallet.jpg', '파렛트 적재', ''], ['inflow_4_move.jpg', '이동', '샘플 검수를 위한 이동']];  // 입고 순서 현장 사진
 function inflowHTML() {
   return `<section class="rbox"><span class="en">INBOUND FLOW</span><h2>예약부터 입고 종료까지</h2><p class="rlead">센터에 도착한 뒤에는 아래 순서로 입고가 진행됩니다.</p>
-   <ol class="ifl">${INFLOW.map((x, i) => `<li><span class="ig">${x[0]}</span><i>${String(i + 1).padStart(2, '0')}</i><b>${x[1]}</b><p>${x[2]}</p></li>`).join('')}</ol></section>`;
+   <ol class="ifl">${INFLOW.map((x, i) => `<li><span class="ig">${x[0]}</span><i>${String(i + 1).padStart(2, '0')}</i><b>${x[1]}</b><p>${x[2]}</p></li>`).join('')}</ol>
+   <h3 class="iph">현장 입고 진행 모습</h3><ol class="ipg">${INFLOW_PH.map((x, i) => `<li><button type="button" data-iph="${i}" aria-label="${esc(x[1])} 크게 보기"><img src="${srcOf(x[0])}" alt="${esc(x[1])}" loading="lazy"></button><i>${String(i + 1).padStart(2, '0')}</i><b>${esc(x[1])}</b>${x[2] ? `<p>${esc(x[2])}</p>` : ''}</li>`).join('')}</ol></section>`;
 }
 
 /* ===== 일러스트: 열린 박스 (아이소메트릭) ===== */
@@ -1732,6 +1735,7 @@ function fitMenu() { const subs = [...document.querySelectorAll('#gnb .sub')]; i
 window.addEventListener('resize', fitMenu); if (document.fonts) document.fonts.ready.then(fitMenu);
 function shutMenu() { const a = document.activeElement; if (a && a.closest && a.closest('.hd')) a.blur(); $('.hd').classList.add('shut'); }
 $('#gnb').addEventListener('click', e => { if (e.target.closest('a')) shutMenu(); });
+document.addEventListener('click', e => { const b = e.target.closest('[data-iph]'); if (!b) return; ZV = {list: INFLOW_PH.map(x => ['참고', srcOf(x[0]), x[1] + (x[2] ? ' · ' + x[2] : ''), 'etc']), i: +b.dataset.iph}; zvShow(); });  // 입고 순서 현장 사진 크게 보기
 document.addEventListener('click', e => { const b = e.target.closest('[data-cph]'); if (!b) return; const ph = CENTERS[cIdx].photos || []; ZV = {list: ph.map(p => ['참고', srcOf(p[0]), p[1], 'etc']), i: +b.dataset.cph}; zvShow(); });  // 센터 현장 사진 크게 보기
 $('#gnb').addEventListener('mouseleave', () => $('.hd').classList.remove('shut'));
 $('#gnb').addEventListener('keydown', e => { if (e.key === 'Tab') $('.hd').classList.remove('shut'); });
