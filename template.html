@@ -59,7 +59,7 @@ body:not(.inb) #gnb{visibility:hidden}
 .hk{display:flex;align-items:center;gap:12px;font:600 11px var(--en);letter-spacing:2.5px;color:#dfe4ee}.hk::before{content:'';width:36px;height:2px;background:#d0021b}
 .htx h1{margin:14px 0 14px;font-size:clamp(30px,3vw,46px);line-height:1.15;font-weight:700;letter-spacing:-1.2px}
 .htx p{margin:0;font-size:15px;color:#e3e7ef}
-.hbar{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));background:var(--navy)}
+.hbar{display:grid;grid-template-columns:repeat(var(--hn,4),minmax(0,1fr));background:var(--navy)}
 .hb{position:relative;text-align:left;border:0;border-left:1px solid rgba(255,255,255,.12);background:transparent;color:#fff;padding:16px clamp(16px,1.6vw,28px);display:grid;grid-template-columns:1fr auto;grid-template-rows:auto auto auto;row-gap:3px;transition:background .25s}
 .hb:first-child{border-left:0}.hb:hover{background:#1e2a45}.hb.on{background:#243152}
 .hb .hn{grid-column:1;font:600 11px var(--en);letter-spacing:2px;color:#9aa4b8}.hb b{grid-column:1;font-size:17px;font-weight:700}
@@ -77,7 +77,7 @@ body:not(.inb) #gnb{visibility:hidden}
 @keyframes hdcIn{to{opacity:1;transform:none}}
 .hdc .en{color:var(--mute)}.hdc b{font-size:15px}.hdc small{font-size:13px;color:var(--sub);line-height:1.5}.hdc i{position:absolute;right:18px;top:50%;transform:translateY(-50%);font-style:normal;color:var(--navy);transition:transform .2s}
 .hdc:hover{border-color:var(--navy);background:#f6f7fa}.hdc:hover i{transform:translate(4px,-50%)}
-@media (max-width:900px){.hdwrap{height:auto}.hero{height:220px}.hbar{grid-template-columns:1fr 1fr}.hb:nth-child(3){border-left:0}.hb:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12)}.hdin{grid-template-columns:1fr}.hb small{display:none}}
+@media (max-width:900px){.hdwrap{height:auto}.hero{height:220px}.hbar:not([style*="--hn: 3"]){grid-template-columns:1fr 1fr}.hbar:not([style*="--hn: 3"]) .hb:nth-child(3){border-left:0}.hbar:not([style*="--hn: 3"]) .hb:nth-child(n+3){border-top:1px solid rgba(255,255,255,.12)}.hdin{grid-template-columns:1fr}.hb small{display:none}}
 .intro{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;padding:calc(var(--ddh,170px) + 32px) 0 40px}
 .intro h1{margin:12px 0 0;font-size:clamp(32px,4.4vw,50px);line-height:1.1;font-weight:700;letter-spacing:-1.5px}
 .intro p{margin:0;text-align:right;color:var(--sub);line-height:1.8}
@@ -758,7 +758,7 @@ function build(M) {
   const res = id => { let x = M.items[id]; if (x && x.ref) x = M.items[x.ref]; return x && !x.ref ? x : null; };
   const rid = id => (M.items[id] && M.items[id].ref) || id;
   /* 패킹 주의사항: 주제(topic)가 정해진 페이지는 패킹 유형 페이지의 기준을 주제별로 자동으로 모음 */
-  const PACK = M.pages.filter(p => p.cat === '패킹 유형' && (p.layout || '기본') === '기본' && p.steps.length);
+  const PACK = M.pages.filter(p => !p.topic && ['solid', 'assort', 'shoes', 'acc'].includes(p.id) && p.steps.length);  /* 유형별 기준 페이지(메뉴 이름이 바뀌어도 동작) */
   TYPEOF = {};
   PACK.forEach(p => p.steps.filter(s => !s.hide).forEach(s => s.items.forEach(id => { const r = rid(id); (TYPEOF[r] = TYPEOF[r] || []).includes(p.sub || p.title) || TYPEOF[r].push(p.sub || p.title); })));
   const RANK = t => /입고 거부|입고 불가|반송/.test(t || '') ? 0 : /시정요구/.test(t || '') ? 1 : /필수/.test(t || '') ? 2 : 3;
@@ -827,7 +827,7 @@ let cIdx = 0; // 센터 정보는 시트의 '센터' 탭에서 고칩니다
 const catOf = v => (byId[v] || {}).cat;
 const catPages = name => (CATS.find(c => c.name === name) || {pages: []}).pages;
 /* 하위 메뉴 묶음: 같은 묶음의 페이지는 메뉴에 한 번만 나오고, 페이지 안 탭으로 오갑니다 */
-const GRP = {reserve: '입고예약', rclose: '입고예약', rfix: '입고예약', rcost: '매입반품', rnote: '매입반품'};
+const GRP = {reserve: '입고예약', rclose: '입고예약', rfix: '입고예약', rcost: '매입반품', rnote: '매입반품', cpoly: '주제별 주의사항', ctag: '주제별 주의사항', cbox: '주제별 주의사항', clabel: '주제별 주의사항'};  /* 주제별 주의사항: 유형별 기준을 주제로 다시 모아 보는 탭(별도 메뉴 아님) */
 const GTAB = {reserve: '예약 안내', rclose: '마감·시간 준수', rfix: '예약 수정', rcost: '비용 기준', rnote: '재입고 예약'};
 const grpOfPage = p => GRP[p.id] || '';
 const menuPages = c => { const seen = new Set(); return c.pages.filter(p => { const g = grpOfPage(p); if (!g) return true; if (seen.has(g)) return false; seen.add(g); return true; }).map(p => grpOfPage(p) ? Object.assign({}, p, {tab: grpOfPage(p)}) : p); };
@@ -1064,6 +1064,7 @@ function reserveHdrop() { const w = $('#hdwrap'), d = $('#hdrop'); if (!w || $('
   HOPEN = keep; renderHbar(true); void d.offsetHeight; requestAnimationFrame(() => { d.style.transition = ''; }); w.style.setProperty('--hdres', Math.ceil(mx) + 2 + 'px'); }
 window.addEventListener('resize', () => { if (!$('#home').hidden) reserveHdrop(); });
 function renderHbar() {
+  $('#hbar').style.setProperty('--hn', CATS.length);  /* 큰 메뉴 개수만큼 칸 나눔 */
   $('#hbar').innerHTML = CATS.map((c, i) => `<button type="button" class="hb${i === HOPEN ? ' on' : ''}" data-hb="${i}" aria-expanded="${i === HOPEN}" aria-controls="hdrop">
     <span class="hn">0${i + 1}</span><b>${esc(c.name)}</b><small>${menuPages(c).map(p => esc(p.tab)).join(' · ')}</small><i class="hc" aria-hidden="true"></i></button>`).join('');
   const d = $('#hdrop'), c = CATS[HOPEN];
