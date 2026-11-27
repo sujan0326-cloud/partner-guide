@@ -305,7 +305,7 @@ body:not(.inb) #gnb{visibility:hidden}
 @media (max-width:700px){.gtabs{display:flex;width:100%}.gtabs button{flex:1;padding:0 6px;font-size:13px}}
 .det.tonly{border-top:0}.det.tonly .bd{padding-top:4px}
 .prep{background:#fff;border:1px solid var(--line);padding:56px 40px;text-align:center;color:var(--sub)}.prep b{display:block;color:var(--ink);font-size:18px;margin-bottom:8px}.prep p{margin:0}
-.tgm{margin-bottom:22px}.tgm .en{color:var(--navy2)}.tgm h2{margin:8px 0 16px;font-size:24px;font-weight:700;letter-spacing:-.6px}.tgg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px;align-items:start}.tgc{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 24px}.tgk{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:999px;background:var(--navy);color:#fff;font-size:13px;font-weight:600;margin-bottom:12px}.tgc>p{margin:0;font-size:15px;line-height:1.7;color:var(--ink)}.tgc .tgl{color:var(--sub);font-size:14px;margin-bottom:10px}.tgo{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}.tgo li{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--line2)}.tgo li>i{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--navy);color:var(--navy);font:700 13px var(--en);font-style:normal;display:flex;align-items:center;justify-content:center}.tgo b{font-size:15px}.tgo p{margin:3px 0 0;font-size:14px;line-height:1.65;color:var(--sub)}.tgw{margin:12px 0 0}@media (max-width:900px){.tgg{grid-template-columns:minmax(0,1fr)}}
+.tgm{margin-bottom:34px}.tglk{margin-top:8px}.nmsec{padding-top:26px;border-top:1px solid var(--line);scroll-margin-top:140px}.nmsec .en{color:var(--navy2)}.nmsec h2{margin:8px 0 16px;font-size:22px;font-weight:700;letter-spacing:-.5px}.tgm .en{color:var(--navy2)}.tgm h2{margin:8px 0 16px;font-size:24px;font-weight:700;letter-spacing:-.6px}.tgg{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,2fr);gap:14px;align-items:start}.tgc{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px 24px}.tgk{display:inline-flex;align-items:center;height:28px;padding:0 12px;border-radius:999px;background:var(--navy);color:#fff;font-size:13px;font-weight:600;margin-bottom:12px}.tgc>p{margin:0;font-size:15px;line-height:1.7;color:var(--ink)}.tgc .tgl{color:var(--sub);font-size:14px;margin-bottom:10px}.tgo{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}.tgo li{display:flex;gap:14px;padding:14px 0;border-top:1px solid var(--line2)}.tgo li>i{flex:none;width:26px;height:26px;border-radius:50%;border:1.5px solid var(--navy);color:var(--navy);font:700 13px var(--en);font-style:normal;display:flex;align-items:center;justify-content:center}.tgo b{font-size:15px}.tgo p{margin:3px 0 0;font-size:14px;line-height:1.65;color:var(--sub)}.tgw{margin:12px 0 0}@media (max-width:900px){.tgg{grid-template-columns:minmax(0,1fr)}}
 .nmg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-bottom:18px}.nmi{display:flex;gap:14px;background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px}.nmi h3{margin:0 0 6px;font-size:16px}.nmi p{margin:0;color:var(--sub);line-height:1.7;font-size:14.5px}.nmi b{color:var(--ink,#162036)}.nmn{flex:none;width:30px;height:30px;border-radius:50%;background:#162036;color:#fff;display:grid;place-items:center;font:700 12px var(--en)}.nmi.warn{border-color:#f0c9cf;background:#fff8f8}.nmi.warn .nmn{background:#d0021b}.nmbtn{display:inline-flex;align-items:center;gap:14px;height:48px;padding:0 22px;border:1px solid #162036;border-radius:999px;background:#fff;color:#162036;font-weight:700;font-size:15px;margin-bottom:22px}.nmbtn i{font-style:normal;font-size:18px}.nmbtn:hover{background:#162036;color:#fff}@media (max-width:900px){.nmg{grid-template-columns:1fr}}
 .nmprev{max-width:760px}.nmprev .paper{box-shadow:0 10px 30px rgba(16,24,40,.08)}
 .forms{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,2.6vw,48px);align-items:start}
@@ -1326,13 +1326,19 @@ function formsHTML() {
       <ol class="tgo">
        <li><i>1</i><div><b>내품 전량 수량 카운트</b><p>납품처에서 모든 박스의 내품 전량을 카운트합니다. (현장 담당자 입회하에)</p></div></li>
        <li><i>2</i><div><b>모든 상품 중량 체크</b><p>모든 상품의 중량을 체크합니다. (현장 담당자 입회하에)</p></div></li>
-       <li><i>3</i><div><b>무측정 동의서 작성</b><p>중량으로 검증이 어려운 경우(내품 1PCS의 유무가 중량으로 검증 불가 시) 무측정 동의서를 작성합니다. 작성 후 내품이 빈 것이 확인되면 <b>납품처에서 제품으로 보충</b>합니다.</p></div></li>
+       <li><i>3</i><div><b>무측정 동의서 작성</b><p>중량으로 검증이 어려운 경우(내품 1PCS의 유무가 중량으로 검증 불가 시) 무측정 동의서를 작성합니다. 작성 후 내품이 빈 것이 확인되면 <b>납품처에서 제품으로 보충</b>합니다.</p><button type="button" class="clink tglk" id="fWhat">무측정 동의서란? <span aria-hidden="true">→</span></button></div></li>
       </ol>
       <div class="rwarn tgw"><b>주의</b><p>무측정 동의서는 <span class="rtx">사전 협의된 경우만</span> 진행합니다. 납품 당일 패킹리스트와 함께 작성해 현장에 전달해 주세요.</p></div>
      </div>
     </div>
    </div>
-   <button type="button" class="nmbtn" id="fToggle" aria-expanded="${FOPEN}">${FOPEN ? '샘플 닫기' : '무측정 동의서 샘플'}<i aria-hidden="true">${FOPEN ? '−' : '+'}</i></button>`;
+   <section class="nmsec" id="nmWhat"><span class="en">NON-MEASUREMENT CONSENT</span><h2>무측정 동의서란?</h2>
+   <div class="nmg">
+    <div class="nmi"><span class="nmn">01</span><div><h3>언제 작성하나요</h3><p>바코드 상품 중 <b>중량으로 내품 1PCS의 유무를 검증할 수 없어</b> 중량 검증 없이 입고할 때, 사전 협의 후 작성합니다.</p></div></div>
+    <div class="nmi"><span class="nmn">02</span><div><h3>어떻게 전달하나요</h3><p>납품 <b>당일 패킹리스트와 함께</b> 작성해 현장에 전달해 주세요.</p></div></div>
+    <div class="nmi warn"><span class="nmn">!</span><div><h3>작성 후 내품이 비었다면</h3><p>무측정으로 입고한 뒤 내품이 빈 것이 확인되면 <b>납품처에서 제품으로 보충</b>합니다.</p></div></div>
+   </div>
+   <button type="button" class="nmbtn" id="fToggle" aria-expanded="${FOPEN}">${FOPEN ? '샘플 닫기' : '무측정 동의서 샘플'}<i aria-hidden="true">${FOPEN ? '−' : '+'}</i></button></section>`;
   if (!FOPEN) return guide;
   return guide + `<div class="nmprev"><div class="paper">${consentDoc(true)}</div></div>`;  /* 양식 작성·인쇄는 숨김 (아래 코드는 남겨 둠) */
   return guide + `<div class="forms"><div class="fcard"><span class="en">FORM 01</span><h2>무측정 입고 동의서</h2>
@@ -1351,7 +1357,7 @@ function formsHTML() {
    <div class="fprev"><span class="en">PREVIEW</span><div class="paper" id="paper">${consentDoc(false)}</div></div></div>`;
 }
 
-document.addEventListener('click', e => { if (e.target.closest('#fToggle')) { FOPEN = !FOPEN; $('#extra').innerHTML = formsHTML(); } });
+document.addEventListener('click', e => { if (e.target.closest('#fWhat')) { FOPEN = true; $('#extra').innerHTML = formsHTML(); const w = document.getElementById('nmWhat'); w && w.scrollIntoView({behavior: 'smooth', block: 'start'}); return; } if (e.target.closest('#fToggle')) { FOPEN = !FOPEN; $('#extra').innerHTML = formsHTML(); } });
 /* 처음 납품하시나요? — 순서대로 확인하는 체크리스트 (홈 + 센터 안내 › 처음 납품 안내) */
 const FIRST = [
   {go: 'location', t: '센터 위치와 입고 가능 복종 확인', d: '1센터·2센터 중 어디로 가는지, 납품 시간(09~16시)과 복장 기준을 확인합니다.'},
