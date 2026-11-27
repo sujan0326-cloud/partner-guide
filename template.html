@@ -292,6 +292,7 @@ body:not(.inb) #gnb{visibility:hidden}
 .ctbl table{table-layout:fixed;font-variant-numeric:tabular-nums}
 .ctbl th:first-child,.ctbl td:first-child{text-align:left;padding-left:16px;width:30%}
 .ctbl th:last-child,.ctbl td:last-child{width:22%}.ctbl th.num,.ctbl td.num{text-align:right;padding-right:16px}
+.ctbls{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:8px 32px;align-items:start}.ctbls>.ctbl:only-child{max-width:520px}.ctbl.cwork{max-width:780px}.ctbls .ctbl h4{flex-wrap:wrap;row-gap:2px;min-height:50px;align-items:flex-end}.ctbls .ctbl th:first-child,.ctbls .ctbl td:first-child{width:auto;padding-left:12px;white-space:nowrap}.ctbls .ctbl th:last-child,.ctbls .ctbl td:last-child{width:auto;padding-right:12px}.ctbls .ctbl td{padding:11px 6px}.ctbls .ctbl table{table-layout:auto;font-size:14.5px}
 .ctbl td{text-align:center;padding:13px 8px;border-bottom:1px solid var(--line2)}.ctbl tr:hover td{background:#fafbfc}.ctbl td.num{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}.ctbl td.l{text-align:left}
 .cnotes{margin:0;padding-left:18px;color:var(--sub);font-size:14px;display:flex;flex-direction:column;gap:6px}
 .ccalc{position:sticky;top:150px;background:#fff;border-top:3px solid var(--navy);padding:26px;display:flex;flex-direction:column;gap:14px}
@@ -1278,8 +1279,8 @@ function costHTML() {
   return `<div class="ctabs" role="tablist" aria-label="비용 기준 선택">${COSTS.map((x, i) => `<button type="button" role="tab" data-ctab="${i}" class="${i === cTab ? 'on' : ''}" aria-selected="${i === cTab}">${x.name}</button>`).join('')}</div>
    <div class="cost"><div class="cmain"><span class="en">COST STANDARD</span><h2>${esc(C.title)}</h2><p class="clead">${esc(C.lead)}</p>
     <ol class="crules">${C.rules.map(r => `<li>${esc(r)}</li>`).join('')}</ol>
-    ${C.work ? `<div class="ctbl"><h4>작업 내용 (도급사)</h4><table><tr><th>구분</th><th style="text-align:left">내용</th><th>타 작업 동일 사항</th></tr>${C.work.map(w => `<tr><td>${w[0]}</td><td class="l">${w[1]}</td><td>${w[2]}</td></tr>`).join('')}</table></div>` : ''}
-    ${C.tables.map(tb).join('')}
+    ${C.work ? `<div class="ctbl cwork"><h4>작업 내용 (도급사)</h4><table><tr><th>구분</th><th style="text-align:left">내용</th><th>타 작업 동일 사항</th></tr>${C.work.map(w => `<tr><td>${w[0]}</td><td class="l">${w[1]}</td><td>${w[2]}</td></tr>`).join('')}</table></div>` : ''}
+    <div class="ctbls">${C.tables.map(tb).join('')}</div>
     <ul class="cnotes">${C.notes.map(n => `<li>${esc(n)}</li>`).join('')}</ul></div>
    <aside class="ccalc"><span class="en">CALCULATOR</span><h3>박스 수로 비용 확인</h3>
     ${C.tables.length > 1 ? `<label>구분<select id="calcT">${C.tables.map((T, i) => `<option value="${i}" ${i === calc.t ? 'selected' : ''}>${esc(T.name)}</option>`).join('')}</select></label>` : ''}
