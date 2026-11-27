@@ -107,7 +107,8 @@ body:not(.inb) #gnb{visibility:hidden}
 .tab:hover{color:var(--ink)}.tab.on{color:var(--navy);font-weight:700;border-bottom-color:var(--navy)}
 .mcat{display:none}
 .board{background:var(--paper);padding:30px 0 72px;min-height:70vh}
-.bhead{display:flex;align-items:flex-end;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.bhead{display:flex;align-items:flex-end;justify-content:flex-start;gap:16px 32px;flex-wrap:wrap;margin-bottom:22px}
+.bprint{display:inline-flex;align-items:center;gap:8px;height:42px;padding:0 18px;border:1px solid var(--navy);border-radius:999px;background:#fff;color:var(--navy);font:600 14px var(--kr,inherit);cursor:pointer;transition:background .2s,color .2s}.bprint:hover{background:var(--navy);color:#fff}@media print{.bprint{display:none}}
 .crumb{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-size:13px;color:var(--mute)}.crumb button{border:0;background:none;padding:0;color:var(--mute);font-size:13px}.crumb button:hover{color:var(--navy)}.crumb span:last-child{color:var(--sub)}
 .bhead h1{margin:0 0 4px;font-size:22px;line-height:1.3;font-weight:700;letter-spacing:-.4px}
 .bhead p{margin:0;color:var(--sub);font-size:14px}.bhead .note{color:var(--red);font-size:13px;margin-top:4px}
@@ -393,7 +394,7 @@ body:not(.inb) #gnb{visibility:hidden}
 @page form{size:A4 portrait;margin:16mm 18mm}
 @page doc{size:A4 portrait;margin:10mm 11mm 11mm}
 #print.doc{page:doc;width:auto;color:var(--ink);font-size:9.5pt}
-#print .pd{break-after:auto}#print .pd+.pd{margin-top:8mm}#print .pdh{break-after:avoid}
+#print .pfr{padding-top:1.8mm!important;padding-bottom:1.8mm!important}#print .pfr h3{margin:1mm 0!important}#print .pfr p{margin:.6mm 0!important}#print .pfr .pdn{display:flex;align-items:center;gap:3mm}#print .pck{display:inline-block;width:4mm;height:4mm;border:1.2pt solid #162036;border-radius:1mm}#print .pfp{color:#6b7280;font-size:8.5pt}#print .pff{margin-top:3mm;color:#6b7280;font-size:8.5pt}#print .pd{break-after:auto}#print .pd+.pd{margin-top:8mm}#print .pdh{break-after:avoid}
 #print .pdh{display:flex;align-items:center;gap:6mm;padding:0 0 3mm;border-bottom:2pt solid var(--navy);margin-bottom:2mm}#print .pdh img{height:5mm}#print .pdh span{font-size:7pt;color:var(--mute)}#print .pdh h1{margin:0;font-size:17pt}
 #print .pds h2{display:flex;align-items:baseline;gap:3mm;margin:4mm 0 0;padding:1.6mm 2.5mm;background:#eef1f6;font-size:11.5pt;break-after:avoid}#print .pds h2 span{font-size:7pt;color:var(--navy2);letter-spacing:.5px}
 #print .pdr{display:grid;grid-template-columns:1fr 92mm;gap:5mm;padding:3mm 0;border-bottom:.6pt solid #d6dae1;break-inside:avoid}#print .pdr.np{grid-template-columns:1fr}
@@ -1210,7 +1211,7 @@ function renderBoard() {
   $('#bnr').innerHTML = `${im ? `<img src="${im}" alt="">` : ''}<div class="bov"></div><div class="bt"><span class="en">${esc(cat.en || b.en || '')}</span><h2>${esc(b.cat)}</h2></div>
    ${cp.length > 1 ? `<nav class="btabs" role="tablist" aria-label="${esc(b.cat)}">${cp.map(x => `<button class="${x.id === b.id ? 'on' : ''}" type="button" role="tab" aria-selected="${x.id === b.id}" data-go="${x.id}">${esc(x.tab)}</button>`).join('')}</nav>` : ''}`.replace(/class="" type="button" role="tab" aria-selected="false" data-go="([a-z0-9]+)"/g, (m, id) => grpOfPage(byId[id] || {}) && grpOfPage(byId[id]) === grpOfPage(b) ? `class="on" type="button" role="tab" aria-selected="true" data-go="${id}"` : m);
   $('#bnr').classList.toggle('has-tabs', cp.length > 1);
-  $('#bhead').innerHTML = `<div><nav class="crumb" aria-label="현재 위치"><button type="button" id="goHome2">홈</button><span aria-hidden="true">/</span><span>${esc(b.cat)}</span>${grpOfPage(b) ? `<span aria-hidden="true">/</span><span>${esc(grpOfPage(b))}</span>` : ''}${b.tab !== b.cat ? `<span aria-hidden="true">/</span><span>${esc(GTAB[b.id] || b.tab)}</span>` : ''}</nav><h1>${esc(b.title)}</h1><p>${esc(b.sub)}</p></div>`;
+  $('#bhead').innerHTML = `<div><nav class="crumb" aria-label="현재 위치"><button type="button" id="goHome2">홈</button><span aria-hidden="true">/</span><span>${esc(b.cat)}</span>${grpOfPage(b) ? `<span aria-hidden="true">/</span><span>${esc(grpOfPage(b))}</span>` : ''}${b.tab !== b.cat ? `<span aria-hidden="true">/</span><span>${esc(GTAB[b.id] || b.tab)}</span>` : ''}</nav><h1>${esc(b.title)}</h1><p>${esc(b.sub)}</p></div>${b.id === 'first' ? '<button type="button" class="bprint" id="printFirst"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>납품 가이드 인쇄</button>' : printable().includes(b) ? '<button type="button" class="bprint" id="printThis"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M6 9V3h12v6"/><rect x="3" y="9" width="18" height="8" rx="2"/><path d="M6 14h12v7H6z"/></svg>이 페이지 인쇄</button>' : ''}`;  /* 페이지 바로 인쇄(상단 프린터 아이콘은 여러 페이지 골라 인쇄) */
   $('#extra').innerHTML = b.layout === '슬라이드' ? slidesHTML(b) : b.layout === '유형' ? typesHTML() : b.layout === '센터' ? centerHTML() : b.layout === '처음' ? `<section class="fst">${firstHTML(false)}</section>` : b.layout === '양식' ? formsHTML() : b.layout === '비용' ? costHTML() : b.layout === '예약마감' ? rcloseHTML() : b.layout === '박스' ? boxesHTML() : b.layout === '전체규칙' ? allRulesHTML() : b.layout === '입고순서' ? inflowHTML() : b.layout === '예약수정' ? rfixHTML() : b.layout === '재입고' ? rnoteHTML() : b.layout === '준비 중' ? `<div class="prep"><b>내용 준비 중입니다</b><p>${esc(b.sub)}. 확인되는 대로 이 자리에 올라옵니다.</p></div>` : '';
   $('#extra').insertAdjacentHTML('afterbegin', gtabsHTML(b)); if (b.layout === '박스') bindBox();
   const noBoard = !b.steps.length || b.layout === '슬라이드'; document.querySelector('.lay').hidden = noBoard;
@@ -1636,6 +1637,12 @@ function printDocSheet(b) {  /* 세로형: 사진 포함, 페이지가 이어서
    ${b.steps.map(st => `<div class="pds"><h2><span>STEP 0${st.n}</span>${esc(st.t)}</h2>${st.items.map(id => { const x = IT[id]; if (!x) return ''; k++; const ph = pics(x);
      return `<article class="pdr${ph ? '' : ' np'}"><div class="pdt"><div class="pdn">${String(k).padStart(2, '0')}${x.tag ? ' ' + tag(x.tag) : ''}</div><h3>${esc(x.text)}</h3>${x.why ? `<p><b>이유</b> ${esc(x.why)}</p>` : ''}${x.exc ? `<p>${esc(x.exc)}</p>` : ''}${x.act ? `<p><b>대응</b> ${esc(x.act)}</p>` : ''}</div>${ph ? `<div class="pdp">${ph}</div>` : ''}</article>`; }).join('')}</div>`).join('')}</section>`;
 }
+function printFirstSheet() {  /* 납품 가이드(처음 납품 체크리스트) 한 장 인쇄 */
+  return `<section class="pd"><div class="pdh"><img src="${$('.logo .d').src}" alt="K2 KOREA"><div><span>K2 협력사 납품 가이드 · 센터 안내</span><h1>처음 납품하시나요? · 납품 가이드</h1></div></div>
+   <div class="pds"><h2><span>CHECKLIST</span>아래 순서대로 확인하면 첫 납품을 준비할 수 있습니다</h2>${FIRST.map((f, i) => { const b = byId[f.go] || {};
+     return `<article class="pdr np pfr"><div class="pdt"><div class="pdn"><span class="pck"></span>${String(i + 1).padStart(2, '0')}</div><h3>${esc(f.t)}</h3><p>${esc(f.d)}</p><p class="pfp">사이트 위치: ${esc(b.cat || '')} › ${esc((f.more || []).map(m => m[1]).join(', ') || GTAB[f.go] || b.tab || '')}</p></div></article>`; }).join('')}</div>
+   <p class="pff">사진과 자세한 기준은 납품 가이드 사이트에서 확인하세요 · sujan0326-cloud.github.io/partner-guide</p></section>`;
+}
 function printFit() {  /* 각 장마다 내용이 칸을 넘지 않는 가장 큰 글자 크기를 찾음 */
   const P = $('#print'); P.classList.add('measure');
   P.querySelectorAll('.pp').forEach(pp => {
@@ -1702,6 +1709,8 @@ document.addEventListener('click', e => {
     case 'toRules': { const c = document.getElementById('st-1'); c && c.scrollIntoView({behavior: 'smooth', block: 'start'}); } break;
     case 'askBtn': toast('질문하기는 기존 사이트의 납품 길잡이(챗봇)를 연결할 자리입니다.'); break;
     case 'printBtn': PSEL = null; printOpen(); break;
+    case 'printThis': { const P = $('#print'); P.className = 'doc'; P.innerHTML = printDocSheet(byId[S.view]); setTimeout(() => { try { window.print(); } catch (err) { toast('이 화면에서는 인쇄가 막혀 있습니다.'); } }, 120); break; }
+    case 'printFirst': { const P = $('#print'); P.className = 'doc'; P.innerHTML = printFirstSheet(); setTimeout(() => { try { window.print(); } catch (err) { toast('이 화면에서는 인쇄가 막혀 있습니다.'); } }, 120); break; }
   }
 });
 $('#dim').addEventListener('click', closeSheet);
